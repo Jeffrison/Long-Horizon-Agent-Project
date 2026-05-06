@@ -1,0 +1,7 @@
+openai>=1.14.0        # 用于调用兼容 OpenAI 格式的模型 API
+requests>=2.31.0      # 基础的网络请求
+python-dotenv>=1.0.1  # 用于优雅地读取 .env 文件中的 API Key
+wikipedia>=1.4.0
+sympy #数学题经常用
+numpy
+scipy

@@ -1,0 +1,9 @@
+# 忽略所有的环境变量文件
+.env
+.env.local
+
+# 忽略 Python 缓存和虚拟环境
+__pycache__/
+venv/
+.venv/
+*.pyc
