@@ -1,4 +1,4 @@
-Long-Horizon Agent & Tool-Use from Scratch
+# Long-Horizon Agent & Tool-Use from Scratch
 本项目是一个不依赖任何重型框架（如 LangChain, AutoGen），从底层纯手写的智能体系统。该 Agent 具备长路径任务处理能力，能够通过 ReAct 循环调用 Wikipedia 搜索和 Python 代码执行工具，并具备强大的自我纠错与工程级鲁棒性。
 核心技术亮点
 零框架底层实现: 纯 Python 手写 ReAct 主循环，深度理解大模型事件流转机制。
@@ -12,9 +12,7 @@ Long-Horizon Agent & Tool-Use from Scratch
 工业级工具健壮性:
 Wikipedia: 实现请求节流与 User-Agent 伪装，彻底解决 429 请求频繁报错。
 多模态评测对齐: 手写启发式 LaTeX 解析引擎，实现 HMMT/AIME 复杂公式答案与 Python 浮点输出的自动化对齐判分。
-📂 目录结构
-code
-Text
+# 📂 目录结构
 ├── agent/
 │   ├── prompts.py        # 针对 7B 模型优化的纯英文 System Prompts
 │   ├── parser.py         # 带有乱码探测与强类型校验的解析器
@@ -32,7 +30,7 @@ Text
 ├── requirements.txt      # 最小依赖清单
 └── README.md             # 本文档
 
-🚀 快速开始
+# 🚀 快速开始
 1. 环境安装
 建议使用 Python 3.9+ 环境：
 Bash
@@ -43,25 +41,25 @@ pip install -r requirements.txt
 复制模板文件并填写你的 API 信息（推荐使用 SiliconFlow 或阿里云百炼）：
 Bash
 cp .env.example .env
-# 编辑 .env 文件，填入你的 LLM_API_KEY 和 LLM_BASE_URL
+编辑 .env 文件，填入你的 LLM_API_KEY 和 LLM_BASE_URL
 3. 运行自动化评测
 你可以一键启动针对数学数据集或多跳问答数据集的评测，并观察“纠错机制”开启前后的准确率对比：
 Bash
 python eval/run_eval.py
 
-📊 实验结果分析
+# 📊 实验结果分析
 在使用 Qwen2.5-7B-Instruct 作为驱动模型时，开启自我纠错带来的增益显著：
 数据集	任务类型	准确率 (Reflection OFF)	准确率 (Reflection ON)
 HotpotQA	多跳搜索	8.00%	43.00%
 HMMT/AIME	代码计算	8.33%	25.00%
 
-🛠️ 避坑与反思
+# 🛠️ 避坑与反思
 Context Pollution: 在开发初期，模型一旦输出乱码，会导致后续对话全部崩坏。通过引入“记忆回滚”机制，系统会拒绝存储格式错误的输出，从而保护了模型思维的纯净度。
 LaTeX Alignment: HMMT 数据集的答案 \frac{1}{576} 与 Python 计算结果 0.001736 难以直接匹配。本项目通过手写正则解析器，将符号逻辑转化为数值逻辑，实现了全自动闭环评测。
 Rate Limiting: 维基百科 API 的 429 报错曾是批量评测的杀手。通过在 Tool 层引入 1.5s 的步进休眠与规范的 User-Agent，解决了生产环境下的稳定性问题。
 
-📜 交付物说明
+# 📜 交付物说明
 代码: 严格遵循工程规范，注释详尽。
 日志: logs/ 文件夹下包含了完整的模型推理轨迹。
 文档: 本 README 提供了完整的复现指引。
-Created by Xuanyi Song for Technical Evaluation Project.
+# Created by Xuanyi Song for Technical Evaluation Project.
