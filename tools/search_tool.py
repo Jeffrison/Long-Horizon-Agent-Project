@@ -1,4 +1,3 @@
-# tools/search_tool.py
 import wikipedia
 import logging
 import time   

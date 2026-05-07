@@ -1,6 +1,3 @@
-# agent/prompts.py
- 
-
 QA_SYSTEM_PROMPT = """You are an intelligent assistant capable of using external tools to solve complex multi-step reasoning questions.
 You have access to the following tools:
 {tool_descriptions}
@@ -48,7 +45,7 @@ Now, please begin solving the following problem:
 """
  
 
-# 数学 Prompt 也建议同步更新，加入一个简单的数学示例
+# 数学 Prompt
 MATH_SYSTEM_PROMPT = """You are an expert mathematician and Python programmer. Your task is to solve math problems by writing and executing Python code.
 You have access to the following tools:
 {tool_descriptions}

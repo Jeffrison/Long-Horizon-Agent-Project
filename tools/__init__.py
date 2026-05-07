@@ -1,4 +1,3 @@
-# tools/__init__.py
 from .search_tool import search
 from .python_repl import execute_python
 

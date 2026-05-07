@@ -1,4 +1,3 @@
-# eval/run_eval.py
 import sys
 import os
 import json
@@ -20,7 +19,7 @@ def run_evaluation(dataset_path: str, task_type: str, max_samples: int = 10, ena
     print(f"数据集: {dataset_path}")
     print(f"任务类型: {task_type}")
     print(f"测试数量: {max_samples} 条")
-    print(f"纠错机制: {'开启✅' if enable_reflection else '关闭❌'}")
+    print(f"纠错机制: {'开启' if enable_reflection else '关闭'}")
     print(f"==============================\n")
 
     # 1. 加载数据
@@ -81,9 +80,9 @@ def run_evaluation(dataset_path: str, task_type: str, max_samples: int = 10, ena
                 
             if is_correct:
                 metrics["correct"] += 1
-                print(f"✅ [结果判定] 准确！标准答案: {ground_truth}")
+                print(f"[结果判定] 准确！标准答案: {ground_truth}")
             else:
-                print(f"❌ [结果判定] 错误。标准答案: {ground_truth}")
+                print(f"[结果判定] 错误。标准答案: {ground_truth}")
         else:
             # 记录失败原因
             error_type = agent_result.get("error", "unknown")
@@ -91,7 +90,7 @@ def run_evaluation(dataset_path: str, task_type: str, max_samples: int = 10, ena
                 metrics["failed_format"] += 1
             elif error_type == "max_steps_reached":
                 metrics["failed_max_steps"] += 1
-            print(f"⚠️ [结果判定] 任务失败 ({error_type})。")
+            print(f"[结果判定] 任务失败 ({error_type})。")
 
         # 5. 保存单条日志
         log_item = {
@@ -115,7 +114,7 @@ def run_evaluation(dataset_path: str, task_type: str, max_samples: int = 10, ena
     metrics["avg_steps"] = round(metrics["total_steps"] / metrics["total"], 2)
     
     print("\n" + "#"*40)
-    print("📈 最终评测报告")
+    print("最终评测报告")
     print("#"*40)
     print(f"总测试数: {metrics['total']}")
     print(f"答对数量: {metrics['correct']}")
@@ -137,7 +136,7 @@ def run_evaluation(dataset_path: str, task_type: str, max_samples: int = 10, ena
             "logs": detailed_logs
         }, f, ensure_ascii=False, indent=2)
         
-    print(f"💾 详细运行日志已保存至: {log_filename}")
+    print(f"详细运行日志已保存至: {log_filename}")
 
 if __name__ == "__main__":
     HOTPOT_DATA_PATH = "data/hotpotqa200.jsonl"

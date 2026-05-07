@@ -1,4 +1,3 @@
-# agent/react_loop.py
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -36,7 +35,7 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 10, enable_ref
     consecutive_format_errors = 0   # 连续格式崩坏计数器
     MAX_FORMAT_RETRIES = 6          # 最多允许它连续胡言乱语 6 次
 
-    print(f"\n🚀 开始任务 | 类型: {task_type} | 滑动窗口记忆: 开启\n{query}\n" + "="*50)
+    print(f"\n开始任务 | 类型: {task_type} | 滑动窗口记忆: 开启\n{query}\n" + "="*50)
 
     while step <= max_steps:
         print(f"\n--- [Step {step}] 正在思考... ---")
@@ -75,10 +74,10 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 10, enable_ref
             if enable_reflection:
                 consecutive_format_errors += 1
                 if consecutive_format_errors > MAX_FORMAT_RETRIES:
-                    print(f"❌ [任务崩溃] 连续 {MAX_FORMAT_RETRIES} 次输出格式乱码，强行截断以防死循环！")
+                    print(f"[任务崩溃] 连续 {MAX_FORMAT_RETRIES} 次输出格式乱码，强行截断以防死循环！")
                     return {"status": "failed", "error": "format_error_limit", "trajectory": trajectory, "steps": step, "final_answer": None}
 
-                print("⚠️[纠错介入] 发现乱码，启动记忆拦截！该段废话不存入历史。")
+                print("[纠错介入] 发现乱码，启动记忆拦截！该段废话不存入历史。")
                 current_error_feedback = f"Observation: Parsing failed ({str(e)}).Please strictly output using 'Thought', 'Action', and 'Action Input' format!"
                 trajectory.append({"role": "user", "content": current_error_feedback})
                 continue 
@@ -91,7 +90,7 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 10, enable_ref
         
         # 判断是否完成任务
         if parsed_result["type"] == "finish":
-            print("\n🎉 任务完成！")
+            print("\n任务完成！")
             print(f"最终答案: {parsed_result['content']}\n" + "="*50)
             return {"status": "success", "final_answer": parsed_result["content"], "trajectory": trajectory, "steps": step}
             
@@ -119,7 +118,7 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 10, enable_ref
                     observation += "\n\n[System Note]: The code above threw an error! Please analyze the cause in your next Thought and rewrite the code."
                 else:
                     # 没开启反思：记录下最后的惨状，直接斩断，强制失败退出！
-                    print("❌ [任务崩溃] 工具执行报错，且未开启反思机制，直接终止。")
+                    print("[任务崩溃] 工具执行报错，且未开启反思机制，直接终止。")
                         
                     # 把报错信息也存入轨迹，方便事后分析
                     if not observation.startswith("Observation:"):
@@ -150,7 +149,7 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 10, enable_ref
                     is_match = math_match(observation, ground_truth)
 
                 if is_match:
-                    print(f"\n🎯 工具执行结果直接命中了标准答案！强制结束任务！")
+                    print(f"\n工具执行结果直接命中了标准答案！强制结束任务！")
                     
                     fake_finish_thought = f"Thought: The tool successfully output the result matching the required answer."
                     trajectory.append({"role": "assistant", "content": f"{fake_finish_thought}\nFinal Answer: {observation}"})
@@ -167,5 +166,5 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 10, enable_ref
                 history_window = history_window[-(MAX_HISTORY_TURNS * 2):]
         step += 1
  
-    print("\n❌ 达到最大步数限制，任务失败。")
+    print("\n达到最大步数限制，任务失败。")
     return {"status": "failed", "error": "max_steps_reached", "trajectory": trajectory, "steps": max_steps, "final_answer": None}

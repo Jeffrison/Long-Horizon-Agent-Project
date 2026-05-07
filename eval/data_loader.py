@@ -1,4 +1,3 @@
-# eval/data_loader.py
 import json
 import os
 
@@ -26,7 +25,7 @@ def load_jsonl_dataset(file_path: str, max_samples: int = None) -> list:
                 item_id = item.get('_id') or item.get('id') or f"sample_{line_num}"
                 
                 if not question or not answer:
-                    print(f"⚠️ 警告: 第 {line_num} 行数据缺少问题或答案字段，已跳过。")
+                    print(f"警告: 第 {line_num} 行数据缺少问题或答案字段，已跳过。")
                     continue
                     
                 dataset.append({
@@ -40,6 +39,6 @@ def load_jsonl_dataset(file_path: str, max_samples: int = None) -> list:
                     break
                     
             except json.JSONDecodeError as e:
-                print(f"⚠️ 警告: 第 {line_num} 行 JSON 格式错误，已跳过。错误信息: {e}")
+                print(f"警告: 第 {line_num} 行 JSON 格式错误，已跳过。错误信息: {e}")
                 
     return dataset
