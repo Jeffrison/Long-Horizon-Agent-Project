@@ -4,7 +4,7 @@ import os
 def load_jsonl_dataset(file_path: str, max_samples: int = None) -> list:
     """
     file_path: 数据集文件路径
-    max_samples: 限制加载的样本数量（用于快速测试调戏）
+    max_samples: 限制加载的样本数量
     返回格式统一的列表:[{'id': '...', 'question': '...', 'answer': '...'}]
     """
     if not os.path.exists(file_path):

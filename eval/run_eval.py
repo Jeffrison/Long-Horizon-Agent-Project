@@ -146,17 +146,16 @@ if __name__ == "__main__":
     NUM_SAMPLES = 200
     '''
     print("\n--- 实验 A：关闭纠错机制 ---")
-    # 测试数学题，不开启纠错
     run_evaluation(MATH_DATA_PATH, task_type="MATH", max_samples=NUM_SAMPLES, enable_reflection=False)
+
+    run_evaluation(HOTPOT_DATA_PATH, task_type="QA", max_samples=NUM_SAMPLES, enable_reflection=False)   
     '''
     
     print("\n\n--- 实验 B：开启纠错机制 ---")
-    # 测试数学题，开启纠错
     
     ''' 
-    run_evaluation(MATH_DATA_PATH, task_type="MATH", max_samples=NUM_SAMPLES, enable_reflection=False)
+    run_evaluation(MATH_DATA_PATH, task_type="MATH", max_samples=NUM_SAMPLES, enable_reflection=True)
     '''
 
-    run_evaluation(HOTPOT_DATA_PATH, task_type="QA", max_samples=NUM_SAMPLES, enable_reflection=False)
-    # QA 任务同理，你可以将上述 MATH 替换为 QA 和 HOTPOT_DATA_PATH 进行测试。
+    run_evaluation(HOTPOT_DATA_PATH, task_type="QA", max_samples=NUM_SAMPLES, enable_reflection=True)
     
