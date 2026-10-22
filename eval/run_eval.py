@@ -1,161 +1,136 @@
-import sys
-import os
+"""CLI evaluation with direct/react/react_reflect baselines and no gold leakage."""
+import argparse
+from dataclasses import replace
+from datetime import datetime, timezone
+import hashlib
 import json
+from pathlib import Path
+import subprocess
+import sys
 import time
-from datetime import datetime
 
-# 确保能导入项目模块
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from eval.data_loader import load_jsonl_dataset
-from eval.metrics import qa_match,math_match
+from agent.client import APIClient
+from agent.config import AgentConfig
+from agent.prompts import PROMPT_VERSION
 from agent.react_loop import run_agent
+from eval.data_loader import dataset_sha256, load_jsonl_dataset
+from eval.metrics import math_match, qa_scores
 
-def run_evaluation(dataset_path: str, task_type: str, max_samples: int = 10, enable_reflection: bool = True):
-    """
-    task_type: "QA" (HotpotQA) 或 "MATH" (Math Dataset)
-    """
-    print(f"========== 评测启动 ==========")
-    print(f"数据集: {dataset_path}")
-    print(f"任务类型: {task_type}")
-    print(f"测试数量: {max_samples} 条")
-    print(f"纠错机制: {'开启' if enable_reflection else '关闭'}")
-    print(f"==============================\n")
 
-    # 1. 加载数据
+def summarize(rows):
+    count = len(rows)
+    if not count:
+        raise ValueError("No evaluation rows")
+    completed = sum(row["status"] == "success" for row in rows)
+    calls = sum(row["stats"]["llm_calls"] for row in rows)
+    tools = sum(row["stats"]["tool_calls"] for row in rows)
+    successful_tools = sum(row["stats"]["tool_successes"] for row in rows)
+    latencies = sorted(row["stats"]["elapsed_seconds"] for row in rows)
+    error_counts = {}
+    for row in rows:
+        for key, value in row["stats"]["errors"].items():
+            error_counts[key] = error_counts.get(key, 0) + value
+    usages = all(row["stats"]["prompt_tokens"] is not None for row in rows)
+    return {"total": count, "answer_rate": completed / count,
+            "em": sum(row["scores"]["em"] for row in rows) / count,
+            "f1": sum(row["scores"]["f1"] for row in rows) / count,
+            "avg_llm_calls": calls / count, "avg_tool_calls": tools / count,
+            "tool_success_rate": successful_tools / tools if tools else None,
+            "format_error_rate_per_call": error_counts.get("format_error", 0) / calls if calls else 0,
+            "avg_seconds": sum(latencies) / count,
+            "p95_seconds": latencies[min(count - 1, int(0.95 * count))],
+            "prompt_tokens": sum(row["stats"]["prompt_tokens"] for row in rows) if usages else None,
+            "completion_tokens": sum(row["stats"]["completion_tokens"] for row in rows) if usages else None,
+            "error_counts": error_counts}
+
+
+def code_revision():
     try:
-        dataset = load_jsonl_dataset(dataset_path, max_samples=max_samples)
-    except Exception as e:
-        print(f"加载数据集失败: {e}")
-        return
-        
-    if not dataset:
-        print("数据集为空！请检查数据路径或格式。")
-        return
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], text=True,
+                                       cwd=Path(__file__).resolve().parents[1], stderr=subprocess.DEVNULL).strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
 
-    # 2. 统计指标初始化
-    metrics = {
-        "total": len(dataset),
-        "correct": 0,
-        "failed_format": 0,
-        "failed_max_steps": 0,
-        "total_steps": 0,
-        "accuracy": 0.0,
-        "avg_steps": 0.0
-    }
-    
-    # 记录详细日志
-    detailed_logs =[]
-    
-    # 3. 循环遍历数据集
-    for index, item in enumerate(dataset):
-        print(f"\n[{index+1}/{len(dataset)}] 正在测试题目 ID: {item['id']}")
-        query = item['question']
-        ground_truth = item['answer']
-        print(f"Q: {query}")
-        print(f"Ground Truth: {ground_truth}")
-        
-        # 运行智能体
-        start_time = time.time()
-        agent_result = run_agent(
-            query=query, 
-            task_type=task_type, 
-            max_steps=8, 
-            enable_reflection=enable_reflection,
-            ground_truth=ground_truth
-        )
-        time_cost = time.time() - start_time
-        
-        metrics["total_steps"] += agent_result["steps"]
-        is_correct = False
-        
-        # 4. 判断对错
-        if agent_result["status"] == "success":
-            pred = agent_result["final_answer"]
-            
-            if task_type == "QA":
-                is_correct = qa_match(pred, ground_truth)
-            else:
-                is_correct = math_match(pred, ground_truth) 
-                
-            if is_correct:
-                metrics["correct"] += 1
-                print(f"[结果判定] 准确！标准答案: {ground_truth}")
-            else:
-                print(f"[结果判定] 错误。标准答案: {ground_truth}")
-        else:
-            # 记录失败原因
-            error_type = agent_result.get("error", "unknown")
-            if error_type == "format_error":
-                metrics["failed_format"] += 1
-            elif error_type == "max_steps_reached":
-                metrics["failed_max_steps"] += 1
-            print(f"[结果判定] 任务失败 ({error_type})。")
 
-        # 5. 保存单条日志
-        log_item = {
-            "id": item["id"],
-            "question": query,
-            "ground_truth": ground_truth,
-            "prediction": agent_result.get("final_answer", None),
-            "is_correct": is_correct,
-            "status": agent_result["status"],
-            "steps_taken": agent_result["steps"],
-            "time_cost_seconds": round(time_cost, 2),
-            "trajectory": agent_result["trajectory"]
-        }
-        detailed_logs.append(log_item)
-        
-        # 为了避免触发API 的限流，每跑完一题暂停 2 秒
-        time.sleep(2)
+def source_fingerprint():
+    root = Path(__file__).resolve().parents[1]
+    digest = hashlib.sha256()
+    for folder in ("agent", "tools", "eval"):
+        for path in sorted((root / folder).glob("*.py")):
+            digest.update(path.relative_to(root).as_posix().encode())
+            digest.update(path.read_bytes())
+    return digest.hexdigest()
 
-    # 6. 计算最终指标
-    metrics["accuracy"] = round((metrics["correct"] / metrics["total"]) * 100, 2)
-    metrics["avg_steps"] = round(metrics["total_steps"] / metrics["total"], 2)
-    
-    print("\n" + "#"*40)
-    print("最终评测报告")
-    print("#"*40)
-    print(f"总测试数: {metrics['total']}")
-    print(f"答对数量: {metrics['correct']}")
-    print(f"准确率 (Accuracy): {metrics['accuracy']}%")
-    print(f"平均交互步数: {metrics['avg_steps']} 步")
-    print(f"因格式崩坏失败: {metrics['failed_format']} 次")
-    print(f"因超时(死循环)失败: {metrics['failed_max_steps']} 次")
-    print("#"*40 + "\n")
 
-    # 7. 保存到本地文件
-    os.makedirs("logs", exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    mode_str = "Reflect_ON" if enable_reflection else "Reflect_OFF"
-    log_filename = f"logs/Eval_{task_type}_{mode_str}_{timestamp}.json"
-    
-    with open(log_filename, "w", encoding="utf-8") as f:
-        json.dump({
-            "metrics": metrics,
-            "logs": detailed_logs
-        }, f, ensure_ascii=False, indent=2)
-        
-    print(f"详细运行日志已保存至: {log_filename}")
+def evaluate(dataset_path, task_type, config, *, max_samples=None, split="test",
+             client=None, tools=None, allow_python=False, delay=0.0):
+    samples = load_jsonl_dataset(dataset_path, max_samples, split, config.seed)
+    if not samples:
+        raise ValueError("Selected split contains no samples")
+    client = client or APIClient()
+    rows = []
+    for item in samples:
+        # Inference sees the question, configuration and tools; never item["answer"].
+        result = run_agent(item["question"], task_type, config=config, client=client,
+                           tools=tools, allow_python=allow_python)
+        prediction = result["final_answer"] if result["status"] == "success" else ""
+        scores = qa_scores(prediction, item["answer"]) if task_type == "QA" else {
+            "em": float(math_match(prediction, item["answer"])), "f1": 0.0}
+        rows.append({**result, **{k: item[k] for k in ("id", "source_id", "question", "split")},
+                     "ground_truth": item["answer"], "prediction": prediction, "scores": scores,
+                     "is_correct": bool(scores["em"]), "task_type": task_type})
+        if delay > 0:
+            time.sleep(delay)
+    return {"schema_version": 2, "metadata": {
+                "created_at": datetime.now(timezone.utc).isoformat(), "task_type": task_type,
+                "dataset_name": Path(dataset_path).name, "dataset_sha256": dataset_sha256(dataset_path),
+                "split": split, "config": config.to_dict(), "prompt_version": PROMPT_VERSION,
+                "git_revision": code_revision(), "source_sha256": source_fingerprint(),
+                "metric": "hotpot_answer_em_f1" if task_type == "QA" else "scalar_math_accuracy",
+                "notes": ["Existing 200 QA questions were previously evaluated; splits are retrospective.",
+                          "Wikipedia is live and may change. Preserve evidence in events.",
+                          "Equal upper call budgets do not imply equal realized token cost."]},
+            "metrics": summarize(rows), "logs": rows}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--data", default="data/hotpotqa200.jsonl")
+    parser.add_argument("--task", choices=["QA", "MATH"], default="QA")
+    parser.add_argument("--mode", choices=["direct", "react", "react_reflect", "all"], default="all")
+    parser.add_argument("--split", choices=["train", "validation", "test", "all"], default="test")
+    parser.add_argument("--max-samples", type=int)
+    parser.add_argument("--max-llm-calls", type=int, default=8)
+    parser.add_argument("--max-tool-calls", type=int, default=6)
+    parser.add_argument("--max-new-tokens", type=int, default=600)
+    parser.add_argument("--history-turns", type=int, default=2)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--model", default="Qwen/Qwen2.5-7B-Instruct")
+    parser.add_argument("--delay", type=float, default=1.0)
+    parser.add_argument("--allow-python", action="store_true")
+    parser.add_argument("--output", default="outputs/eval")
+    args = parser.parse_args()
+    if args.task == "MATH" and args.mode != "direct" and not args.allow_python:
+        parser.error("MATH tool use requires --allow-python (local execution is not a security sandbox)")
+    modes = ["direct", "react", "react_reflect"] if args.mode == "all" else [args.mode]
+    config = AgentConfig(model=args.model, max_llm_calls=args.max_llm_calls,
+                         max_tool_calls=args.max_tool_calls, max_new_tokens=args.max_new_tokens,
+                         history_turns=args.history_turns, seed=args.seed)
+    output = Path(args.output)
+    output.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f")
+    client = APIClient()
+    for mode in modes:
+        report = evaluate(args.data, args.task, replace(config, mode=mode),
+                          max_samples=args.max_samples, split=args.split, client=client,
+                          allow_python=args.allow_python, delay=args.delay)
+        path = output / f"{args.task}_{args.split}_{mode}_{stamp}.json"
+        path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(json.dumps({"mode": mode, "metrics": report["metrics"], "path": str(path)}, ensure_ascii=False))
+
 
 if __name__ == "__main__":
-    HOTPOT_DATA_PATH = "data/hotpotqa200.jsonl"
-    MATH_DATA_PATH = "data/math.jsonl"
-    
-    # 测试数量
-    NUM_SAMPLES = 200
-    '''
-    print("\n--- 实验 A：关闭纠错机制 ---")
-    run_evaluation(MATH_DATA_PATH, task_type="MATH", max_samples=NUM_SAMPLES, enable_reflection=False)
-
-    run_evaluation(HOTPOT_DATA_PATH, task_type="QA", max_samples=NUM_SAMPLES, enable_reflection=False)   
-    '''
-    
-    print("\n\n--- 实验 B：开启纠错机制 ---")
-    
-    ''' 
-    run_evaluation(MATH_DATA_PATH, task_type="MATH", max_samples=NUM_SAMPLES, enable_reflection=True)
-    '''
-
-    run_evaluation(HOTPOT_DATA_PATH, task_type="QA", max_samples=NUM_SAMPLES, enable_reflection=True)
-    
+    main()

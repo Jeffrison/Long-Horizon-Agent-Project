@@ -1,99 +1,76 @@
-import subprocess
-import tempfile
-import os
-import re
+"""Opt-in local math execution. A child process is NOT a security sandbox."""
 import ast
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+from tools.types import ToolResult
 
-def auto_inject_print(code: str) -> str:
-    """
-    沙箱级代码劫持处理器：
-    1. 重写内置的 print 函数，拦截 sympy 符号对象并强制转为 Float。
-    2. AST 解析：如果代码最后一行是一个孤立的表达式（忘记写 print），自动为其包裹 print()。
-    """
-    
-    # 1：重写 builtins.print
-    patch_code = """
-import builtins
-_orig_print = builtins.print
-
-def _smart_print(*args, **kwargs):
-    new_args =[]
-    for a in args:
-        # 如果对象的模块名以 sympy 开头，尝试调用 .evalf() 并转为 float
-        if type(a).__module__.startswith('sympy'):
-            try:
-                a = float(a.evalf())
-            except Exception:
-                pass
-        new_args.append(a)
-    _orig_print(*new_args, **kwargs)
-
-builtins.print = _smart_print
-"""
-    
-    # 2：AST 静态分析
-    try:
-        tree = ast.parse(code)
-        # 如果代码不为空，且最后一条语句是“表达式（Expr）”而不是“赋值等语句”
-        if tree.body and isinstance(tree.body[-1], ast.Expr):
-            last_expr = tree.body[-1].value
-            
-            # 检查它是不是已经在调用 print 了
-            is_print_call = isinstance(last_expr, ast.Call) and getattr(last_expr.func, 'id', '') == 'print'
-            
-            if not is_print_call:
-                # 提取最后一行，强行套上 print()
-                last_line_str = ast.unparse(last_expr)
-                code += f"\nprint({last_line_str})"
-    except Exception:
-        # 如果代码本身有 SyntaxError，直接忽略，让底层的 python 子进程去真实报错
-        pass
-
-    # 将劫持补丁注入到大模型代码的最上方
-    return patch_code + "\n" + code
+ALLOWED_IMPORTS = {"math", "sympy", "numpy", "scipy", "itertools", "fractions", "statistics", "collections", "decimal"}
+BLOCKED_CALLS = {"open", "exec", "eval", "compile", "input", "getattr", "setattr", "delattr", "globals", "locals", "vars", "breakpoint"}
 
 
-def execute_python(code: str, timeout: int = 10) -> str:
-    """
-    在一个隔离的子进程中执行 Python 代码。
-    """
-    # 1. 暴力抹除 Markdown 标记
-    code = re.sub(r"^```[a-zA-Z]*\n", "", code, flags=re.MULTILINE)
-    code = re.sub(r"^```\n?", "", code, flags=re.MULTILINE)
+def auto_inject_print(code):
+    tree = ast.parse(code)
+    if tree.body and isinstance(tree.body[-1], ast.Expr):
+        value = tree.body[-1].value
+        if not (isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.func.id == "print"):
+            # Replace: appending would execute side-effecting calls twice.
+            tree.body[-1] = ast.Expr(ast.Call(ast.Name("print", ast.Load()), [value], []))
+    return ast.unparse(ast.fix_missing_locations(tree))
+
+
+def validate_code(code):
+    if len(code) > 12000:
+        raise ValueError("Code too long")
+    tree = ast.parse(code)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            if any(a.name.split(".")[0] not in ALLOWED_IMPORTS for a in node.names):
+                raise ValueError("Only math-related imports are allowed")
+        if isinstance(node, ast.ImportFrom) and (node.level or (node.module or "").split(".")[0] not in ALLOWED_IMPORTS):
+            raise ValueError("Only math-related imports are allowed")
+        if isinstance(node, ast.Name) and (node.id.startswith("_") or node.id in BLOCKED_CALLS):
+            raise ValueError("Disallowed name")
+        if isinstance(node, ast.Attribute) and (node.attr.startswith("_") or node.attr in {"load", "save", "loadtxt", "savetxt", "tofile", "fromfile", "dump", "dumps", "system"}):
+            raise ValueError("Disallowed attribute")
+
+
+def run_python(code, timeout=10):
     code = code.strip()
-
-    # 2. 在执行前，拦截并自动注入 print 与类型转换
-    code = auto_inject_print(code)
-
-    # 3. 隔离执行
-    fd, path = tempfile.mkstemp(suffix=".py", text=True)
+    fence = chr(96) * 3
+    if code.startswith(fence):
+        code = "\n".join(code.splitlines()[1:]).removesuffix(fence).strip()
     try:
-        with os.fdopen(fd, 'w', encoding='utf-8') as f:
-            f.write(code)
-        
-        result = subprocess.run(
-            ['python', path],
-            capture_output=True,
-            text=True,
-            timeout=timeout
-        )
-        
-        output = ""
-        if result.stdout:
-            output += result.stdout
-            
-        if result.stderr:
-            output += f"\n[Error Traceback]:\n{result.stderr}"
-            
-        if not output.strip():
-            return "Observation: Code executed successfully, but there is no output. Please remember to output the results you want to see!"
-        
-        return output.strip()
-
+        validate_code(code)
+        code = auto_inject_print(code)
+    except (SyntaxError, ValueError) as exc:
+        return ToolResult(False, f"Invalid math code: {exc}", "invalid_code")
+    # Defense in depth only. Production execution needs a real OS/container sandbox.
+    env = {k: v for k, v in os.environ.items() if k.upper() in {"PATH", "SYSTEMROOT", "WINDIR", "TEMP", "TMP", "SYSTEMDRIVE"}}
+    env["PYTHONIOENCODING"] = "utf-8"
+    try:
+        with tempfile.TemporaryDirectory(prefix="agent_math_") as directory:
+            script = Path(directory) / "task.py"
+            script.write_text(code, encoding="utf-8")
+            with (Path(directory) / "stdout.txt").open("w+b") as stdout, (Path(directory) / "stderr.txt").open("w+b") as stderr:
+                result = subprocess.run([sys.executable, "-I", str(script)], cwd=directory,
+                                        stdout=stdout, stderr=stderr, timeout=timeout, env=env)
+                stdout.seek(0)
+                stderr.seek(0)
+                text = stdout.read(8000).decode("utf-8", errors="replace").strip()
+                error = stderr.read(4000).decode("utf-8", errors="replace").strip()
+            if result.returncode:
+                return ToolResult(False, error or "Python exited with an error.", "execution_error")
+            if not text:
+                return ToolResult(False, "No output. Print the result.", "no_output")
+            return ToolResult(True, text)
     except subprocess.TimeoutExpired:
-        return f"Observation: Code execution timed out (exceeded {timeout} seconds). You might have written an infinite loop."
-    except Exception as e:
-        return f"Observation: Execution environment system error: {str(e)}"
-    finally:
-        if os.path.exists(path):
-            os.remove(path)
+        return ToolResult(False, f"Execution exceeded {timeout} seconds.", "timeout")
+    except OSError:
+        return ToolResult(False, "Could not start the local Python process.", "process_error")
+
+
+def execute_python(code, timeout=10):
+    return run_python(code, timeout).text

@@ -1,55 +1,53 @@
-import wikipedia
-import logging
-import time   
-
-wikipedia.set_lang("en")
-# 设置合法的开发者 User-Agent，绕过维基百科防火墙拦截
-wikipedia.set_user_agent("LongHorizonAgent_Eval/1.0 (Contact: eval_test@example.com)")
-def search(query: str, max_results: int = 2) -> str:
-    """
-    搜索维基百科，返回最相关词条的摘要。
-    遇到网络异常或消歧义报错时，返回文本Observation。
-    """
-    try:
-        # 在每次调用 Search 工具的开头，强制休眠 1.5 秒，防止两道题之间或者短时间内多次调用工具导致的并发过高
-        time.sleep(1.5) 
-        query = query.strip("\"'")
-        
-        # 1. 先搜索出最相关的词条标题
-        titles = wikipedia.search(query, results=max_results)
-        if not titles:
-            return f"Observation: No Wikipedia results found for '{query}'. Please try different keywords."
-            
-        formatted_results =[]
-        for i, title in enumerate(titles):
-            try:
-                # 休眠 1 秒
-                time.sleep(1.0) 
-                # 2. 获取具体页面的摘要
-                page = wikipedia.page(title, auto_suggest=False)
-                # 截断太长的摘要 
-                summary = page.summary[:600] + "..." if len(page.summary) > 600 else page.summary
-                formatted_results.append(
-                    f"[Result {i+1}]\nTitle: {page.title}\nSnippet: {summary}"
-                )
-            except wikipedia.exceptions.DisambiguationError as e:
-                # 如果遇到消歧义页面，把建议的词条返回给模型
-                options = e.options[:3]
-                formatted_results.append(
-                    f"[Result {i+1}]\nTitle: {title} (Disambiguation)\nSnippet: The query is ambiguous. Please try more specific terms, e.g., {', '.join(options)}"
-                )
-            except wikipedia.exceptions.PageError:
-                continue
-            except Exception as e:
-                continue
-                
-        if not formatted_results:
-             return "Observation: Relevant titles found, but failed to extract page content."
-             
-        return "\n\n".join(formatted_results)
-        
-    except Exception as e:
-        logging.warning(f"Wikipedia API Error: {str(e)}")
-        return f"Observation: Search tool internal error ({str(e)}). Please refine your keywords or use another tool."
+"""Wikipedia retrieval with explicit timeout and typed failures."""
+import json
+import time
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+from tools.types import ToolResult
 
 
+class WikipediaSearch:
+    def __init__(self, timeout=15, min_interval=1.0, max_results=2, snippet_chars=1000):
+        self.timeout, self.min_interval = timeout, min_interval
+        self.max_results, self.snippet_chars = max_results, snippet_chars
+        self.last_request = 0.0
+
+    def _request(self, parameters):
+        time.sleep(max(0.0, self.min_interval - (time.monotonic() - self.last_request)))
+        self.last_request = time.monotonic()
+        url = "https://en.wikipedia.org/w/api.php?" + urlencode({"format": "json", **parameters})
+        request = Request(url, headers={"User-Agent": "AgentEvalProject/2.0 (educational retrieval)"})
+        with urlopen(request, timeout=self.timeout) as response:
+            return json.load(response)
+
+    def __call__(self, query):
+        if not isinstance(query, str) or not query.strip() or len(query) > 300:
+            return ToolResult(False, "Use a short, nonempty entity query.", "invalid_query")
+        try:
+            result = self._request({"action": "query", "list": "search", "srsearch": query,
+                                    "srlimit": self.max_results})
+            hits = result.get("query", {}).get("search", [])
+            if not hits:
+                return ToolResult(False, "No matching page. Try a different entity.", "no_results")
+            pages = self._request({"action": "query", "prop": "extracts|pageprops", "explaintext": 1,
+                                   "exintro": 1, "pageids": "|".join(str(x["pageid"]) for x in hits)})
+            output = []
+            for page in pages.get("query", {}).get("pages", {}).values():
+                title, extract = page.get("title", ""), page.get("extract", "")
+                if "disambiguation" in page.get("pageprops", {}):
+                    extract = "Ambiguous entity; refine the query. " + extract
+                output.append(f"Title: {title}\nEvidence: {extract[:self.snippet_chars]}")
+            if not output:
+                return ToolResult(False, "No readable page content.", "empty_page")
+            return ToolResult(True, "\n\n".join(output))
+        except HTTPError as exc:
+            return ToolResult(False, f"Wikipedia HTTP {exc.code}.", "rate_limit" if exc.code == 429 else "http_error")
+        except (URLError, TimeoutError):
+            return ToolResult(False, "Wikipedia request failed or timed out.", "network_error")
+        except (ValueError, KeyError, TypeError):
+            return ToolResult(False, "Invalid Wikipedia response.", "response_error")
+
+
+def search(query, max_results=2):
+    return WikipediaSearch(max_results=max_results)(query).text
