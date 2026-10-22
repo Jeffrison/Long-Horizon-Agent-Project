@@ -1,9 +1,16 @@
-# 忽略所有的环境变量文件
+# Local credentials
 .env
-.env.local
+.env.*
+!.env.example
 
-# 忽略 Python 缓存和虚拟环境
+# Python environments and caches
 __pycache__/
+*.py[cod]
 venv/
 .venv/
-*.pyc
+.venv-train/
+.training_vendor/
+
+# Generated model weights, datasets and logs; small audit summaries live in reports/
+outputs/
+checkpoints/

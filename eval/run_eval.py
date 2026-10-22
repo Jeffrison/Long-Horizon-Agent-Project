@@ -36,7 +36,8 @@ def summarize(rows):
     usages = all(row["stats"]["prompt_tokens"] is not None for row in rows)
     return {"total": count, "answer_rate": completed / count,
             "em": sum(row["scores"]["em"] for row in rows) / count,
-            "f1": sum(row["scores"]["f1"] for row in rows) / count,
+            "f1": (sum(row["scores"]["f1"] for row in rows) / count
+                   if all(row["scores"]["f1"] is not None for row in rows) else None),
             "avg_llm_calls": calls / count, "avg_tool_calls": tools / count,
             "tool_success_rate": successful_tools / tools if tools else None,
             "format_error_rate_per_call": error_counts.get("format_error", 0) / calls if calls else 0,
@@ -66,7 +67,7 @@ def source_fingerprint():
 
 
 def evaluate(dataset_path, task_type, config, *, max_samples=None, split="test",
-             client=None, tools=None, allow_python=False, delay=0.0):
+             client=None, tools=None, allow_python=False, delay=0.0, backend_details=None):
     samples = load_jsonl_dataset(dataset_path, max_samples, split, config.seed)
     if not samples:
         raise ValueError("Selected split contains no samples")
@@ -78,7 +79,7 @@ def evaluate(dataset_path, task_type, config, *, max_samples=None, split="test",
                            tools=tools, allow_python=allow_python)
         prediction = result["final_answer"] if result["status"] == "success" else ""
         scores = qa_scores(prediction, item["answer"]) if task_type == "QA" else {
-            "em": float(math_match(prediction, item["answer"])), "f1": 0.0}
+            "em": float(math_match(prediction, item["answer"])), "f1": None}
         rows.append({**result, **{k: item[k] for k in ("id", "source_id", "question", "split")},
                      "ground_truth": item["answer"], "prediction": prediction, "scores": scores,
                      "is_correct": bool(scores["em"]), "task_type": task_type})
@@ -89,6 +90,7 @@ def evaluate(dataset_path, task_type, config, *, max_samples=None, split="test",
                 "dataset_name": Path(dataset_path).name, "dataset_sha256": dataset_sha256(dataset_path),
                 "split": split, "config": config.to_dict(), "prompt_version": PROMPT_VERSION,
                 "git_revision": code_revision(), "source_sha256": source_fingerprint(),
+                "backend": backend_details or {"kind": type(client).__name__},
                 "metric": "hotpot_answer_em_f1" if task_type == "QA" else "scalar_math_accuracy",
                 "notes": ["Existing 200 QA questions were previously evaluated; splits are retrospective.",
                           "Wikipedia is live and may change. Preserve evidence in events.",
@@ -109,24 +111,35 @@ def main():
     parser.add_argument("--history-turns", type=int, default=2)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--model", default="Qwen/Qwen2.5-7B-Instruct")
+    parser.add_argument("--backend", choices=["api", "local"], default="api")
+    parser.add_argument("--adapter", help="Local PEFT adapter directory; local backend only")
+    parser.add_argument("--temperature", type=float, default=0.1)
     parser.add_argument("--delay", type=float, default=1.0)
     parser.add_argument("--allow-python", action="store_true")
     parser.add_argument("--output", default="outputs/eval")
     args = parser.parse_args()
+    if args.adapter and args.backend != "local":
+        parser.error("--adapter requires --backend local")
     if args.task == "MATH" and args.mode != "direct" and not args.allow_python:
         parser.error("MATH tool use requires --allow-python (local execution is not a security sandbox)")
     modes = ["direct", "react", "react_reflect"] if args.mode == "all" else [args.mode]
     config = AgentConfig(model=args.model, max_llm_calls=args.max_llm_calls,
                          max_tool_calls=args.max_tool_calls, max_new_tokens=args.max_new_tokens,
-                         history_turns=args.history_turns, seed=args.seed)
+                         history_turns=args.history_turns, seed=args.seed, temperature=args.temperature)
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f")
-    client = APIClient()
+    if args.backend == "local":
+        from agent.local_client import LocalHFClient
+        client = LocalHFClient(args.model, args.adapter, args.seed)
+    else:
+        client = APIClient()
     for mode in modes:
         report = evaluate(args.data, args.task, replace(config, mode=mode),
                           max_samples=args.max_samples, split=args.split, client=client,
-                          allow_python=args.allow_python, delay=args.delay)
+                          allow_python=args.allow_python, delay=args.delay,
+                          backend_details={"kind": args.backend, "model": args.model,
+                                           "adapter": args.adapter})
         path = output / f"{args.task}_{args.split}_{mode}_{stamp}.json"
         path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
         print(json.dumps({"mode": mode, "metrics": report["metrics"], "path": str(path)}, ensure_ascii=False))

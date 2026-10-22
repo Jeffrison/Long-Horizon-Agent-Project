@@ -1,0 +1,8 @@
+# Optional. Install CUDA-enabled PyTorch suitable for your driver first.
+# Resolve inside a separate training venv; save pip freeze after a successful run.
+torch>=2.5,<3
+transformers>=4.56,<6
+trl>=0.25,<2
+peft>=0.17,<1
+datasets>=3,<6
+accelerate>=1,<2
