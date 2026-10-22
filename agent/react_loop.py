@@ -1,6 +1,7 @@
 """Budgeted ReAct runtime. Gold answers are deliberately absent from this API."""
 from collections import Counter
 from copy import deepcopy
+from dataclasses import replace
 import time
 
 from agent.client import APIClient
@@ -54,9 +55,10 @@ def run_agent(query, task_type="QA", max_steps=8, enable_reflection=True, *,
             messages.append({"role": "user", "content": feedback})
         calls += 1  # Includes all malformed responses and failed provider requests.
         call_start = time.monotonic()
-        event = {"kind": "llm", "call": calls, "messages": messages}
+        effective_seed = config.seed + calls - 1
+        event = {"kind": "llm", "call": calls, "messages": messages, "effective_seed": effective_seed}
         try:
-            response = client.complete(messages, config)
+            response = client.complete(messages, replace(config, seed=effective_seed))
             text = response["text"]
             event.update({"text": text, "usage": response.get("usage", {}),
                           "response_model": response.get("response_model")})

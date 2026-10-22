@@ -52,6 +52,14 @@ class DataExportTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 export_data([path], Path(directory) / "output")
 
+    def test_protocol_fixture_is_not_mixed_into_training_data(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "fixture.json"
+            path.write_text(json.dumps({"schema_version": 2,
+                "metadata": {"task_type": "QA", "fixture_only": True}, "logs": [row("q", "Paris")]}))
+            with self.assertRaises(ValueError):
+                export_data([path], Path(directory) / "output")
+
     def test_legacy_context_is_not_fabricated_for_agent_training(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "Eval_QA_fixture.json"

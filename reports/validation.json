@@ -1,13 +1,25 @@
 {
   "date": "2026-10-22",
   "verification": {
-    "offline_regression_tests": 19,
+    "offline_regression_tests": 25,
     "offline_fixture_passed": true
   },
   "legacy_qa_rescore": [
     {
       "file": "Eval_QA_Reflect_OFF_20260504_181855.json",
       "sha256": "0152a8c25fc1ef94a74a0810dc878bd1e1f7a476db371bb8a1e16429609ffbaf",
+      "source_policy": {
+        "file": "Eval_QA_Reflect_OFF_20260504_181855.json",
+        "record_selection": "single_trajectory_per_question_reported_by_author",
+        "all_attempts_recorded": null,
+        "attempt_counts_known": null,
+        "selection_conditioned_training_data": false,
+        "eligible_for_reflection_gain_comparison": false,
+        "training_use": "Silver training candidates; original protocol was not prospectively controlled."
+      },
+      "metric_scope": "stored_records_only_not_unbiased_pass_at_1",
+      "unbiased_pass_at_1": null,
+      "unbiased_pass_at_k": null,
       "total": 200,
       "unique_questions": 200,
       "answer_em": 0.04,
@@ -20,6 +32,8 @@
         "success": 51
       },
       "warnings": [
+        "Historical ON records were selected after extra attempts; missing attempts are unavailable.",
+        "Rescoring cannot correct outcome-conditioned selection or reconstruct pass@k.",
         "Historical runs are not controlled by the new call budget.",
         "Answer metrics only; no supporting-fact/joint metrics.",
         "No new model inference was performed."
@@ -28,6 +42,18 @@
     {
       "file": "Eval_QA_Reflect_ON_20260502_153421.json",
       "sha256": "560074abd1fc686a5c524ee4086b2b89a654ab511b716287f21ae67d404b9440",
+      "source_policy": {
+        "file": "Eval_QA_Reflect_ON_20260502_153421.json",
+        "record_selection": "correctness_conditioned_retention",
+        "all_attempts_recorded": false,
+        "attempt_counts_known": false,
+        "selection_conditioned_training_data": true,
+        "eligible_for_reflection_gain_comparison": false,
+        "training_use": "Selected demonstrations may be used as silver training data; not unbiased evaluation evidence."
+      },
+      "metric_scope": "stored_records_only_not_unbiased_pass_at_1",
+      "unbiased_pass_at_1": null,
+      "unbiased_pass_at_k": null,
       "total": 200,
       "unique_questions": 200,
       "answer_em": 0.295,
@@ -40,6 +66,8 @@
         "success": 171
       },
       "warnings": [
+        "Historical ON records were selected after extra attempts; missing attempts are unavailable.",
+        "Rescoring cannot correct outcome-conditioned selection or reconstruct pass@k.",
         "Historical runs are not controlled by the new call budget.",
         "Answer metrics only; no supporting-fact/joint metrics.",
         "No new model inference was performed."
@@ -53,14 +81,35 @@
       {
         "file": "Eval_QA_Reflect_OFF_20260504_181855.json",
         "sha256": "0152a8c25fc1ef94a74a0810dc878bd1e1f7a476db371bb8a1e16429609ffbaf",
-        "legacy": true
+        "legacy": true,
+        "source_policy": {
+          "file": "Eval_QA_Reflect_OFF_20260504_181855.json",
+          "record_selection": "single_trajectory_per_question_reported_by_author",
+          "all_attempts_recorded": null,
+          "attempt_counts_known": null,
+          "selection_conditioned_training_data": false,
+          "eligible_for_reflection_gain_comparison": false,
+          "training_use": "Silver training candidates; original protocol was not prospectively controlled."
+        }
       },
       {
         "file": "Eval_QA_Reflect_ON_20260502_153421.json",
         "sha256": "560074abd1fc686a5c524ee4086b2b89a654ab511b716287f21ae67d404b9440",
-        "legacy": true
+        "legacy": true,
+        "source_policy": {
+          "file": "Eval_QA_Reflect_ON_20260502_153421.json",
+          "record_selection": "correctness_conditioned_retention",
+          "all_attempts_recorded": false,
+          "attempt_counts_known": false,
+          "selection_conditioned_training_data": true,
+          "eligible_for_reflection_gain_comparison": false,
+          "training_use": "Selected demonstrations may be used as silver training data; not unbiased evaluation evidence."
+        }
       }
     ],
+    "purpose": "training_data_not_accuracy_estimation",
+    "contains_selection_conditioned_or_unknown_sources": true,
+    "eligible_for_reflection_gain_comparison": false,
     "counts": {
       "sft_train.jsonl": 49,
       "sft_validation.jsonl": 6,
@@ -70,14 +119,16 @@
       "dpo_test.jsonl": 2
     },
     "file_sha256": {
-      "sft_train.jsonl": "0ddcf21cea733d79a6bea6eaa70cede793d2df897fd50278e6eb2aa8922c30aa",
-      "sft_validation.jsonl": "7e4cd3fcdcbdb21c5baf7c912fc0135bf789b62874ea02f0c60191761c75c34c",
-      "sft_test.jsonl": "cb1158d3ca101f7b7768e851252ac1c40542d91bd38c4870cac8acab5f71b614",
-      "dpo_train.jsonl": "f756f2e278f4cad4fc83f12b97ad2513e79b7a668e93ebc5e556f6114a12d0d8",
+      "sft_train.jsonl": "2510500e4d76956991ce73386f6db589bb76e4dfee9ef55206f47bfabb630023",
+      "sft_validation.jsonl": "36eda7bc3966a4b23dea51de9a50f337011fb209ec20db3c24211de840f525ff",
+      "sft_test.jsonl": "12636f9a575e0fc48dce5335343e8a28f50f3dfed47bc0628ccc3d57401a6fa5",
+      "dpo_train.jsonl": "3bbf8a927c4212c84ca5a8b7b13b34408259795836b48484b471a127ca3c37e2",
       "dpo_validation.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "dpo_test.jsonl": "86c012a0ae6764a6977f90df489b0a2704fbce1a1ca62f4b24e5417e7549a996"
+      "dpo_test.jsonl": "f5a89ae9df951043c1661d43a8dd7dde5dcd1a94f7a8c87750725891a8c8bca9"
     },
     "limitations": [
+      "Legacy ON records were retained after correctness-conditioned sampling; useful as selected training demonstrations, not unbiased evaluation.",
+      "Missing failed attempts and sampling counts cannot be recovered.",
       "Small retrospective dataset; old runs have seen the full question pool.",
       "Answer data trains answer behavior, not tool selection or Agentic RL.",
       "Decision data uses exact saved prompts and assistant-only completions.",
@@ -162,7 +213,13 @@
           "model.safetensors": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe"
         }
       },
-      "note": "Training loss is not QA accuracy; evaluate the saved adapter separately."
+      "note": "Training loss is not QA accuracy; evaluate the saved adapter separately.",
+      "retrospective_source_audit": {
+        "contains_selection_conditioned_demonstrations": true,
+        "matched_data_manifest": "outputs\\posttrain_answer\\manifest.json",
+        "audit_does_not_modify_training_report": true,
+        "interpretation": "Valid small-scale training execution; not unbiased reflection evidence"
+      }
     },
     "dpo_adapter": {
       "method": "dpo",
@@ -219,7 +276,13 @@
         "dpo_test.jsonl": "86c012a0ae6764a6977f90df489b0a2704fbce1a1ca62f4b24e5417e7549a996"
       },
       "model_provenance": null,
-      "note": "Training loss is not QA accuracy; evaluate the saved adapter separately."
+      "note": "Training loss is not QA accuracy; evaluate the saved adapter separately.",
+      "retrospective_source_audit": {
+        "contains_selection_conditioned_demonstrations": true,
+        "matched_data_manifest": "outputs\\posttrain_answer\\manifest.json",
+        "audit_does_not_modify_training_report": true,
+        "interpretation": "Valid small-scale training execution; not unbiased reflection evidence"
+      }
     }
   },
   "evaluation": [
@@ -693,11 +756,255 @@
     "outputs/sft_adapter/merged/model.safetensors": "0919e5fc17ab3dc8cdafe7f3946ab8817e55c0cd90a6b7ddd9f7443104c80eaa",
     "outputs/dpo_adapter/adapter_model.safetensors": "02a9b6b60fe4f909e4872d1e3bcd06ea7ce38482211e855a118a7fac4dfe7fad"
   },
+  "historical_collection_disclosure": {
+    "source": "project author's 2026-10-22 clarification",
+    "on_collection": "extra sampling with correctness-conditioned retention",
+    "missing_attempts_recoverable": false,
+    "historical_scores_support_reflection_gain": false,
+    "selected_demonstrations_can_be_training_data": true,
+    "completed_sft_dpo_are_workflow_experiments_not_effectiveness_evidence": true
+  },
   "limitations": [
     "Historical QA rescoring is not an effect of the new implementation.",
     "Dataset splits are retrospective, not a fresh unseen benchmark.",
     "Answer-only training does not directly train tool selection.",
     "Preference labels are unreviewed silver labels; DPO validation split is empty.",
     "Small training/eval runs validate the pipeline, not general model improvement."
+  ],
+  "fair_protocol_runs": [
+    {
+      "file": "outputs\\fair_eval\\local_fixture_20261022\\report.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:47:59.010641+00:00",
+        "backend": "local",
+        "model": "outputs/models/qwen2.5-0.5b-instruct",
+        "fixture_only": true,
+        "total_calls_per_question_per_strategy": 8,
+        "total_tool_budget": 8,
+        "restarts": 4,
+        "max_new_tokens": 128,
+        "temperature": 0.7,
+        "seed": 42,
+        "question_ids": [
+          "83f4c0535039708ea00e4069c607e123cc6354dbaf468ac54b326ac71b8360ec"
+        ],
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "dcc41d91a665231111c65bedb23fa4974c1f3b66",
+        "source_sha256": "830bb2270178f85ec69f422432910c8aa7adec3cd5619323ed49dad71ae26dbf",
+        "reference_used_for_generation": false,
+        "dataset_sha256": null,
+        "task_type": "QA",
+        "completed": true,
+        "generalization_evidence": false,
+        "collection_protocol": {
+          "record_selection": "all_attempts",
+          "all_attempts_recorded": true,
+          "reference_used_for_generation": false,
+          "attempt_count_policy": {
+            "react_single": 1,
+            "react_error_feedback": 1,
+            "react_restarts": 4
+          }
+        },
+        "selection": "first for single trajectories; normalized majority with first-index tie break for restarts",
+        "oracle_metric": "diagnostic coverage upper bound only; not a deployable selector",
+        "budget_note": "Equal upper call limits, not equal realized input tokens or latency.",
+        "reflection_scope": "format/tool-error feedback; no ground-truth correctness feedback",
+        "pass_at_k_note": "Assumes complete fixed sampling, comparable independent attempts; not for legacy selected logs."
+      },
+      "metrics": {
+        "react_single": {
+          "questions": 1,
+          "selected_em": 0.0,
+          "selected_f1": 0.0,
+          "first_attempt_em": 0.0,
+          "oracle_any_success_rate": 0.0,
+          "mean_actual_llm_calls": 1.0,
+          "mean_actual_tool_calls": 0.0
+        },
+        "react_error_feedback": {
+          "questions": 1,
+          "selected_em": 0.0,
+          "selected_f1": 0.0,
+          "first_attempt_em": 0.0,
+          "oracle_any_success_rate": 0.0,
+          "mean_actual_llm_calls": 4.0,
+          "mean_actual_tool_calls": 0.0
+        },
+        "react_restarts": {
+          "questions": 1,
+          "selected_em": 0.0,
+          "selected_f1": 0.0,
+          "first_attempt_em": 0.0,
+          "oracle_any_success_rate": 0.0,
+          "mean_actual_llm_calls": 4.0,
+          "mean_actual_tool_calls": 0.0
+        }
+      },
+      "use": "protocol smoke only"
+    },
+    {
+      "file": "outputs\\fair_eval\\protocol_fixture_20261022\\report.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:46:29.792221+00:00",
+        "backend": "fixture",
+        "model": "outputs/models/qwen2.5-0.5b-instruct",
+        "fixture_only": true,
+        "total_calls_per_question_per_strategy": 8,
+        "total_tool_budget": 8,
+        "restarts": 4,
+        "max_new_tokens": 128,
+        "temperature": 0.7,
+        "seed": 42,
+        "question_ids": [
+          "83f4c0535039708ea00e4069c607e123cc6354dbaf468ac54b326ac71b8360ec"
+        ],
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "dcc41d91a665231111c65bedb23fa4974c1f3b66",
+        "source_sha256": "9b38ed1367db6042d8b13fb4aef1720d7b3cd22a767e632dc83d762286a703cc",
+        "reference_used_for_generation": false,
+        "dataset_sha256": null,
+        "task_type": "QA",
+        "completed": true,
+        "generalization_evidence": false,
+        "collection_protocol": {
+          "record_selection": "all_attempts",
+          "all_attempts_recorded": true,
+          "reference_used_for_generation": false,
+          "attempt_count_policy": {
+            "react_single": 1,
+            "react_error_feedback": 1,
+            "react_restarts": 4
+          }
+        },
+        "selection": "first for single trajectories; normalized majority with first-index tie break for restarts",
+        "oracle_metric": "diagnostic coverage upper bound only; not a deployable selector",
+        "budget_note": "Equal upper call limits, not equal realized input tokens or latency.",
+        "reflection_scope": "format/tool-error feedback; no ground-truth correctness feedback",
+        "pass_at_k_note": "Assumes complete fixed sampling, comparable independent attempts; not for legacy selected logs."
+      },
+      "metrics": {
+        "react_single": {
+          "questions": 1,
+          "selected_em": 1.0,
+          "selected_f1": 1.0,
+          "first_attempt_em": 1.0,
+          "oracle_any_success_rate": 1.0,
+          "mean_actual_llm_calls": 3.0,
+          "mean_actual_tool_calls": 2.0
+        },
+        "react_error_feedback": {
+          "questions": 1,
+          "selected_em": 1.0,
+          "selected_f1": 1.0,
+          "first_attempt_em": 1.0,
+          "oracle_any_success_rate": 1.0,
+          "mean_actual_llm_calls": 3.0,
+          "mean_actual_tool_calls": 2.0
+        },
+        "react_restarts": {
+          "questions": 1,
+          "selected_em": 0.0,
+          "selected_f1": 0.0,
+          "first_attempt_em": 0.0,
+          "oracle_any_success_rate": 0.0,
+          "mean_actual_llm_calls": 8.0,
+          "mean_actual_tool_calls": 8.0
+        }
+      },
+      "use": "protocol smoke only"
+    },
+    {
+      "file": "outputs\\fair_eval\\protocol_fixture_costs_20261022\\report.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:55:13.989770+00:00",
+        "backend": "fixture",
+        "model": "outputs/models/qwen2.5-0.5b-instruct",
+        "fixture_only": true,
+        "total_calls_per_question_per_strategy": 8,
+        "total_tool_budget": 8,
+        "restarts": 4,
+        "max_new_tokens": 128,
+        "temperature": 0.7,
+        "seed": 42,
+        "question_ids": [
+          "83f4c0535039708ea00e4069c607e123cc6354dbaf468ac54b326ac71b8360ec"
+        ],
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "dcc41d91a665231111c65bedb23fa4974c1f3b66",
+        "source_sha256": "e78e3d7354ba9178263719b6b4ef56c5f78f9fca2de48161200efd2f94c64101",
+        "reference_used_for_generation": false,
+        "dataset_sha256": null,
+        "task_type": "QA",
+        "completed": true,
+        "generalization_evidence": false,
+        "collection_protocol": {
+          "record_selection": "all_attempts",
+          "all_attempts_recorded": true,
+          "reference_used_for_generation": false,
+          "attempt_count_policy": {
+            "react_single": 1,
+            "react_error_feedback": 1,
+            "react_restarts": 4
+          }
+        },
+        "selection": "first for single trajectories; normalized majority with first-index tie break for restarts",
+        "oracle_metric": "diagnostic coverage upper bound only; not a deployable selector",
+        "budget_note": "Equal upper call limits, not equal realized input tokens or latency.",
+        "reflection_scope": "format/tool-error feedback; no ground-truth correctness feedback",
+        "pass_at_k_note": "Assumes complete fixed sampling, comparable independent attempts; not for legacy selected logs."
+      },
+      "metrics": {
+        "react_single": {
+          "questions": 1,
+          "selected_em": 1.0,
+          "selected_f1": 1.0,
+          "first_attempt_em": 1.0,
+          "oracle_any_success_rate": 1.0,
+          "mean_actual_llm_calls": 3.0,
+          "mean_actual_tool_calls": 2.0,
+          "mean_prompt_tokens": null,
+          "mean_completion_tokens": null,
+          "mean_elapsed_seconds": 0.0,
+          "oracle_pass_at_k": {
+            "1": 1.0
+          }
+        },
+        "react_error_feedback": {
+          "questions": 1,
+          "selected_em": 1.0,
+          "selected_f1": 1.0,
+          "first_attempt_em": 1.0,
+          "oracle_any_success_rate": 1.0,
+          "mean_actual_llm_calls": 3.0,
+          "mean_actual_tool_calls": 2.0,
+          "mean_prompt_tokens": null,
+          "mean_completion_tokens": null,
+          "mean_elapsed_seconds": 0.0,
+          "oracle_pass_at_k": {
+            "1": 1.0
+          }
+        },
+        "react_restarts": {
+          "questions": 1,
+          "selected_em": 0.0,
+          "selected_f1": 0.0,
+          "first_attempt_em": 0.0,
+          "oracle_any_success_rate": 0.0,
+          "mean_actual_llm_calls": 8.0,
+          "mean_actual_tool_calls": 8.0,
+          "mean_prompt_tokens": null,
+          "mean_completion_tokens": null,
+          "mean_elapsed_seconds": 0.0,
+          "oracle_pass_at_k": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0
+          }
+        }
+      },
+      "use": "protocol smoke only"
+    }
   ]
 }

@@ -10,15 +10,15 @@ Agent 执行 → 可追溯评测 → 数据筛选 → 小模型 LoRA SFT / DPO �
 - 答案级 HotpotQA EM/F1、逐步上下文、错误分类、token 与耗时记录。
 - 问题哈希切分，数据与源码指纹；可追溯 SFT/偏好数据导出。
 - 小模型 LoRA SFT/DPO 训练入口与本地 adapter 评测，支持 completion-only SFT。
-- 19 项离线回归测试和无需密钥的端到端演示。
+- 25 项离线回归测试和无需密钥的端到端演示。
 
 ## 实验口径
 - 旧 README 的 8%/43% 为宽松自定义匹配。重算旧 QA：OFF 的 EM=4.0%、F1=6.22%；ON 的 EM=29.5%、F1=38.21%。
-- 这是历史答案重新评分，不是新版效果或等成本提升。当前不评 supporting facts / joint 分数。
+- 作者补充：历史 ON 组经过额外采样和按正确性筛选，缺少全部失败尝试。上述分数仅描述已留存记录，严格重评分也不能恢复无偏 pass@1/pass@k，更不能归因于反思。当前不评 supporting facts / joint 分数。
 - 旧数学轨迹用标准答案提前停止，不用于效果宣传或训练导出。
 - 200 个 QA 问题以前均评测过，当前划分是回溯划分，不是全新盲测。
 - 旧记录只导出答案级训练数据，不代表训练了工具选择或 Agentic RL。
-- 规则标签为 silver labels，可能错拒同义答案，偏好对需要人工复核。
+- 成功示范可用于训练，但来源属于按结果筛选的数据。规则标签为 silver labels，可能错拒同义答案，偏好对需要人工复核。
 - Python 子进程不是安全沙箱，数学执行需显式 --allow-python，只用于本人可控实验。
 - 实训和效果状态看 reports/validation.json；有训练脚本不等于训练已经成功。
 
@@ -34,12 +34,19 @@ Python 3.10+，在项目根目录运行：
 
     python -m eval.rescore logs/Eval_QA_Reflect_OFF_20260504_181855.json logs/Eval_QA_Reflect_ON_20260502_153421.json
 
-原 logs 不修改，结果写入 outputs/reports。
+原 logs 不修改，结果写入 outputs/reports。旧 ON 组仅统计成功筛选后留存的记录，不能恢复完整采样分母。
+
+## 固定预算的反思与采样对照
+
+新增 python -m eval.fair_compare --backend fixture，演示全量留痕协议；fixture 不是模型效果证据。
+真实实验比较单次 ReAct、带错误反馈的 ReAct 和独立重采样。预先保存计划、固定预算，保留全部尝试，分别报告多数投票结果和 oracle 至少一次正确的上界。
+详细说明见 docs/成功样本筛选与反思对照.md。
 
 ## 构建数据
 
     python -m posttrain.build_data --logs logs/Eval_QA_Reflect_OFF_20260504_181855.json logs/Eval_QA_Reflect_ON_20260502_153421.json
 
+新默认输出为 outputs/posttrain_answer_v2，包含采集与筛选来源说明；原 outputs/posttrain_answer 保留为已完成实训的数据快照。
 按问题哈希、种子 42 约 80/10/10 划分：
 
 | 数据 | train | validation | test |

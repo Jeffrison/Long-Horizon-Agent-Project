@@ -10,6 +10,7 @@ from pathlib import Path
 from agent.parser import check_gibberish
 from eval.data_loader import dataset_sha256, question_key, split_for_question
 from eval.metrics import qa_match
+from eval.provenance import policy_for_file
 
 ANSWER_SYSTEM = "Answer the factual question. Return exactly one line: Final Answer: short answer."
 
@@ -39,6 +40,8 @@ def export_data(log_paths, output_dir, *, kind="answer", seed=42):
         path = Path(name)
         report = json.loads(path.read_text(encoding="utf-8"))
         metadata = report.get("metadata", {})
+        if metadata.get("fixture_only"):
+            raise ValueError("Protocol fixtures are not collected training demonstrations")
         task = metadata.get("task_type")
         if task is None:
             task = "MATH" if "MATH" in path.name else "QA" if "_QA_" in path.name else None
@@ -46,8 +49,9 @@ def export_data(log_paths, output_dir, *, kind="answer", seed=42):
             raise ValueError("Only verified QA logs are accepted; math/oracle trajectories are excluded")
         if kind == "decision" and report.get("schema_version") != 2:
             raise ValueError("Decision export needs schema-v2 logs with exact request messages")
+        policy = policy_for_file(path, report)
         sources.append({"file": path.name, "sha256": dataset_sha256(path),
-                        "legacy": report.get("schema_version") != 2})
+                        "legacy": report.get("schema_version") != 2, "source_policy": policy})
         for row in report["logs"]:
             question, answer = row["question"], str(row["ground_truth"])
             key = question_key(question)
@@ -57,6 +61,7 @@ def export_data(log_paths, output_dir, *, kind="answer", seed=42):
             base = {"question_id": key, "split": split_for_question(question, seed),
                     "source_log": path.name, "review_status": "pending",
                     "label_source": "exact_match_rule", "dataset_kind": kind}
+            base["source_record_selection"] = policy["record_selection"]
             prediction = row.get("prediction")
             correct = row.get("status") == "success" and qa_match(prediction, answer)
             if kind == "answer":
@@ -96,7 +101,7 @@ def export_data(log_paths, output_dir, *, kind="answer", seed=42):
         if not positives:
             continue
         chosen = min(positives, key=lambda x: len(x["response"][0]["content"]))
-        common = {k: chosen[k] for k in ("question_id", "split", "review_status", "label_source", "dataset_kind")}
+        common = {k: chosen[k] for k in ("question_id", "split", "review_status", "label_source", "dataset_kind", "source_record_selection")}
         if kind == "answer":
             sft.append({**common, "source_log": chosen["source_log"],
                         "prompt": chosen["prompt"], "completion": chosen["response"]})
@@ -124,13 +129,20 @@ def export_data(log_paths, output_dir, *, kind="answer", seed=42):
             counts[path.name] = len(subset)
             files[path.name] = dataset_sha256(path)
     manifest = {"schema_version": 1, "kind": kind, "seed": seed, "sources": sources,
+                "purpose": "training_data_not_accuracy_estimation",
+                "contains_selection_conditioned_or_unknown_sources": any(
+                    source["source_policy"].get("selection_conditioned_training_data") is not False
+                    for source in sources),
+                "eligible_for_reflection_gain_comparison": False,
                 "unique_questions": len(questions), "counts": counts, "file_sha256": files,
                 "question_splits": {key: split_for_question(item["question"], seed)
                                     for key, item in sorted(questions.items())},
                 "split_policy": "question-hash-80-10-10; all attempts for one question stay together",
                 "label_policy": "silver EM labels; pending human review; EM may reject correct aliases",
                 "training_completed": False,
-                "limitations": ["Small retrospective dataset; old runs have seen the full question pool.",
+                "limitations": ["Legacy ON records were retained after correctness-conditioned sampling; useful as selected training demonstrations, not unbiased evaluation.",
+                                "Missing failed attempts and sampling counts cannot be recovered.",
+                                "Small retrospective dataset; old runs have seen the full question pool.",
                                 "Answer data trains answer behavior, not tool selection or Agentic RL.",
                                 "Decision data uses exact saved prompts and assistant-only completions.",
                                 "Preference labels need review for aliases and ambiguous answers."]}
@@ -141,7 +153,7 @@ def export_data(log_paths, output_dir, *, kind="answer", seed=42):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--logs", nargs="+", required=True)
-    parser.add_argument("--output", default="outputs/posttrain_answer")
+    parser.add_argument("--output", default="outputs/posttrain_answer_v2")
     parser.add_argument("--kind", choices=["answer", "decision"], default="answer")
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()

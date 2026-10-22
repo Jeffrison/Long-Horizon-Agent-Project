@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "disclosure_date": "2026-10-22",
+  "basis": "Project author disclosed repeated generation and correctness-conditioned retention in historical reflection-on collection. Missing attempts and sampling counts cannot be reconstructed.",
+  "sources": {
+    "560074abd1fc686a5c524ee4086b2b89a654ab511b716287f21ae67d404b9440": {
+      "file": "Eval_QA_Reflect_ON_20260502_153421.json",
+      "record_selection": "correctness_conditioned_retention",
+      "all_attempts_recorded": false,
+      "attempt_counts_known": false,
+      "selection_conditioned_training_data": true,
+      "eligible_for_reflection_gain_comparison": false,
+      "training_use": "Selected demonstrations may be used as silver training data; not unbiased evaluation evidence."
+    },
+    "0152a8c25fc1ef94a74a0810dc878bd1e1f7a476db371bb8a1e16429609ffbaf": {
+      "file": "Eval_QA_Reflect_OFF_20260504_181855.json",
+      "record_selection": "single_trajectory_per_question_reported_by_author",
+      "all_attempts_recorded": null,
+      "attempt_counts_known": null,
+      "selection_conditioned_training_data": false,
+      "eligible_for_reflection_gain_comparison": false,
+      "training_use": "Silver training candidates; original protocol was not prospectively controlled."
+    },
+    "568a11efe74e73e89b812660cd384e2d83d06c74fea344645d12a245a2bdafcd": {
+      "file": "Eval_MATH_Reflect_ON_20260503_161754.json",
+      "record_selection": "correctness_conditioned_retention_reported",
+      "selection_conditioned_training_data": true,
+      "gold_dependent_stopping": true,
+      "eligible_for_reflection_gain_comparison": false,
+      "training_use": "Excluded because legacy runtime used reference-dependent stopping."
+    },
+    "35532fc6d3b28088d24f0dfb1d93ed8224778c8c18afed961ab9d983f37ad4d4": {
+      "file": "Eval_MATH_Reflect_OFF_20260504_170752.json",
+      "record_selection": "single_trajectory_per_question_reported_by_author",
+      "gold_dependent_stopping": true,
+      "eligible_for_reflection_gain_comparison": false,
+      "training_use": "Excluded because legacy runtime used reference-dependent stopping."
+    }
+  }
+}

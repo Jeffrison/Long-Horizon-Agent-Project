@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 from eval.data_loader import dataset_sha256, question_key
 from eval.metrics import qa_scores
+from eval.provenance import policy_for_file
 
 
 def rescore(path):
@@ -15,7 +16,11 @@ def rescore(path):
     scored = [qa_scores(row.get("prediction") if row.get("status") == "success" else "",
                         row["ground_truth"]) for row in rows]
     actual_steps = sum(row.get("steps_taken", row.get("steps", 0)) for row in rows)
+    policy = policy_for_file(path, data)
     return {"file": Path(path).name, "sha256": dataset_sha256(path),
+            "source_policy": policy,
+            "metric_scope": "stored_records_only_not_unbiased_pass_at_1",
+            "unbiased_pass_at_1": None, "unbiased_pass_at_k": None,
             "total": len(rows), "unique_questions": len({question_key(r["question"]) for r in rows}),
             "answer_em": sum(s["em"] for s in scored) / len(rows),
             "answer_f1": sum(s["f1"] for s in scored) / len(rows),
@@ -23,7 +28,9 @@ def rescore(path):
             "actual_mean_recorded_steps": actual_steps / len(rows),
             "assistant_messages": sum(sum(t["role"] == "assistant" for t in r.get("trajectory", [])) for r in rows),
             "statuses": dict(Counter(r["status"] for r in rows)),
-            "warnings": ["Historical runs are not controlled by the new call budget.",
+            "warnings": ["Historical ON records were selected after extra attempts; missing attempts are unavailable.",
+                         "Rescoring cannot correct outcome-conditioned selection or reconstruct pass@k.",
+                         "Historical runs are not controlled by the new call budget.",
                          "Answer metrics only; no supporting-fact/joint metrics.",
                          "No new model inference was performed."]}
 

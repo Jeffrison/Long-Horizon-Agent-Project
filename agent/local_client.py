@@ -21,7 +21,6 @@ class LocalHFClient:
         self.model.eval()
         self.model.config.use_cache = True
         self.model_name = model_name
-        self.calls = 0
 
     def complete(self, messages, config):
         inputs = self.tokenizer.apply_chat_template(messages, add_generation_prompt=True,
@@ -30,8 +29,7 @@ class LocalHFClient:
         length = inputs["input_ids"].shape[-1]
         if length + config.max_new_tokens > getattr(self.model.config, "max_position_embeddings", 32768):
             raise ValueError("Context too long; reduce history/snippet lengths")
-        self.torch.manual_seed(config.seed + self.calls)
-        self.calls += 1
+        self.torch.manual_seed(config.seed)
         with self.torch.inference_mode():
             generated = self.model.generate(**inputs, max_new_tokens=config.max_new_tokens,
                                             do_sample=config.temperature > 0,

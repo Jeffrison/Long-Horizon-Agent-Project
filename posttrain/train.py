@@ -8,6 +8,7 @@ from pathlib import Path
 import platform
 
 from eval.data_loader import dataset_sha256
+from eval.provenance import source_policy
 
 
 def load_training_data(directory, method, accept_silver=False):
@@ -38,7 +39,7 @@ def load_training_data(directory, method, accept_silver=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--method", choices=["sft", "dpo"], required=True)
-    parser.add_argument("--data-dir", default="outputs/posttrain_answer")
+    parser.add_argument("--data-dir", default="outputs/posttrain_answer_v2")
     parser.add_argument("--model", default="Qwen/Qwen2.5-0.5B-Instruct")
     parser.add_argument("--output", default="outputs/sft_adapter")
     parser.add_argument("--max-length", type=int, default=512)
@@ -54,6 +55,11 @@ def main():
     dependencies = {name: importlib.util.find_spec(name) is not None
                     for name in ("torch", "transformers", "trl", "peft", "datasets", "accelerate")}
     plan = {"method": args.method, "model": args.model, "kind": manifest["kind"],
+            "source_selection_conditioned_or_unknown": manifest.get(
+                "contains_selection_conditioned_or_unknown_sources", any(
+                    source_policy(source["sha256"]).get("selection_conditioned_training_data") is not False
+                    for source in manifest["sources"])),
+            "source_purpose": "selected_demonstrations_for_training_not_benchmark",
             "train_examples": len(rows["train"]), "validation_examples": len(rows["validation"]),
             "max_steps": args.max_steps, "max_length": args.max_length,
             "lora_rank": 8, "micro_batch": 1, "gradient_accumulation": 8,
