@@ -1,67 +1,104 @@
-# Long-Horizon Agent & Tool-Use from Scratch
-本项目是一个不依赖任何重型框架（如 LangChain, AutoGen），从底层纯手写的智能体系统。该 Agent 具备长路径任务处理能力，能够通过 ReAct 循环调用 Wikipedia 搜索和 Python 代码执行工具，并具备强大的自我纠错与工程级鲁棒性。
-核心技术亮点
-零框架底层实现: 纯 Python 手写 ReAct 主循环，深度理解大模型事件流转机制。
-滑动窗口记忆管理: 针对小参数模型（Qwen2.5-7B）设计的记忆策略，仅保留最近交互，防止上下文污染与逻辑断片。
-沙箱级代码劫持:
-自动拦截 sympy 符号对象并强制转换为浮点数。
-基于 ast 静态分析，自动为孤立表达式注入 print()，兼容 Jupyter 编写习惯。
-自愈与记忆回滚:
-当检测到输出乱码或格式崩溃时，自动拦截“毒性上下文”进入记忆。
-通过提示词诱导强行拉回模型的推理分布。
-工业级工具健壮性:
-Wikipedia: 实现请求节流与 User-Agent 伪装，彻底解决 429 请求频繁报错。
-多模态评测对齐: 手写启发式 LaTeX 解析引擎，实现 HMMT/AIME 复杂公式答案与 Python 浮点输出的自动化对齐判分。
-# 📂 目录结构
-```
-.
-├── agent/
-│   ├── prompts.py        # 针对 7B 模型优化的纯英文 System Prompts
-│   ├── parser.py         # 带有乱码探测与强类型校验的解析器
-│   └── react_loop.py     # 核心主循环（支持反思机制与步数解耦）
-├── tools/
-│   ├── search_tool.py    # Wikipedia 检索（含 Throttling 机制）
-│   └── python_repl.py    # Python 沙箱（含代码劫持与 AST 注入）
-├── eval/
-│   ├── data_loader.py    # 异构数据集加载器
-│   ├── metrics.py        # 自动化 LaTeX 分数判分引擎
-│   └── run_eval.py       # 一键评测与 A/B 测试脚本
-├── data/                 # 存放评测数据集 (HotpotQA, HMMT, etc.)
-├── logs/                 # 存放运行轨迹 (JSON 格式，证明真实可执行)
-├── .env.example          # 环境配置模板
-├── requirements.txt      # 最小依赖清单
-└── README.md             # 项目说明文档
-```
-# 🚀 快速开始
-1. 环境安装
-建议使用 Python 3.9+ 环境：
-Bash
-git clone https://github.com/Jeffrison/Long-Horizon-Agent-Project.git
-cd Long-Horizon-Agent-Project
-pip install -r requirements.txt
-2. 配置 API Key
-复制模板文件并填写你的 API 信息（推荐使用 SiliconFlow 或阿里云百炼）：
-Bash
-cp .env.example .env
-编辑 .env 文件，填入你的 LLM_API_KEY 和 LLM_BASE_URL
-3. 运行自动化评测
-你可以一键启动针对数学数据集或多跳问答数据集的评测，并观察“纠错机制”开启前后的准确率对比：
-Bash
-python eval/run_eval.py
+# ReAct Agent、评测与后训练实验
 
-# 📊 实验结果分析
-在使用 Qwen2.5-7B-Instruct 作为驱动模型时，开启自我纠错带来的增益显著：
-数据集	任务类型	准确率 (Reflection OFF)	准确率 (Reflection ON)
-HotpotQA	多跳搜索	8.00%	43.00%
-HMMT/AIME	代码计算	8.33%	25.00%
+在原有多跳问答 / Python 工具 Agent 上完善的学习项目：
+Agent 执行 → 可追溯评测 → 数据筛选 → 小模型 LoRA SFT / DPO → 独立评测。
 
-# 🛠️ 避坑与反思
-Context Pollution: 在开发初期，模型一旦输出乱码，会导致后续对话全部崩坏。通过引入“记忆回滚”机制，系统会拒绝存储格式错误的输出，从而保护了模型思维的纯净度。
-LaTeX Alignment: HMMT 数据集的答案 \frac{1}{576} 与 Python 计算结果 0.001736 难以直接匹配。本项目通过手写正则解析器，将符号逻辑转化为数值逻辑，实现了全自动闭环评测。
-Rate Limiting: 维基百科 API 的 429 报错曾是批量评测的杀手。通过在 Tool 层引入 1.5s 的步进休眠与规范的 User-Agent，解决了生产环境下的稳定性问题。
+## 已实现
+- direct、react、react_reflect 模式，共享模型/工具调用上限；格式重试也消耗预算。
+- Wikipedia 检索和可选 Python 数学执行，结构化返回结果；有限纠错与滑动窗口历史。
+- Agent 接口不接收标准答案，只在运行结束后评分。
+- 答案级 HotpotQA EM/F1、逐步上下文、错误分类、token 与耗时记录。
+- 问题哈希切分，数据与源码指纹；可追溯 SFT/偏好数据导出。
+- 小模型 LoRA SFT/DPO 训练入口与本地 adapter 评测，支持 completion-only SFT。
+- 19 项离线回归测试和无需密钥的端到端演示。
 
-# 📜 交付物说明
-代码: 严格遵循工程规范，注释详尽。
-日志: logs/ 文件夹下包含了完整的模型推理轨迹。
-文档: 本 README 提供了完整的复现指引。
-# Created by Xuanyi Song for Technical Evaluation Project.
+## 实验口径
+- 旧 README 的 8%/43% 为宽松自定义匹配。重算旧 QA：OFF 的 EM=4.0%、F1=6.22%；ON 的 EM=29.5%、F1=38.21%。
+- 这是历史答案重新评分，不是新版效果或等成本提升。当前不评 supporting facts / joint 分数。
+- 旧数学轨迹用标准答案提前停止，不用于效果宣传或训练导出。
+- 200 个 QA 问题以前均评测过，当前划分是回溯划分，不是全新盲测。
+- 旧记录只导出答案级训练数据，不代表训练了工具选择或 Agentic RL。
+- 规则标签为 silver labels，可能错拒同义答案，偏好对需要人工复核。
+- Python 子进程不是安全沙箱，数学执行需显式 --allow-python，只用于本人可控实验。
+- 实训和效果状态看 reports/validation.json；有训练脚本不等于训练已经成功。
+
+## 离线验证
+Python 3.10+，在项目根目录运行：
+
+    python -m unittest discover -s tests -v
+    python -m examples.offline_demo
+
+演示是虚构实体与固定响应，只验证工具闭环，不是模型 benchmark。
+
+## 历史重评分
+
+    python -m eval.rescore logs/Eval_QA_Reflect_OFF_20260504_181855.json logs/Eval_QA_Reflect_ON_20260502_153421.json
+
+原 logs 不修改，结果写入 outputs/reports。
+
+## 构建数据
+
+    python -m posttrain.build_data --logs logs/Eval_QA_Reflect_OFF_20260504_181855.json logs/Eval_QA_Reflect_ON_20260502_153421.json
+
+按问题哈希、种子 42 约 80/10/10 划分：
+
+| 数据 | train | validation | test |
+|---|---:|---:|---:|
+| 答案级 SFT | 49 | 6 | 7 |
+| 答案级 DPO | 15 | 0 | 2 |
+
+偏好验证集为空，不能从测试集复制填充。所有规则标签初始为 pending。
+明确接受规则标签的教学实验可运行：
+
+    python -m posttrain.train --method sft --dry-run --accept-silver-labels
+    python -m posttrain.train --method dpo --dry-run --accept-silver-labels
+
+新版 Agent 日志可导出精确上下文决策数据：
+
+    python -m posttrain.build_data --logs outputs/eval/新版QA日志.json --kind decision --output outputs/posttrain_decision
+
+决策 SFT 用真实 messages 与一次 assistant 输出；不监督工具返回。
+决策 DPO 只在相同前缀下配对正确/错误最终决策，没有合格偏好对就导出零条。
+
+## 8GB GPU 训练
+小模型入门配方：0.5B、LoRA rank=8、max-length=512、micro-batch=1、
+梯度累积=8、梯度检查点；实际显存随环境和序列变化。
+依赖范围见 posttrain/requirements.txt，实际验证版本见 posttrain/requirements-tested.txt。当前机器建立了项目内 .venv-train，复用现有 CUDA 包。
+先用 python -m scripts.download_model 下载固定版本并逐文件校验哈希（默认 Qwen 官方 ModelScope 地址）。
+
+    .\.venv-train\Scripts\python.exe -m posttrain.train --method sft --model outputs/models/qwen2.5-0.5b-instruct --accept-silver-labels --max-steps 20 --output outputs/sft_adapter --export-merged
+    .\.venv-train\Scripts\python.exe -m posttrain.train --method dpo --model outputs/sft_adapter/merged --accept-silver-labels --max-steps 5 --output outputs/dpo_adapter
+
+SFT 保存 adapter，--export-merged 另存合并权重。DPO 使用 SFT 合并权重作为参考基座，
+才是 SFT→DPO；使用原始基座则是独立 DPO 实验。
+训练报告保存软件版本、数据哈希、损失与显存。损失下降不等于任务准确率提升。
+
+## 评测
+API 方式需本地 .env 中的 LLM_BASE_URL / LLM_API_KEY：
+
+    python -m eval.run_eval --mode all --split test --max-samples 10
+
+会真实调用模型与 Wikipedia；3 模式 × 10 题 × 8 次上限，最多 240 次模型调用。
+调用上限相同不等于实际 token 成本相同，因此分别报告调用数、token 和延迟。
+
+本地基座与 adapter 对照：
+
+    .\.venv-train\Scripts\python.exe -m eval.run_eval --backend local --model outputs/models/qwen2.5-0.5b-instruct --mode direct --split test --max-samples 10 --temperature 0 --max-new-tokens 64 --output outputs/base_eval
+    .\.venv-train\Scripts\python.exe -m eval.run_eval --backend local --model outputs/models/qwen2.5-0.5b-instruct --adapter outputs/sft_adapter --mode direct --split test --max-samples 10 --temperature 0 --max-new-tokens 64 --output outputs/sft_eval
+
+本轮已实际完成 SFT 20 步和 DPO 5 步，以及 10 题同题直接回答测试：基座 EM/F1=30%/30%，SFT=20%/20%，DPO=20%/20%。没有观察到提升。首次诊断曾错误要求 direct 回答使用 ReAct 前缀，三组均格式失败；已保留记录并统一改用直接回答协议重测。reports/validation.json 的 latest_evaluation 是最新同协议结果。
+这只比较直接回答。Agent 提升还需相同工具、检索环境与预算的 react 测试。
+DPO adapter 的基座必须与训练使用的基座一致。
+
+## 目录与版本
+agent/ 是运行时；tools/ 是工具；eval/ 是评测；posttrain/ 是训练数据和训练入口。
+tests/ 是回归；docs/ 是学习路线和简历；reports/ 是小型审计报告。
+outputs/ 保存生成数据、模型和大日志，Git 忽略，可按命令重建；.env 不提交。
+本次升级分支 improve/agent-posttraining，原代码保留在 main。
+查看差异：git diff main...HEAD；查看阶段：git log --oneline。
+
+## 参考
+- HotpotQA：https://github.com/hotpotqa/hotpot/blob/master/hotpot_evaluate_v1.py
+- TRL SFT：https://huggingface.co/docs/trl/sft_trainer
+- TRL DPO：https://huggingface.co/docs/trl/dpo_trainer
+- Qwen：https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct

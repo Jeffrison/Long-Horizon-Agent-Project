@@ -31,3 +31,15 @@ def parse_llm_output(text, task_type="QA"):
         value = "\n".join(value.splitlines()[1:]).removesuffix(fence).strip()
     check_gibberish(value)
     return {"type": "action", "action": action, "action_input": value}
+
+
+def parse_model_response(text, task_type="QA", mode="react_reflect"):
+    if mode != "direct":
+        return parse_llm_output(text, task_type)
+    # The no-tool baseline evaluates answer content, not a ReAct serialization protocol.
+    if re.search(r"^Action(?:\s+Input)?:", text, flags=re.I | re.M):
+        raise ValueError("Direct mode cannot call tools")
+    if re.search(r"^Final\s+Answer:", text, flags=re.I | re.M):
+        return parse_llm_output(text, task_type)
+    check_gibberish(text)
+    return {"type": "finish", "content": text.strip()}

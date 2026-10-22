@@ -19,6 +19,7 @@ class LocalHFClient:
             from peft import PeftModel
             self.model = PeftModel.from_pretrained(self.model, adapter)
         self.model.eval()
+        self.model.config.use_cache = True
         self.model_name = model_name
         self.calls = 0
 

@@ -5,7 +5,7 @@ import time
 
 from agent.client import APIClient
 from agent.config import AgentConfig
-from agent.parser import parse_llm_output
+from agent.parser import parse_model_response
 from agent.prompts import make_prompt
 from tools import build_tools, get_tool_description
 from tools.types import ToolResult
@@ -76,7 +76,7 @@ def run_agent(query, task_type="QA", max_steps=8, enable_reflection=True, *,
             prompt_tokens += usage["prompt_tokens"]
             completion_tokens += usage["completion_tokens"]
         try:
-            parsed = parse_llm_output(text, task_type)
+            parsed = parse_model_response(text, task_type, config.mode)
             event["parsed"] = parsed
             if config.mode == "direct" and parsed["type"] != "finish":
                 raise ValueError("Direct mode cannot call tools")

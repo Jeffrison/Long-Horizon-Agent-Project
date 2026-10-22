@@ -91,4 +91,4 @@ def math_match(prediction, ground_truth, abs_tol=1e-6, rel_tol=1e-6):
     pred, gold = parse_latex_to_float(prediction), parse_latex_to_float(ground_truth)
     if pred is not None and gold is not None:
         return math.isclose(pred, gold, abs_tol=abs_tol, rel_tol=rel_tol)
-    return bool(str(prediction or "").strip()) and str(prediction).strip() == str(ground_truth).strip()
+    return False  # Unsupported/nonfinite expressions require manual scoring, never silent matches.

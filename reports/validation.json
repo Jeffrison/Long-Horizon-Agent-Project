@@ -1,0 +1,703 @@
+{
+  "date": "2026-10-22",
+  "verification": {
+    "offline_regression_tests": 19,
+    "offline_fixture_passed": true
+  },
+  "legacy_qa_rescore": [
+    {
+      "file": "Eval_QA_Reflect_OFF_20260504_181855.json",
+      "sha256": "0152a8c25fc1ef94a74a0810dc878bd1e1f7a476db371bb8a1e16429609ffbaf",
+      "total": 200,
+      "unique_questions": 200,
+      "answer_em": 0.04,
+      "answer_f1": 0.062192821067821064,
+      "legacy_custom_accuracy_percent": 8.0,
+      "actual_mean_recorded_steps": 2.2,
+      "assistant_messages": 440,
+      "statuses": {
+        "failed": 149,
+        "success": 51
+      },
+      "warnings": [
+        "Historical runs are not controlled by the new call budget.",
+        "Answer metrics only; no supporting-fact/joint metrics.",
+        "No new model inference was performed."
+      ]
+    },
+    {
+      "file": "Eval_QA_Reflect_ON_20260502_153421.json",
+      "sha256": "560074abd1fc686a5c524ee4086b2b89a654ab511b716287f21ae67d404b9440",
+      "total": 200,
+      "unique_questions": 200,
+      "answer_em": 0.295,
+      "answer_f1": 0.382123247192916,
+      "legacy_custom_accuracy_percent": 43.0,
+      "actual_mean_recorded_steps": 4.225,
+      "assistant_messages": 1232,
+      "statuses": {
+        "failed": 29,
+        "success": 171
+      },
+      "warnings": [
+        "Historical runs are not controlled by the new call budget.",
+        "Answer metrics only; no supporting-fact/joint metrics.",
+        "No new model inference was performed."
+      ]
+    }
+  ],
+  "answer_data": {
+    "kind": "answer",
+    "seed": 42,
+    "sources": [
+      {
+        "file": "Eval_QA_Reflect_OFF_20260504_181855.json",
+        "sha256": "0152a8c25fc1ef94a74a0810dc878bd1e1f7a476db371bb8a1e16429609ffbaf",
+        "legacy": true
+      },
+      {
+        "file": "Eval_QA_Reflect_ON_20260502_153421.json",
+        "sha256": "560074abd1fc686a5c524ee4086b2b89a654ab511b716287f21ae67d404b9440",
+        "legacy": true
+      }
+    ],
+    "counts": {
+      "sft_train.jsonl": 49,
+      "sft_validation.jsonl": 6,
+      "sft_test.jsonl": 7,
+      "dpo_train.jsonl": 15,
+      "dpo_validation.jsonl": 0,
+      "dpo_test.jsonl": 2
+    },
+    "file_sha256": {
+      "sft_train.jsonl": "0ddcf21cea733d79a6bea6eaa70cede793d2df897fd50278e6eb2aa8922c30aa",
+      "sft_validation.jsonl": "7e4cd3fcdcbdb21c5baf7c912fc0135bf789b62874ea02f0c60191761c75c34c",
+      "sft_test.jsonl": "cb1158d3ca101f7b7768e851252ac1c40542d91bd38c4870cac8acab5f71b614",
+      "dpo_train.jsonl": "f756f2e278f4cad4fc83f12b97ad2513e79b7a668e93ebc5e556f6114a12d0d8",
+      "dpo_validation.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dpo_test.jsonl": "86c012a0ae6764a6977f90df489b0a2704fbce1a1ca62f4b24e5417e7549a996"
+    },
+    "limitations": [
+      "Small retrospective dataset; old runs have seen the full question pool.",
+      "Answer data trains answer behavior, not tool selection or Agentic RL.",
+      "Decision data uses exact saved prompts and assistant-only completions.",
+      "Preference labels need review for aliases and ambiguous answers."
+    ]
+  },
+  "training": {
+    "sft_adapter": {
+      "method": "sft",
+      "model": "outputs/models/qwen2.5-0.5b-instruct",
+      "kind": "answer",
+      "train_examples": 49,
+      "validation_examples": 6,
+      "max_steps": 20,
+      "max_length": 512,
+      "lora_rank": 8,
+      "micro_batch": 1,
+      "gradient_accumulation": 8,
+      "completion_only_sft": true,
+      "dependencies": {
+        "torch": true,
+        "transformers": true,
+        "trl": true,
+        "peft": true,
+        "datasets": true,
+        "accelerate": true
+      },
+      "dry_run": false,
+      "training_completed": true,
+      "train_metrics": {
+        "train_runtime": 33.7521,
+        "train_samples_per_second": 4.74,
+        "train_steps_per_second": 0.593,
+        "total_flos": 18852446283264.0,
+        "train_loss": 1.6624205976724624,
+        "epoch": 2.979591836734694
+      },
+      "validation_metrics": {
+        "eval_loss": 1.0507608652114868,
+        "eval_runtime": 0.2269,
+        "eval_samples_per_second": 26.444,
+        "eval_steps_per_second": 26.444,
+        "eval_entropy": 2.3914507627487183,
+        "eval_num_tokens": 8766.0,
+        "eval_mean_token_accuracy": 0.8032407363255819,
+        "epoch": 2.979591836734694
+      },
+      "dropped_overlength": {
+        "train": 0,
+        "validation": 0
+      },
+      "torch_cuda_max_memory_bytes": 1268881408,
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "python": "3.12.12",
+      "versions": {
+        "torch": "2.5.1+cu121",
+        "transformers": "4.57.1",
+        "trl": "0.25.1",
+        "peft": "0.18.0",
+        "datasets": "3.3.2",
+        "accelerate": "1.11.0"
+      },
+      "data_hashes": {
+        "sft_train.jsonl": "0ddcf21cea733d79a6bea6eaa70cede793d2df897fd50278e6eb2aa8922c30aa",
+        "sft_validation.jsonl": "7e4cd3fcdcbdb21c5baf7c912fc0135bf789b62874ea02f0c60191761c75c34c",
+        "sft_test.jsonl": "cb1158d3ca101f7b7768e851252ac1c40542d91bd38c4870cac8acab5f71b614",
+        "dpo_train.jsonl": "f756f2e278f4cad4fc83f12b97ad2513e79b7a668e93ebc5e556f6114a12d0d8",
+        "dpo_validation.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "dpo_test.jsonl": "86c012a0ae6764a6977f90df489b0a2704fbce1a1ca62f4b24e5417e7549a996"
+      },
+      "model_provenance": {
+        "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+        "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "source": "modelscope",
+        "sha256": {
+          "config.json": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+          "generation_config.json": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6",
+          "merges.txt": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+          "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+          "tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+          "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "model.safetensors": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe"
+        }
+      },
+      "note": "Training loss is not QA accuracy; evaluate the saved adapter separately."
+    },
+    "dpo_adapter": {
+      "method": "dpo",
+      "model": "outputs/sft_adapter/merged",
+      "kind": "answer",
+      "train_examples": 15,
+      "validation_examples": 0,
+      "max_steps": 5,
+      "max_length": 512,
+      "lora_rank": 8,
+      "micro_batch": 1,
+      "gradient_accumulation": 8,
+      "completion_only_sft": false,
+      "dependencies": {
+        "torch": true,
+        "transformers": true,
+        "trl": true,
+        "peft": true,
+        "datasets": true,
+        "accelerate": true
+      },
+      "dry_run": false,
+      "training_completed": true,
+      "train_metrics": {
+        "train_runtime": 6.396,
+        "train_samples_per_second": 6.254,
+        "train_steps_per_second": 0.782,
+        "total_flos": 0.0,
+        "train_loss": 0.6851332068443299,
+        "epoch": 2.533333333333333
+      },
+      "validation_metrics": null,
+      "dropped_overlength": {
+        "train": 0,
+        "validation": 0
+      },
+      "torch_cuda_max_memory_bytes": 1518863360,
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "python": "3.12.12",
+      "versions": {
+        "torch": "2.5.1+cu121",
+        "transformers": "4.57.1",
+        "trl": "0.25.1",
+        "peft": "0.18.0",
+        "datasets": "3.3.2",
+        "accelerate": "1.11.0"
+      },
+      "data_hashes": {
+        "sft_train.jsonl": "0ddcf21cea733d79a6bea6eaa70cede793d2df897fd50278e6eb2aa8922c30aa",
+        "sft_validation.jsonl": "7e4cd3fcdcbdb21c5baf7c912fc0135bf789b62874ea02f0c60191761c75c34c",
+        "sft_test.jsonl": "cb1158d3ca101f7b7768e851252ac1c40542d91bd38c4870cac8acab5f71b614",
+        "dpo_train.jsonl": "f756f2e278f4cad4fc83f12b97ad2513e79b7a668e93ebc5e556f6114a12d0d8",
+        "dpo_validation.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "dpo_test.jsonl": "86c012a0ae6764a6977f90df489b0a2704fbce1a1ca62f4b24e5417e7549a996"
+      },
+      "model_provenance": null,
+      "note": "Training loss is not QA accuracy; evaluate the saved adapter separately."
+    }
+  },
+  "evaluation": [
+    {
+      "file": "outputs\\base_eval\\QA_test_direct_20261022T072200252647.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:22:13.796818+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2-budgeted",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "11d4a1bea890e9d4d7d2a1ee372466125dc463eefd59caf8f95ad28ac54d6c2a",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "adapter": null
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 0.0,
+        "em": 0.0,
+        "f1": 0.0,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 1.0,
+        "avg_seconds": 0.41719999999999996,
+        "p95_seconds": 1.157,
+        "prompt_tokens": 652,
+        "completion_tokens": 172,
+        "error_counts": {
+          "format_error": 10
+        }
+      }
+    },
+    {
+      "file": "outputs\\base_eval\\QA_test_direct_20261022T072456927771.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:25:07.470691+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "fafc296d53716090c9f217f6fdfe4fdb6238b9ec9913cb84d16c36a8c9c0f10f",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "adapter": null
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 1.0,
+        "em": 0.3,
+        "f1": 0.3,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 0.0,
+        "avg_seconds": 0.1703,
+        "p95_seconds": 0.735,
+        "prompt_tokens": 692,
+        "completion_tokens": 66,
+        "error_counts": {}
+      }
+    },
+    {
+      "file": "outputs\\sft_eval\\QA_test_direct_20261022T072214665092.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:22:31.315722+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2-budgeted",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "11d4a1bea890e9d4d7d2a1ee372466125dc463eefd59caf8f95ad28ac54d6c2a",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "adapter": "outputs/sft_adapter"
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 0.0,
+        "em": 0.0,
+        "f1": 0.0,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 1.0,
+        "avg_seconds": 0.6094,
+        "p95_seconds": 1.36,
+        "prompt_tokens": 652,
+        "completion_tokens": 202,
+        "error_counts": {
+          "format_error": 10
+        }
+      }
+    },
+    {
+      "file": "outputs\\sft_eval\\QA_test_direct_20261022T072508252871.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:25:20.121214+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "fafc296d53716090c9f217f6fdfe4fdb6238b9ec9913cb84d16c36a8c9c0f10f",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "adapter": "outputs/sft_adapter"
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 1.0,
+        "em": 0.2,
+        "f1": 0.2,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 0.0,
+        "avg_seconds": 0.1766,
+        "p95_seconds": 0.688,
+        "prompt_tokens": 692,
+        "completion_tokens": 52,
+        "error_counts": {}
+      }
+    },
+    {
+      "file": "outputs\\dpo_eval\\QA_test_direct_20261022T072232209855.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:22:49.270120+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/sft_adapter/merged",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2-budgeted",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "11d4a1bea890e9d4d7d2a1ee372466125dc463eefd59caf8f95ad28ac54d6c2a",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/sft_adapter/merged",
+          "adapter": "outputs/dpo_adapter"
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 0.0,
+        "em": 0.0,
+        "f1": 0.0,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 1.0,
+        "avg_seconds": 0.589,
+        "p95_seconds": 1.343,
+        "prompt_tokens": 652,
+        "completion_tokens": 192,
+        "error_counts": {
+          "format_error": 10
+        }
+      }
+    },
+    {
+      "file": "outputs\\dpo_eval\\QA_test_direct_20261022T072521022812.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:25:32.806965+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/sft_adapter/merged",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "fafc296d53716090c9f217f6fdfe4fdb6238b9ec9913cb84d16c36a8c9c0f10f",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/sft_adapter/merged",
+          "adapter": "outputs/dpo_adapter"
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 1.0,
+        "em": 0.2,
+        "f1": 0.2,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 0.0,
+        "avg_seconds": 0.1641,
+        "p95_seconds": 0.641,
+        "prompt_tokens": 692,
+        "completion_tokens": 52,
+        "error_counts": {}
+      }
+    }
+  ],
+  "latest_evaluation": {
+    "base_eval": {
+      "file": "outputs\\base_eval\\QA_test_direct_20261022T072456927771.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:25:07.470691+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "fafc296d53716090c9f217f6fdfe4fdb6238b9ec9913cb84d16c36a8c9c0f10f",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "adapter": null
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 1.0,
+        "em": 0.3,
+        "f1": 0.3,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 0.0,
+        "avg_seconds": 0.1703,
+        "p95_seconds": 0.735,
+        "prompt_tokens": 692,
+        "completion_tokens": 66,
+        "error_counts": {}
+      }
+    },
+    "sft_eval": {
+      "file": "outputs\\sft_eval\\QA_test_direct_20261022T072508252871.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:25:20.121214+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "fafc296d53716090c9f217f6fdfe4fdb6238b9ec9913cb84d16c36a8c9c0f10f",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/models/qwen2.5-0.5b-instruct",
+          "adapter": "outputs/sft_adapter"
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 1.0,
+        "em": 0.2,
+        "f1": 0.2,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 0.0,
+        "avg_seconds": 0.1766,
+        "p95_seconds": 0.688,
+        "prompt_tokens": 692,
+        "completion_tokens": 52,
+        "error_counts": {}
+      }
+    },
+    "dpo_eval": {
+      "file": "outputs\\dpo_eval\\QA_test_direct_20261022T072521022812.json",
+      "metadata": {
+        "created_at": "2026-10-22T07:25:32.806965+00:00",
+        "task_type": "QA",
+        "dataset_name": "hotpotqa200.jsonl",
+        "dataset_sha256": "a3e09fe9916637dd2f0634ebe86ad5fd0bc04a742282c4c09f9e411eca52b139",
+        "split": "test",
+        "config": {
+          "model": "outputs/sft_adapter/merged",
+          "mode": "direct",
+          "max_llm_calls": 1,
+          "max_tool_calls": 6,
+          "max_new_tokens": 64,
+          "history_turns": 2,
+          "max_format_retries": 3,
+          "temperature": 0.0,
+          "seed": 42
+        },
+        "prompt_version": "react-v2.1-direct-answer",
+        "git_revision": "62542ab852b1fbdc29a93bf49e96bbacd46fada0",
+        "source_sha256": "fafc296d53716090c9f217f6fdfe4fdb6238b9ec9913cb84d16c36a8c9c0f10f",
+        "backend": {
+          "kind": "local",
+          "model": "outputs/sft_adapter/merged",
+          "adapter": "outputs/dpo_adapter"
+        },
+        "metric": "hotpot_answer_em_f1",
+        "notes": [
+          "Existing 200 QA questions were previously evaluated; splits are retrospective.",
+          "Wikipedia is live and may change. Preserve evidence in events.",
+          "Equal upper call budgets do not imply equal realized token cost."
+        ]
+      },
+      "metrics": {
+        "total": 10,
+        "answer_rate": 1.0,
+        "em": 0.2,
+        "f1": 0.2,
+        "avg_llm_calls": 1.0,
+        "avg_tool_calls": 0.0,
+        "tool_success_rate": null,
+        "format_error_rate_per_call": 0.0,
+        "avg_seconds": 0.1641,
+        "p95_seconds": 0.641,
+        "prompt_tokens": 692,
+        "completion_tokens": 52,
+        "error_counts": {}
+      }
+    }
+  },
+  "comparison_integrity": {
+    "same_question_ids": true,
+    "same_prompt_version": true,
+    "same_budget_and_decoding": true
+  },
+  "artifact_sha256": {
+    "outputs/models/qwen2.5-0.5b-instruct/model.safetensors": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+    "outputs/sft_adapter/adapter_model.safetensors": "b872ef52a419eb2c73e8fa96b425652be8a96db84febfb879b8c200b596ce9f8",
+    "outputs/sft_adapter/merged/model.safetensors": "0919e5fc17ab3dc8cdafe7f3946ab8817e55c0cd90a6b7ddd9f7443104c80eaa",
+    "outputs/dpo_adapter/adapter_model.safetensors": "02a9b6b60fe4f909e4872d1e3bcd06ea7ce38482211e855a118a7fac4dfe7fad"
+  },
+  "limitations": [
+    "Historical QA rescoring is not an effect of the new implementation.",
+    "Dataset splits are retrospective, not a fresh unseen benchmark.",
+    "Answer-only training does not directly train tool selection.",
+    "Preference labels are unreviewed silver labels; DPO validation split is empty.",
+    "Small training/eval runs validate the pipeline, not general model improvement."
+  ]
+}

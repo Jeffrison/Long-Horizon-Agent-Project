@@ -1,0 +1,8 @@
+# Versions actually used for the local RTX 4060 experiment.
+# Install a CUDA-enabled torch build first; this machine used 2.5.1+cu121.
+torch==2.5.1
+transformers==4.57.1
+trl==0.25.1
+peft==0.18.0
+datasets==3.3.2
+accelerate==1.11.0

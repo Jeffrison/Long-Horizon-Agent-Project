@@ -33,6 +33,7 @@ class MetricsTests(unittest.TestCase):
         self.assertIsNone(parse_latex_to_float("sqrt(-1)"))
         self.assertIsNone(parse_latex_to_float("2**100000"))
         self.assertIsNone(parse_latex_to_float("__import__('os').getcwd()"))
+        self.assertFalse(math_match("nan", "nan"))
 
 
 class AgentTests(unittest.TestCase):
@@ -86,6 +87,13 @@ class AgentTests(unittest.TestCase):
         result = run_agent("q", config=AgentConfig(mode="direct"),
                            client=ScriptedClient(["Action: Search\nAction Input: q"]))
         self.assertEqual(result["termination_reason"], "format_error")
+
+    def test_direct_baseline_accepts_plain_answers_but_react_does_not(self):
+        direct = run_agent("q", config=AgentConfig(mode="direct"), client=ScriptedClient(["British"]))
+        self.assertEqual(direct["final_answer"], "British")
+        react = run_agent("q", config=AgentConfig(mode="react"), client=ScriptedClient(["British"]),
+                          tools={"Search": lambda q: ToolResult(True, "evidence")})
+        self.assertEqual(react["termination_reason"], "format_error")
 
     def test_conflicting_final_answers_are_rejected(self):
         with self.assertRaises(ValueError):

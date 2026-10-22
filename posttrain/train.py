@@ -126,6 +126,7 @@ def main():
     tokenizer.save_pretrained(args.output)
     if args.export_merged:
         merged = trainer.model.merge_and_unload()
+        merged.config.use_cache = True
         merged.save_pretrained(Path(args.output) / "merged")
         tokenizer.save_pretrained(Path(args.output) / "merged")
     audit = {**plan, "dry_run": False, "training_completed": True,
@@ -135,6 +136,8 @@ def main():
              "gpu": torch.cuda.get_device_name(), "python": platform.python_version(),
              "versions": {name: importlib.metadata.version(name) for name in dependencies},
              "data_hashes": manifest["file_sha256"],
+             "model_provenance": (json.loads((Path(args.model) / "source_manifest.json").read_text(encoding="utf-8"))
+                                  if (Path(args.model) / "source_manifest.json").exists() else None),
              "note": "Training loss is not QA accuracy; evaluate the saved adapter separately."}
     (Path(args.output) / "training_report.json").write_text(
         json.dumps(audit, ensure_ascii=False, indent=2), encoding="utf-8")
