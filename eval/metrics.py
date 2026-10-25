@@ -1,116 +1,124 @@
+"""Conservative answer-only metrics; no substring/oracle matching."""
+import ast
+from collections import Counter
+import math
+import operator
 import re
 import string
-import math
-def normalize_text(s: str) -> str:
-    if s is None:
-        return ""
-    s = str(s).lower()
-    s = re.sub(r'\b(a|an|the)\b', ' ', s)
-    exclude = set(string.punctuation)
-    s = ''.join(ch for ch in s if ch not in exclude)
-    s = ' '.join(s.split())
+
+
+def normalize_text(value) -> str:
+    value = str(value or "").lower()
+    value = "".join(c for c in value if c not in string.punctuation)
+    value = re.sub(r"\b(a|an|the)\b", " ", value)
+    return " ".join(value.split())
+
+
+def qa_match(prediction, ground_truth) -> bool:
+    pred, gold = normalize_text(prediction), normalize_text(ground_truth)
+    return bool(pred and gold and pred == gold)
+
+
+def qa_f1(prediction, ground_truth) -> float:
+    pred, gold = normalize_text(prediction), normalize_text(ground_truth)
+    if not pred or not gold:
+        return 0.0
+    if pred in {"yes", "no", "noanswer"} or gold in {"yes", "no", "noanswer"}:
+        return float(pred == gold)
+    common = sum((Counter(pred.split()) & Counter(gold.split())).values())
+    if not common:
+        return 0.0
+    precision, recall = common / len(pred.split()), common / len(gold.split())
+    return 2 * precision * recall / (precision + recall)
+
+
+OPS = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
+       ast.Div: operator.truediv, ast.Pow: operator.pow}
+FUNCTIONS = {"sqrt": math.sqrt, "factorial": math.factorial}
+
+
+def _number(node):
+    if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+        if abs(node.value) > 1e100:
+            raise ValueError("Constant too large")
+        return node.value
+    if isinstance(node, ast.Name) and node.id == "pi":
+        return math.pi
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
+        return -_number(node.operand) if isinstance(node.op, ast.USub) else _number(node.operand)
+    if isinstance(node, ast.BinOp) and type(node.op) in OPS:
+        a, b = _number(node.left), _number(node.right)
+        if isinstance(node.op, ast.Pow) and (abs(b) > 100 or abs(a) > 1e10):
+            raise ValueError("Power too large")
+        result = OPS[type(node.op)](a, b)
+        if isinstance(result, complex) or not math.isfinite(result) or abs(result) > 1e100:
+            raise ValueError("Nonfinite result")
+        return result
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in FUNCTIONS:
+        if len(node.args) != 1 or node.keywords:
+            raise ValueError("Invalid call")
+        value = _number(node.args[0])
+        if node.func.id == "factorial":
+            if not 0 <= value <= 100 or int(value) != value:
+                raise ValueError("Invalid factorial")
+            value = int(value)
+        return FUNCTIONS[node.func.id](value)
+    raise ValueError("Unsupported mathematical syntax")
+
+
+def _unwrap_box(s):
+    if not s.startswith(r"\boxed{") or not s.endswith("}"):
+        return s
+    depth = 0
+    for index, char in enumerate(s[6:], 6):
+        depth += (char == "{") - (char == "}")
+        if depth == 0:
+            return s[7:-1] if index == len(s) - 1 else s
     return s
 
-def qa_match(prediction: str, ground_truth: str) -> bool:
-    """
-    字符串匹配
-    """
-    norm_pred = normalize_text(prediction)
-    norm_gt = normalize_text(ground_truth)
-    
-    if not norm_pred or not norm_gt:
-        return False
-        
-    # 1. 如果标准答案是 "yes"
-    if norm_gt == "yes":
-        if norm_pred == "yes" or ("yes" in norm_pred and "no " not in norm_pred and "not " not in norm_pred):
-            return True
-        positive_words =["same", "both", "true", "correct","sure"]
-        if any(w in norm_pred for w in positive_words) and "not" not in norm_pred:
-            return True
-        return False
-        
-    # 2. 如果标准答案是 "no"
-    if norm_gt == "no":
-        if norm_pred == "no" or ("no " in norm_pred or "not " in norm_pred):
-            return True
-        negative_words = ["different", "false", "neither"]
-        if any(w in norm_pred for w in negative_words):
-            return True
-        return False
 
-    # 3. 普通实体题：如果标准答案被完全包含在模型的预测中
-    if norm_gt in norm_pred:
-        return True
-        
-    return False
-
-
-
-def parse_latex_to_float(latex_str: str):
-    if not latex_str:
+def parse_latex_to_float(value):
+    if value is None:
         return None
-        
-    s = str(latex_str).replace(' ', '').replace('\\\\', '\\')
-    
+    s = str(value).strip()
+    if len(s) > 512:
+        return None
+    s = _unwrap_box(s.strip("$").strip())
+    s = s.replace(r"\left", "").replace(r"\right", "").replace(r"\,", "")
+    s = s.replace(r"\dfrac", r"\frac").replace(r"\tfrac", r"\frac")
+    # Allow well-formed numeric thousands separators, never strip arbitrary commas.
+    s = re.sub(r"(?<![\d.])\d{1,3}(?:,\d{3})+(?:\.\d+)?", lambda m: m.group().replace(",", ""), s)
+    if "," in s:
+        return None
+    s = s.replace(" ", "").replace(r"\pi", "pi").replace(r"\cdot", "*").replace(r"\times", "*")
+    for _ in range(16):
+        previous = s
+        s = re.sub(r"\\sqrt\{([^{}]+)\}", r"sqrt(\1)", s)
+        s = re.sub(r"\\frac\{([^{}]+)\}\{([^{}]+)\}", r"((\1)/(\2))", s)
+        s = re.sub(r"\^\{([^{}]+)\}", r"**(\1)", s)
+        if s == previous:
+            break
+    s = s.replace("^", "**")
+    s = re.sub(r"(\d+)!", r"factorial(\1)", s)
+    s = re.sub(r"(\d|\))(sqrt|pi|\()", r"\1*\2", s)
     try:
-        return float(s)
-    except ValueError:
-        pass
-
-    try:
-        s = s.replace(r'\pi', 'math.pi')
-        s = s.replace(r'\cdot', '*')
-        s = s.replace(r'\times', '*')
-        
-        prev_s = ""
-        while s != prev_s:
-            prev_s = s
-            # 1. 消除最内层的平方根
-            s = re.sub(r'\\sqrt{([^{}]+)}', r'math.sqrt(\1)', s)
-            # 2. 消除最内层的乘方
-            s = re.sub(r'\^{([^{}]+)}', r'**(\1)', s)
-            # 3. 消除最内层的分数
-            s = re.sub(r'\\frac{([^{}]+)}{([^{}]+)}', r'((\1)/(\2))', s)
-            # 4. 消除阶乘
-            s = re.sub(r'([0-9.]+)!', r'math.factorial(\1)', s)
-            
-        # 处理没有花括号的简单乘方，例如 x^2
-        s = s.replace('^', '**')
-        
-        # 隐式乘法修正
-        s = re.sub(r'(\d)(math\.sqrt)', r'\1*\2', s)
-        s = re.sub(r'(\d)(\()', r'\1*\2', s)
-        
-        # 将残留的大括号转为小括号
-        s = s.replace('{', '(').replace('}', ')')
-        
-        allowed_names = {"math": math, "math.pi": math.pi, "math.sqrt": math.sqrt, "math.factorial": math.factorial}
-        return float(eval(s, {"__builtins__": {}}, allowed_names))
-    except Exception as e:
-        return f"Error: {str(e)}"
-
-def math_match(prediction: str, ground_truth: str) -> bool:
-    """
-    大模型输出浮点数 VS 真实公式
-    """
-    def extract_pred_number(text: str):
-        text = str(text).replace(',', '').strip()
-        matches = re.findall(r'-?\d+\.?\d*(?:e[-+]?\d+)?', text, re.IGNORECASE) # 支持科学计数法
-        if matches:
-            return float(matches[0]) 
+        if "{" in s or "}" in s:
+            return None
+        tree = ast.parse(s, mode="eval")
+        if sum(1 for _ in ast.walk(tree)) > 128:
+            return None
+        result = float(_number(tree.body))
+        return result if math.isfinite(result) else None
+    except (ValueError, SyntaxError, OverflowError, ZeroDivisionError, TypeError, RecursionError):
         return None
 
-    pred_num = extract_pred_number(prediction)
-    
-    gt_num = parse_latex_to_float(ground_truth)
-    
-    if pred_num is not None and gt_num is not None:
-        if gt_num == 0:
-            return abs(pred_num) < 1e-3
-        relative_error = abs((pred_num - gt_num) / gt_num)
-        absolute_error = abs(pred_num - gt_num)
-        return absolute_error < 1e-3 or relative_error < 1e-3
 
-    # 如果无法提取数字
-    return normalize_text(prediction) == normalize_text(ground_truth)
+def math_match(prediction, ground_truth, rel_tol=1e-6, abs_tol=1e-8) -> bool:
+    pred, gold = parse_latex_to_float(prediction), parse_latex_to_float(ground_truth)
+    if pred is not None and gold is not None:
+        return math.isclose(pred, gold, rel_tol=rel_tol, abs_tol=abs_tol)
+    # Conservative exact expression fallback; do not pick the first number from prose.
+    if prediction is None or ground_truth is None:
+        return False
+    norm = lambda x: re.sub(r"\s+", "", str(x).strip().strip("$"))
+    return bool(norm(prediction) and norm(prediction) == norm(ground_truth))

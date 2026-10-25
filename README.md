@@ -1,67 +1,83 @@
-# Long-Horizon Agent & Tool-Use from Scratch
-本项目是一个不依赖任何重型框架（如 LangChain, AutoGen），从底层纯手写的智能体系统。该 Agent 具备长路径任务处理能力，能够通过 ReAct 循环调用 Wikipedia 搜索和 Python 代码执行工具，并具备强大的自我纠错与工程级鲁棒性。
-核心技术亮点
-零框架底层实现: 纯 Python 手写 ReAct 主循环，深度理解大模型事件流转机制。
-滑动窗口记忆管理: 针对小参数模型（Qwen2.5-7B）设计的记忆策略，仅保留最近交互，防止上下文污染与逻辑断片。
-沙箱级代码劫持:
-自动拦截 sympy 符号对象并强制转换为浮点数。
-基于 ast 静态分析，自动为孤立表达式注入 print()，兼容 Jupyter 编写习惯。
-自愈与记忆回滚:
-当检测到输出乱码或格式崩溃时，自动拦截“毒性上下文”进入记忆。
-通过提示词诱导强行拉回模型的推理分布。
-工业级工具健壮性:
-Wikipedia: 实现请求节流与 User-Agent 伪装，彻底解决 429 请求频繁报错。
-多模态评测对齐: 手写启发式 LaTeX 解析引擎，实现 HMMT/AIME 复杂公式答案与 Python 浮点输出的自动化对齐判分。
-# 📂 目录结构
+# Long-Horizon Agent Evaluation & Post-training Data Pipeline
+
+纯 Python 实现的 ReAct Agent，支持 Wikipedia 检索、Python 数学工具、可观测错误反馈，以及可审计的反思消融评测。项目重心是**公平评测、工具可靠性和轨迹数据工程**。
+
+> 历史 README 的 8%→43%、8.33%→25% 来自存在重复运行/挑选偏差的实验，已撤回作为性能证据。原始代码和日志保留以便审计。本次真实复测结果以 reports 下的冻结实验为准，不预设反思一定有效。
+
+## 实现能力
+
+- **手写 ReAct 状态机**：协议解析 → 工具执行 → observation → 完成/预算耗尽。推理代码不接受标准答案。
+- **等预算消融**：OFF/ON 都允许错误后继续；唯一干预是显式错误纠正指导语。每次请求，包括格式错误，都消耗预算。
+- **轨迹可追溯**：保存每步实际输入 messages、模型输出、工具输入输出、错误类型、请求 id、token、finish reason、延迟。
+- **评测治理**：问题级哈希划分、数据校验、预注册 manifest、三种子成对实验、逐条 checkpoint、失败保留、题目聚类 bootstrap。
+- **保守判分**：QA answer EM/F1；数学整段表达式解析与受限 AST 数值计算，不再抽取第一数字或用子串判正确。
+- **后训练数据工程**：仅从 dev 轨迹构造去重 SFT 和相同 prompt 的偏好候选，保留来源、结果标签和审核标志；可选 LoRA SFT 入口。
+- **回归测试与 CI**：离线测试覆盖答案隔离、预算、错误恢复、判分、工具超时、数据划分和训练泄漏。
+
+这不是完整的 RL/RLHF 训练系统；现阶段不能声称已经训练出效果更好的模型。Python 子进程有静态限制、环境清理和超时，但不是操作系统安全沙箱。
+
+## 快速复现
+
+要求 Python 3.10+。以下命令在仓库根目录执行：
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-dev.txt
+Copy-Item .env.example .env
+# 在 .env 中配置自己的 LLM_API_KEY / LLM_BASE_URL，不要提交密钥
+python -m eval.prepare_data
+python -m pytest -q
 ```
-.
-├── agent/
-│   ├── prompts.py        # 针对 7B 模型优化的纯英文 System Prompts
-│   ├── parser.py         # 带有乱码探测与强类型校验的解析器
-│   └── react_loop.py     # 核心主循环（支持反思机制与步数解耦）
-├── tools/
-│   ├── search_tool.py    # Wikipedia 检索（含 Throttling 机制）
-│   └── python_repl.py    # Python 沙箱（含代码劫持与 AST 注入）
-├── eval/
-│   ├── data_loader.py    # 异构数据集加载器
-│   ├── metrics.py        # 自动化 LaTeX 分数判分引擎
-│   └── run_eval.py       # 一键评测与 A/B 测试脚本
-├── data/                 # 存放评测数据集 (HotpotQA, HMMT, etc.)
-├── logs/                 # 存放运行轨迹 (JSON 格式，证明真实可执行)
-├── .env.example          # 环境配置模板
-├── requirements.txt      # 最小依赖清单
-└── README.md             # 项目说明文档
+
+先检查开发集，再冻结代码做完整复测：
+
+```powershell
+python -m eval.run_eval --split dev --limit 2 --seeds 11 --workers 2 --output outputs/my-smoke
+python -m eval.run_eval --split test --seeds 11 29 47 --workers 4 --output outputs/my-test
+python -m eval.report outputs/my-test
 ```
-# 🚀 快速开始
-1. 环境安装
-建议使用 Python 3.9+ 环境：
-Bash
-git clone https://github.com/Jeffrison/Long-Horizon-Agent-Project.git
-cd Long-Horizon-Agent-Project
-pip install -r requirements.txt
-2. 配置 API Key
-复制模板文件并填写你的 API 信息（推荐使用 SiliconFlow 或阿里云百炼）：
-Bash
-cp .env.example .env
-编辑 .env 文件，填入你的 LLM_API_KEY 和 LLM_BASE_URL
-3. 运行自动化评测
-你可以一键启动针对数学数据集或多跳问答数据集的评测，并观察“纠错机制”开启前后的准确率对比：
-Bash
-python eval/run_eval.py
 
-# 📊 实验结果分析
-在使用 Qwen2.5-7B-Instruct 作为驱动模型时，开启自我纠错带来的增益显著：
-数据集	任务类型	准确率 (Reflection OFF)	准确率 (Reflection ON)
-HotpotQA	多跳搜索	8.00%	43.00%
-HMMT/AIME	代码计算	8.33%	25.00%
+一个 question × seed × mode 只有一条轨迹。完整默认复测为 215 题 × 3 种子 × 2 模式 = **1290 条轨迹**，会调用收费模型 API。更改输出路径可启动独立预声明实验；禁止挑选表现更好的那次作为唯一结果。
 
-# 🛠️ 避坑与反思
-Context Pollution: 在开发初期，模型一旦输出乱码，会导致后续对话全部崩坏。通过引入“记忆回滚”机制，系统会拒绝存储格式错误的输出，从而保护了模型思维的纯净度。
-LaTeX Alignment: HMMT 数据集的答案 \frac{1}{576} 与 Python 计算结果 0.001736 难以直接匹配。本项目通过手写正则解析器，将符号逻辑转化为数值逻辑，实现了全自动闭环评测。
-Rate Limiting: 维基百科 API 的 429 报错曾是批量评测的杀手。通过在 Tool 层引入 1.5s 的步进休眠与规范的 User-Agent，解决了生产环境下的稳定性问题。
+中断后用完全相同参数加 `--resume`。已开始但没有完成记录的轨迹计为 interrupted failure，不能重新采样。不要同时向同一输出目录启动多个评测进程。
 
-# 📜 交付物说明
-代码: 严格遵循工程规范，注释详尽。
-日志: logs/ 文件夹下包含了完整的模型推理轨迹。
-文档: 本 README 提供了完整的复现指引。
-# Created by Xuanyi Song for Technical Evaluation Project.
+数据与配置在 manifest.json 中冻结；运行时不能更换代码、数据和 prompt。最终只保存了合法最终答案不代表答对，准确率由独立 scorer 判定。
+
+## 结果与限制
+
+本次正式复测报告完成后归档至 `reports/`，包含原始轨迹压缩归档、实验 manifest、环境快照、汇总和 Markdown 报告。运行中的实验可通过 `python -m eval.report <输出目录>` 查看，未完成的报告会显式标注进度。
+
+- 原始数据：HotpotQA 风格问答 200 题、数学 60 题；数学原 ID 有 29 次重复，已在 validated 副本中修复。
+- 冻结划分：dev 45 题，test 215 题；历史开发使用过这些题，不能宣称完全未见。
+- QA 是实时 Wikipedia 检索，只报告答案 EM/F1，不是官方完整 HotpotQA distractor/supporting-facts 评测。
+- seed 仅是向供应商发出的请求，不能保证远端推理确定性。重复种子的结果不会择优合并。
+- 方法、提示词、工具与判分均已改变，不能把新旧数值相减后当作因果增益。
+
+协议和误差分析见 [评测协议](docs/evaluation-protocol.md)；后训练路径、使用方法与边界见 [后训练文档](docs/post-training.md)。
+
+## 后训练数据与可选 LoRA
+
+```powershell
+python -m eval.run_eval --split dev --seeds 11 29 47 --workers 4 --output outputs/my-dev
+python -m post_training.export outputs/my-dev --output outputs/my-training-data
+python -m post_training.train_sft --data outputs/my-training-data/sft.jsonl --dry-run
+```
+
+SFT 只学习最后一条 assistant completion；train/validation 按题目组划分。DPO 文件仅是需要审核的候选，最终答对不能证明每步动作优质。可选 GPU 训练依赖与 LoRA 命令见后训练文档。API rollout、数据导出、dry-run 与模型训练是不同完成状态。
+
+## 目录
+
+```text
+agent/          模型 HTTP 客户端、协议解析、ReAct 状态机
+tools/          typed result、受限 Python 子进程、Wikipedia 缓存
+eval/           数据审计、哈希划分、成对评测、统计报告
+post_training/  dev-only SFT / 偏好候选导出、可选 LoRA 入口
+tests/          无需 API Key 的回归测试
+data/           原数据与 validated 副本
+logs/           历史日志（有偏，仅用于审计）
+reports/        本次冻结实验与原始轨迹归档
+docs/           协议、后训练说明、项目升级与简历材料
+```
+
+原始版本保留在 `codex/archive-original-d95783a`；本次开发分支为 `codex/reproducible-agent-eval`。

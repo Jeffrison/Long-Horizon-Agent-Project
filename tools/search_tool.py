@@ -1,55 +1,58 @@
-import wikipedia
-import logging
-import time   
+"""HTTPS Wikipedia retrieval with bounded requests and a shared disk cache."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import threading
+import time
+import requests
+from tools.result import ToolResult
 
-wikipedia.set_lang("en")
-# 设置合法的开发者 User-Agent，绕过维基百科防火墙拦截
-wikipedia.set_user_agent("LongHorizonAgent_Eval/1.0 (Contact: eval_test@example.com)")
-def search(query: str, max_results: int = 2) -> str:
-    """
-    搜索维基百科，返回最相关词条的摘要。
-    遇到网络异常或消歧义报错时，返回文本Observation。
-    """
-    try:
-        # 在每次调用 Search 工具的开头，强制休眠 1.5 秒，防止两道题之间或者短时间内多次调用工具导致的并发过高
-        time.sleep(1.5) 
-        query = query.strip("\"'")
-        
-        # 1. 先搜索出最相关的词条标题
-        titles = wikipedia.search(query, results=max_results)
-        if not titles:
-            return f"Observation: No Wikipedia results found for '{query}'. Please try different keywords."
-            
-        formatted_results =[]
-        for i, title in enumerate(titles):
-            try:
-                # 休眠 1 秒
-                time.sleep(1.0) 
-                # 2. 获取具体页面的摘要
-                page = wikipedia.page(title, auto_suggest=False)
-                # 截断太长的摘要 
-                summary = page.summary[:600] + "..." if len(page.summary) > 600 else page.summary
-                formatted_results.append(
-                    f"[Result {i+1}]\nTitle: {page.title}\nSnippet: {summary}"
-                )
-            except wikipedia.exceptions.DisambiguationError as e:
-                # 如果遇到消歧义页面，把建议的词条返回给模型
-                options = e.options[:3]
-                formatted_results.append(
-                    f"[Result {i+1}]\nTitle: {title} (Disambiguation)\nSnippet: The query is ambiguous. Please try more specific terms, e.g., {', '.join(options)}"
-                )
-            except wikipedia.exceptions.PageError:
-                continue
-            except Exception as e:
-                continue
-                
-        if not formatted_results:
-             return "Observation: Relevant titles found, but failed to extract page content."
-             
-        return "\n\n".join(formatted_results)
-        
-    except Exception as e:
-        logging.warning(f"Wikipedia API Error: {str(e)}")
-        return f"Observation: Search tool internal error ({str(e)}). Please refine your keywords or use another tool."
+_lock = threading.Lock()
 
 
+def search(query: str, max_results: int = 2) -> ToolResult:
+    query = query.strip().strip("\"'")
+    if not query:
+        return ToolResult("Empty search query", True, "invalid_input")
+    key = hashlib.sha256(f"wikipedia-v2:{max_results}:{query.casefold()}".encode()).hexdigest()
+    cache = Path(os.getenv("SEARCH_CACHE_DIR", ".cache/wikipedia")) / (key + ".json")
+    with _lock:
+        if cache.exists():
+            data = json.loads(cache.read_text(encoding="utf-8"))
+            return ToolResult(data["content"], cached=True)
+        if os.getenv("SEARCH_CACHE_ONLY") == "1":
+            return ToolResult("Search cache miss in offline mode", True, "cache_miss")
+        try:
+            session = requests.Session()
+            session.headers["User-Agent"] = "LongHorizonAgent/2.0 (research evaluation; github.com/Jeffrison/Long-Horizon-Agent-Project)"
+            endpoint = "https://en.wikipedia.org/w/api.php"
+            data = session.get(endpoint, params={"action": "query", "list": "search", "srsearch": query,
+                "srlimit": max_results, "format": "json"}, timeout=15)
+            data.raise_for_status()
+            payload = data.json()
+            if "error" in payload:
+                return ToolResult("Wikipedia API returned an error", True, "retrieval_api_error")
+            titles = [r["title"] for r in payload.get("query", {}).get("search", [])]
+            if not titles:
+                content = "No results found."
+            else:
+                time.sleep(0.25)
+                response = session.get(endpoint, params={"action": "query", "prop": "extracts",
+                    "exintro": 1, "explaintext": 1, "titles": "|".join(titles), "format": "json"}, timeout=15)
+                response.raise_for_status()
+                pages = response.json().get("query", {}).get("pages", {}).values()
+                content = "\n\n".join(f"Title: {p.get('title')}\nSnippet: {p.get('extract', '')[:2400]}"
+                                        for p in sorted(pages, key=lambda p: p.get("title", "")))
+            cache.parent.mkdir(parents=True, exist_ok=True)
+            temporary = cache.with_suffix(".tmp")
+            temporary.write_text(json.dumps({"query": query, "content": content}, ensure_ascii=False), encoding="utf-8")
+            temporary.replace(cache)
+            return ToolResult(content)
+        except requests.HTTPError as exc:
+            status = exc.response.status_code if exc.response is not None else "unknown"
+            return ToolResult(f"Wikipedia HTTP {status}", True, f"retrieval_http_{status}")
+        except requests.Timeout:
+            return ToolResult("Wikipedia request timed out", True, "retrieval_timeout")
+        except (requests.RequestException, ValueError, KeyError):
+            return ToolResult("Wikipedia request failed or returned invalid JSON", True, "retrieval_error")

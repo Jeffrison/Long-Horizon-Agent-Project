@@ -1,44 +1,47 @@
+"""Fail-fast dataset validation and stable question-level splits."""
+import hashlib
 import json
-import os
+from pathlib import Path
+import re
+import unicodedata
+
+
+def question_key(question: str) -> str:
+    normalized = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", question).casefold()).strip()
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def split_for(question: str) -> str:
+    # Global by question, independent of file/id/task: duplicate questions cannot cross splits.
+    return "dev" if int(question_key(question)[:8], 16) % 5 == 0 else "test"
+
 
 def load_jsonl_dataset(file_path: str, max_samples: int = None) -> list:
-    """
-    file_path: 数据集文件路径
-    max_samples: 限制加载的样本数量
-    返回格式统一的列表:[{'id': '...', 'question': '...', 'answer': '...'}]
-    """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"找不到数据集文件: {file_path}。请确保文件已放入正确目录。")
-
-    dataset =[]
-    
-    with open(file_path, 'r', encoding='utf-8') as f:
-        for line_num, line in enumerate(f, 1):
+    if max_samples is not None and max_samples < 1:
+        raise ValueError("max_samples must be positive")
+    dataset, ids, questions = [], set(), set()
+    with Path(file_path).open(encoding="utf-8-sig") as stream:
+        for line_num, line in enumerate(stream, 1):
             if not line.strip():
                 continue
-                
             try:
-                item = json.loads(line)
-                
-                question = item.get('question') or item.get('problem')
-                answer = item.get('answer')
-                item_id = item.get('_id') or item.get('id') or f"sample_{line_num}"
-                
-                if not question or not answer:
-                    print(f"警告: 第 {line_num} 行数据缺少问题或答案字段，已跳过。")
-                    continue
-                    
-                dataset.append({
-                    "id": str(item_id),
-                    "question": question,
-                    "answer": str(answer) # 统一转为字符串，方便后续比对
-                })
-                
-                # 如果设定了最大加载数量，达到后直接停止
-                if max_samples and len(dataset) >= max_samples:
-                    break
-                    
-            except json.JSONDecodeError as e:
-                print(f"警告: 第 {line_num} 行 JSON 格式错误，已跳过。错误信息: {e}")
-                
-    return dataset
+                raw = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"Invalid JSON on line {line_num}") from exc
+            question = raw.get("question") or raw.get("problem")
+            answer = raw.get("answer")
+            item_id = str(raw.get("_id", raw.get("id", f"sample_{line_num}")))
+            if not isinstance(question, str) or not question.strip() or answer is None or str(answer).strip() == "":
+                raise ValueError(f"Missing question/answer on line {line_num}")
+            if not isinstance(answer, (str, int, float)):
+                raise ValueError(f"Unsupported answer type on line {line_num}")
+            key = question_key(question)
+            if item_id in ids or key in questions:
+                raise ValueError(f"Duplicate id/question on line {line_num}")
+            ids.add(item_id)
+            questions.add(key)
+            dataset.append({"id": item_id, "question": question, "answer": str(answer),
+                            "question_key": key, "split": split_for(question)})
+    if not dataset:
+        raise ValueError("Empty dataset")
+    return dataset if max_samples is None else dataset[:max_samples]

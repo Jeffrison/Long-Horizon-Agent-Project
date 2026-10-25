@@ -1,0 +1,22 @@
+{
+  "QA": {
+    "source": "data\\hotpotqa200.jsonl",
+    "validated": "data\\validated\\hotpotqa200.jsonl",
+    "questions": 200,
+    "repeated_source_ids": 0,
+    "splits": {
+      "dev": 34,
+      "test": 166
+    }
+  },
+  "MATH": {
+    "source": "data\\math.jsonl",
+    "validated": "data\\validated\\math.jsonl",
+    "questions": 60,
+    "repeated_source_ids": 29,
+    "splits": {
+      "dev": 11,
+      "test": 49
+    }
+  }
+}

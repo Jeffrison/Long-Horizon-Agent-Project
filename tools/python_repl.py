@@ -1,99 +1,62 @@
-import subprocess
-import tempfile
-import os
-import re
+"""Restricted subprocess runner; NOT a security sandbox for hostile code."""
 import ast
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+from tools.result import ToolResult
+
+ALLOWED_IMPORTS = {"math", "sympy", "numpy", "scipy", "statistics", "itertools", "functools",
+                   "collections", "decimal", "fractions", "random", "warnings"}
+BLOCKED_NAMES = {"open", "eval", "exec", "compile", "globals", "locals", "vars", "getattr",
+                 "setattr", "delattr", "__import__", "input", "breakpoint", "help"}
+BLOCKED_ATTRIBUTES = {"load", "save", "savez", "loadtxt", "savetxt", "fromfile", "tofile",
+                      "memmap", "ctypeslib", "f2py", "read", "write", "dump", "dumps", "loads"}
+
 
 def auto_inject_print(code: str) -> str:
-    """
-    沙箱级代码劫持处理器：
-    1. 重写内置的 print 函数，拦截 sympy 符号对象并强制转为 Float。
-    2. AST 解析：如果代码最后一行是一个孤立的表达式（忘记写 print），自动为其包裹 print()。
-    """
-    
-    # 1：重写 builtins.print
-    patch_code = """
-import builtins
-_orig_print = builtins.print
+    tree = ast.parse(code)
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            modules = [a.name for a in node.names] if isinstance(node, ast.Import) else [node.module or ""]
+            if any(m.split(".")[0] not in ALLOWED_IMPORTS for m in modules):
+                raise ValueError("Import is outside the math library allowlist")
+        if isinstance(node, ast.Name) and (node.id in BLOCKED_NAMES or node.id.startswith("__")):
+            raise ValueError("Disallowed builtin")
+        if isinstance(node, ast.Attribute) and (node.attr.startswith("_") or node.attr in BLOCKED_ATTRIBUTES):
+            raise ValueError("Disallowed attribute")
+    if tree.body and isinstance(tree.body[-1], ast.Expr):
+        value = tree.body[-1].value
+        if not (isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.func.id == "print"):
+            # Replace, rather than append: expressions with side effects run once.
+            tree.body[-1].value = ast.Call(func=ast.Name(id="print", ctx=ast.Load()), args=[value], keywords=[])
+    return ast.unparse(ast.fix_missing_locations(tree))
 
-def _smart_print(*args, **kwargs):
-    new_args =[]
-    for a in args:
-        # 如果对象的模块名以 sympy 开头，尝试调用 .evalf() 并转为 float
-        if type(a).__module__.startswith('sympy'):
+
+def execute_python(code: str, timeout: float = 10) -> ToolResult:
+    try:
+        code = auto_inject_print(code)
+    except (SyntaxError, ValueError) as exc:
+        return ToolResult(f"{type(exc).__name__}: {exc}", True, "invalid_code")
+    env = {k: v for k, v in os.environ.items() if k.upper() in
+           {"SYSTEMROOT", "WINDIR", "PATH", "TEMP", "TMP", "SYSTEMDRIVE"}}
+    env.update(PYTHONIOENCODING="utf-8", OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1")
+    with tempfile.TemporaryDirectory(prefix="agent_math_") as directory:
+        path = Path(directory) / "program.py"
+        path.write_text(code, encoding="utf-8")
+        with open(Path(directory) / "stdout", "w+b") as stdout, open(Path(directory) / "stderr", "w+b") as stderr:
             try:
-                a = float(a.evalf())
-            except Exception:
-                pass
-        new_args.append(a)
-    _orig_print(*new_args, **kwargs)
-
-builtins.print = _smart_print
-"""
-    
-    # 2：AST 静态分析
-    try:
-        tree = ast.parse(code)
-        # 如果代码不为空，且最后一条语句是“表达式（Expr）”而不是“赋值等语句”
-        if tree.body and isinstance(tree.body[-1], ast.Expr):
-            last_expr = tree.body[-1].value
-            
-            # 检查它是不是已经在调用 print 了
-            is_print_call = isinstance(last_expr, ast.Call) and getattr(last_expr.func, 'id', '') == 'print'
-            
-            if not is_print_call:
-                # 提取最后一行，强行套上 print()
-                last_line_str = ast.unparse(last_expr)
-                code += f"\nprint({last_line_str})"
-    except Exception:
-        # 如果代码本身有 SyntaxError，直接忽略，让底层的 python 子进程去真实报错
-        pass
-
-    # 将劫持补丁注入到大模型代码的最上方
-    return patch_code + "\n" + code
-
-
-def execute_python(code: str, timeout: int = 10) -> str:
-    """
-    在一个隔离的子进程中执行 Python 代码。
-    """
-    # 1. 暴力抹除 Markdown 标记
-    code = re.sub(r"^```[a-zA-Z]*\n", "", code, flags=re.MULTILINE)
-    code = re.sub(r"^```\n?", "", code, flags=re.MULTILINE)
-    code = code.strip()
-
-    # 2. 在执行前，拦截并自动注入 print 与类型转换
-    code = auto_inject_print(code)
-
-    # 3. 隔离执行
-    fd, path = tempfile.mkstemp(suffix=".py", text=True)
-    try:
-        with os.fdopen(fd, 'w', encoding='utf-8') as f:
-            f.write(code)
-        
-        result = subprocess.run(
-            ['python', path],
-            capture_output=True,
-            text=True,
-            timeout=timeout
-        )
-        
-        output = ""
-        if result.stdout:
-            output += result.stdout
-            
-        if result.stderr:
-            output += f"\n[Error Traceback]:\n{result.stderr}"
-            
-        if not output.strip():
-            return "Observation: Code executed successfully, but there is no output. Please remember to output the results you want to see!"
-        
-        return output.strip()
-
-    except subprocess.TimeoutExpired:
-        return f"Observation: Code execution timed out (exceeded {timeout} seconds). You might have written an infinite loop."
-    except Exception as e:
-        return f"Observation: Execution environment system error: {str(e)}"
-    finally:
-        if os.path.exists(path):
-            os.remove(path)
+                process = subprocess.run([sys.executable, "-I", "-X", "utf8", str(path)],
+                    cwd=directory, env=env, stdout=stdout, stderr=stderr, timeout=timeout)
+            except subprocess.TimeoutExpired:
+                return ToolResult(f"Execution timed out after {timeout}s", True, "timeout")
+            except OSError:
+                return ToolResult("Execution environment unavailable", True, "environment_error")
+            stdout.seek(0)
+            stderr.seek(0)
+            out = stdout.read(12000).decode("utf-8", "replace")
+            err = stderr.read(4000).decode("utf-8", "replace")
+        if process.returncode:
+            return ToolResult((out + "\n" + err).strip(), True, "execution_error")
+        return ToolResult(out.strip() or "Code completed without output.")

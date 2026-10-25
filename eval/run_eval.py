@@ -1,161 +1,178 @@
-import sys
-import os
+"""Predeclared paired evaluation: one trajectory per question/seed/mode."""
+import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import asdict, replace
+from datetime import datetime, timezone
+import hashlib
 import json
+import os
+from pathlib import Path
+import random
+import subprocess
+import sys
+import threading
 import time
-from datetime import datetime
 
-# 确保能导入项目模块
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from agent.react_loop import AgentConfig, run_agent
 from eval.data_loader import load_jsonl_dataset
-from eval.metrics import qa_match,math_match
-from agent.react_loop import run_agent
+from eval.metrics import qa_match, qa_f1, math_match
 
-def run_evaluation(dataset_path: str, task_type: str, max_samples: int = 10, enable_reflection: bool = True):
-    """
-    task_type: "QA" (HotpotQA) 或 "MATH" (Math Dataset)
-    """
-    print(f"========== 评测启动 ==========")
-    print(f"数据集: {dataset_path}")
-    print(f"任务类型: {task_type}")
-    print(f"测试数量: {max_samples} 条")
-    print(f"纠错机制: {'开启' if enable_reflection else '关闭'}")
-    print(f"==============================\n")
+DATASETS = {"QA": "data/validated/hotpotqa200.jsonl", "MATH": "data/validated/math.jsonl"}
+_lock = threading.Lock()
 
-    # 1. 加载数据
-    try:
-        dataset = load_jsonl_dataset(dataset_path, max_samples=max_samples)
-    except Exception as e:
-        print(f"加载数据集失败: {e}")
-        return
-        
-    if not dataset:
-        print("数据集为空！请检查数据路径或格式。")
-        return
 
-    # 2. 统计指标初始化
-    metrics = {
-        "total": len(dataset),
-        "correct": 0,
-        "failed_format": 0,
-        "failed_max_steps": 0,
-        "total_steps": 0,
-        "accuracy": 0.0,
-        "avg_steps": 0.0
-    }
-    
-    # 记录详细日志
-    detailed_logs =[]
-    
-    # 3. 循环遍历数据集
-    for index, item in enumerate(dataset):
-        print(f"\n[{index+1}/{len(dataset)}] 正在测试题目 ID: {item['id']}")
-        query = item['question']
-        ground_truth = item['answer']
-        print(f"Q: {query}")
-        print(f"Ground Truth: {ground_truth}")
-        
-        # 运行智能体
-        start_time = time.time()
-        agent_result = run_agent(
-            query=query, 
-            task_type=task_type, 
-            max_steps=8, 
-            enable_reflection=enable_reflection,
-            ground_truth=ground_truth
-        )
-        time_cost = time.time() - start_time
-        
-        metrics["total_steps"] += agent_result["steps"]
-        is_correct = False
-        
-        # 4. 判断对错
-        if agent_result["status"] == "success":
-            pred = agent_result["final_answer"]
-            
-            if task_type == "QA":
-                is_correct = qa_match(pred, ground_truth)
-            else:
-                is_correct = math_match(pred, ground_truth) 
-                
-            if is_correct:
-                metrics["correct"] += 1
-                print(f"[结果判定] 准确！标准答案: {ground_truth}")
-            else:
-                print(f"[结果判定] 错误。标准答案: {ground_truth}")
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def append(path, row):
+    with _lock:
+        with Path(path).open("a", encoding="utf-8") as stream:
+            stream.write(json.dumps(row, ensure_ascii=False) + "\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+
+
+def read_rows(path):
+    if not Path(path).exists():
+        return []
+    # Never silently discard a damaged last line: repair explicitly, preserving evidence.
+    return [json.loads(line) for line in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def job_key(task, item, seed, mode):
+    return f"{task}:{item['id']}:{seed}:{mode}"
+
+
+def execute_job(task, item, seed, mode, config):
+    result = run_agent(item["question"], task_type=task,
+                       enable_reflection=(mode == "on"), config=replace(config, seed=seed))
+    correct = result["status"] == "success" and (
+        qa_match(result["final_answer"], item["answer"]) if task == "QA"
+        else math_match(result["final_answer"], item["answer"]))
+    return {"key": job_key(task, item, seed, mode), "task": task, "id": item["id"],
+            "question_key": item["question_key"], "question": item["question"],
+            "split": item["split"], "seed": seed, "mode": mode,
+            "ground_truth": item["answer"], "is_correct": bool(correct),
+            "answer_f1": qa_f1(result["final_answer"], item["answer"]) if task == "QA" else None,
+            "result": result}
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--tasks", nargs="+", choices=DATASETS, default=["QA", "MATH"])
+    parser.add_argument("--split", choices=["dev", "test", "all"], default="test")
+    parser.add_argument("--limit", type=int)
+    parser.add_argument("--seeds", nargs="+", type=int, default=[11, 29, 47])
+    parser.add_argument("--max-calls", type=int, default=8)
+    parser.add_argument("--max-tokens", type=int, default=600)
+    parser.add_argument("--history-turns", type=int, default=8)
+    parser.add_argument("--temperature", type=float, default=0.1)
+    parser.add_argument("--timeout", type=float, default=60)
+    parser.add_argument("--model", default=os.getenv("LLM_MODEL", "Qwen/Qwen2.5-7B-Instruct"))
+    parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--output", required=True)
+    parser.add_argument("--resume", action="store_true")
+    args = parser.parse_args(argv)
+    if args.workers < 1 or len(args.seeds) != len(set(args.seeds)) or (args.limit is not None and args.limit < 1):
+        parser.error("Workers/limit must be positive; seeds must be unique")
+    config = AgentConfig(model=args.model, max_calls=args.max_calls, max_tokens=args.max_tokens,
+                         history_turns=args.history_turns, temperature=args.temperature, timeout=args.timeout)
+    datasets = {}
+    for task in dict.fromkeys(args.tasks):
+        items = load_jsonl_dataset(DATASETS[task])
+        items = [x for x in items if args.split == "all" or x["split"] == args.split]
+        # Hash order is stable and does not favor the beginning of a source file.
+        datasets[task] = sorted(items, key=lambda x: x["question_key"])[:args.limit]
+    directory = Path(args.output)
+    manifest_path = directory / "manifest.json"
+    settings = {"tasks": datasets, "dataset_sha256": {t: sha(DATASETS[t]) for t in datasets},
+                "config": asdict(config), "seeds": args.seeds, "modes": ["off", "on"],
+                "split": args.split, "metric_version": "strict-v2",
+                "protocol": "one-trajectory-no-answer-selection", "workers": args.workers}
+    if args.resume:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest["settings"] != settings:
+            parser.error("Resume settings/data differ from the frozen manifest")
+        revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+        if manifest["git_revision"] != revision:
+            parser.error("Source revision changed; resume requires the original implementation")
+    else:
+        if directory.exists() and any(directory.iterdir()):
+            parser.error("Output directory is nonempty; use --resume with identical settings")
+        directory.mkdir(parents=True, exist_ok=True)
+        manifest = {"schema_version": 2, "created_at": datetime.now(timezone.utc).isoformat(),
+                    "git_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+                    "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain",
+                                                               "--untracked-files=no"], text=True).strip()),
+                    "settings": settings,
+                    "limitations": ["Seed is requested; provider determinism is not guaranteed.",
+                        "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
+                        "QA uses live Wikipedia, not the official HotpotQA distractor protocol."]}
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+    records_path, started_path = directory / "episodes.jsonl", directory / "started.jsonl"
+    rows = read_rows(records_path)
+    done = {r["key"] for r in rows}
+    if len(done) != len(rows):
+        raise ValueError("Duplicate evaluation records")
+    started_keys = {r["key"] for r in read_rows(started_path)}
+    jobs = []
+    for task, items in datasets.items():
+        for item in items:
+            for seed in args.seeds:
+                modes = ["off", "on"]
+                random.Random(f"{item['id']}:{seed}").shuffle(modes)
+                for mode in modes:
+                    key = job_key(task, item, seed, mode)
+                    if key not in done:
+                        jobs.append((task, item, seed, mode))
+    random.Random(20261025).shuffle(jobs)
+    # An attempt interrupted before checkpoint is counted as a failure, never resampled.
+    pending = []
+    for job in jobs:
+        task, item, seed, mode = job
+        key = job_key(*job)
+        if key in started_keys:
+            append(records_path, {"key": key, "task": task, "id": item["id"], "question_key": item["question_key"],
+                "question": item["question"], "split": item["split"], "seed": seed, "mode": mode,
+                "ground_truth": item["answer"], "is_correct": False, "answer_f1": 0.0 if task == "QA" else None,
+                "result": {"status": "failed", "error": "interrupted", "final_answer": None,
+                           "events": [], "trajectory": [], "llm_calls": 0, "latency_seconds": 0}})
         else:
-            # 记录失败原因
-            error_type = agent_result.get("error", "unknown")
-            if error_type == "format_error":
-                metrics["failed_format"] += 1
-            elif error_type == "max_steps_reached":
-                metrics["failed_max_steps"] += 1
-            print(f"[结果判定] 任务失败 ({error_type})。")
+            pending.append(job)
+    print(f"Planned {sum(len(x) for x in datasets.values()) * len(args.seeds) * 2} episodes; pending {len(pending)}", flush=True)
 
-        # 5. 保存单条日志
-        log_item = {
-            "id": item["id"],
-            "question": query,
-            "ground_truth": ground_truth,
-            "prediction": agent_result.get("final_answer", None),
-            "is_correct": is_correct,
-            "status": agent_result["status"],
-            "steps_taken": agent_result["steps"],
-            "time_cost_seconds": round(time_cost, 2),
-            "trajectory": agent_result["trajectory"]
-        }
-        detailed_logs.append(log_item)
-        
-        # 为了避免触发API 的限流，每跑完一题暂停 2 秒
-        time.sleep(2)
+    def worker(job):
+        key = job_key(*job)
+        append(started_path, {"key": key, "started_at": datetime.now(timezone.utc).isoformat()})
+        try:
+            row = execute_job(*job, config)
+        except Exception as exc:
+            task, item, seed, mode = job
+            row = {"key": key, "task": task, "id": item["id"], "question_key": item["question_key"],
+                   "question": item["question"], "split": item["split"], "seed": seed, "mode": mode,
+                   "ground_truth": item["answer"], "is_correct": False, "answer_f1": 0.0 if task == "QA" else None,
+                   "result": {"status": "failed", "error": "runner_error", "error_type": type(exc).__name__,
+                              "final_answer": None, "events": [], "trajectory": [], "llm_calls": 0,
+                              "latency_seconds": 0}}
+        append(records_path, row)
+        return row
 
-    # 6. 计算最终指标
-    metrics["accuracy"] = round((metrics["correct"] / metrics["total"]) * 100, 2)
-    metrics["avg_steps"] = round(metrics["total_steps"] / metrics["total"], 2)
-    
-    print("\n" + "#"*40)
-    print("最终评测报告")
-    print("#"*40)
-    print(f"总测试数: {metrics['total']}")
-    print(f"答对数量: {metrics['correct']}")
-    print(f"准确率 (Accuracy): {metrics['accuracy']}%")
-    print(f"平均交互步数: {metrics['avg_steps']} 步")
-    print(f"因格式崩坏失败: {metrics['failed_format']} 次")
-    print(f"因超时(死循环)失败: {metrics['failed_max_steps']} 次")
-    print("#"*40 + "\n")
+    started = time.monotonic()
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        futures = [executor.submit(worker, job) for job in pending]
+        for index, future in enumerate(as_completed(futures), 1):
+            row = future.result()
+            if index % 10 == 0 or index == len(pending):
+                print(f"{index}/{len(pending)} elapsed={time.monotonic()-started:.0f}s last={row['key']} "
+                      f"correct={row['is_correct']} status={row['result']['status']}", flush=True)
+    from eval.report import write_report
+    write_report(directory)
+    print(f"Report: {directory / 'report.md'}", flush=True)
 
-    # 7. 保存到本地文件
-    os.makedirs("logs", exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    mode_str = "Reflect_ON" if enable_reflection else "Reflect_OFF"
-    log_filename = f"logs/Eval_{task_type}_{mode_str}_{timestamp}.json"
-    
-    with open(log_filename, "w", encoding="utf-8") as f:
-        json.dump({
-            "metrics": metrics,
-            "logs": detailed_logs
-        }, f, ensure_ascii=False, indent=2)
-        
-    print(f"详细运行日志已保存至: {log_filename}")
 
 if __name__ == "__main__":
-    HOTPOT_DATA_PATH = "data/hotpotqa200.jsonl"
-    MATH_DATA_PATH = "data/math.jsonl"
-    
-    # 测试数量
-    NUM_SAMPLES = 200
-    '''
-    print("\n--- 实验 A：关闭纠错机制 ---")
-    run_evaluation(MATH_DATA_PATH, task_type="MATH", max_samples=NUM_SAMPLES, enable_reflection=False)
-
-    run_evaluation(HOTPOT_DATA_PATH, task_type="QA", max_samples=NUM_SAMPLES, enable_reflection=False)   
-    '''
-    
-    print("\n\n--- 实验 B：开启纠错机制 ---")
-    
-    ''' 
-    run_evaluation(MATH_DATA_PATH, task_type="MATH", max_samples=NUM_SAMPLES, enable_reflection=True)
-    '''
-
-    run_evaluation(HOTPOT_DATA_PATH, task_type="QA", max_samples=NUM_SAMPLES, enable_reflection=True)
-    
+    main()
