@@ -74,7 +74,7 @@ def main(argv=None):
                                                 torch_dtype=torch.bfloat16, trust_remote_code=False)
     # Reject long examples before training; silent right truncation may discard the completion.
     for row in train + validation:
-        tokens = tokenizer.apply_chat_template(row["prompt"] + row["completion"], tokenize=True)
+        tokens = tokenizer.apply_chat_template(row["prompt"] + row["completion"], tokenize=True, return_dict=False)
         if len(tokens) > args.max_length:
             raise ValueError("Example exceeds max-length; curate or increase the limit before training")
     config = SFTConfig(output_dir=str(output), max_steps=args.max_steps,

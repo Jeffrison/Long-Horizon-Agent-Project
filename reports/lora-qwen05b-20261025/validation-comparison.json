@@ -1,0 +1,120 @@
+{
+  "base_nll": 0.8767848748508609,
+  "lora_nll": 0.583000797824686,
+  "examples": 15,
+  "questions": 3,
+  "completion_tokens": 563,
+  "elapsed_seconds": 3.2190000000009604,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "data_sha256": "e0440512d5a883c908b6b39da0ed63ed0091649b1674c1f46f5751a5b1871146",
+  "scope": "question-disjoint development validation; teacher-forced NLL, NOT answer accuracy",
+  "precision": "bfloat16",
+  "records": [
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 29,
+      "prompt_tokens_masked": 277,
+      "base_nll": 1.2253196239471436,
+      "lora_nll": 0.4200054407119751
+    },
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 13,
+      "prompt_tokens_masked": 359,
+      "base_nll": 0.7710619568824768,
+      "lora_nll": 0.1002596989274025
+    },
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 6,
+      "prompt_tokens_masked": 517,
+      "base_nll": 3.2271413803100586,
+      "lora_nll": 0.4572038948535919
+    },
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 38,
+      "prompt_tokens_masked": 240,
+      "base_nll": 1.0355805158615112,
+      "lora_nll": 0.31282666325569153
+    },
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 37,
+      "prompt_tokens_masked": 331,
+      "base_nll": 0.25191864371299744,
+      "lora_nll": 0.19604922831058502
+    },
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 46,
+      "prompt_tokens_masked": 513,
+      "base_nll": 0.8750476241111755,
+      "lora_nll": 0.8064929842948914
+    },
+    {
+      "question_key": "0395cf6a3ce8711ec3c068f00312be68258414faff51e18d19fbeddaf51b4608",
+      "supervised_tokens": 52,
+      "prompt_tokens_masked": 252,
+      "base_nll": 1.2325952053070068,
+      "lora_nll": 0.6482614278793335
+    },
+    {
+      "question_key": "0395cf6a3ce8711ec3c068f00312be68258414faff51e18d19fbeddaf51b4608",
+      "supervised_tokens": 55,
+      "prompt_tokens_masked": 513,
+      "base_nll": 0.318263977766037,
+      "lora_nll": 0.3134160041809082
+    },
+    {
+      "question_key": "0395cf6a3ce8711ec3c068f00312be68258414faff51e18d19fbeddaf51b4608",
+      "supervised_tokens": 8,
+      "prompt_tokens_masked": 966,
+      "base_nll": 1.420335292816162,
+      "lora_nll": 0.08573625981807709
+    },
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 36,
+      "prompt_tokens_masked": 331,
+      "base_nll": 0.2725374400615692,
+      "lora_nll": 0.18983399868011475
+    },
+    {
+      "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+      "supervised_tokens": 30,
+      "prompt_tokens_masked": 512,
+      "base_nll": 1.274483561515808,
+      "lora_nll": 1.2016364336013794
+    },
+    {
+      "question_key": "143d8484770ff5a3aac32b1c1f26b4f58faabd0c6ae81051ed0472554f721212",
+      "supervised_tokens": 78,
+      "prompt_tokens_masked": 280,
+      "base_nll": 1.272717833518982,
+      "lora_nll": 1.0476202964782715
+    },
+    {
+      "question_key": "143d8484770ff5a3aac32b1c1f26b4f58faabd0c6ae81051ed0472554f721212",
+      "supervised_tokens": 54,
+      "prompt_tokens_masked": 655,
+      "base_nll": 0.9155368804931641,
+      "lora_nll": 0.7660683989524841
+    },
+    {
+      "question_key": "143d8484770ff5a3aac32b1c1f26b4f58faabd0c6ae81051ed0472554f721212",
+      "supervised_tokens": 65,
+      "prompt_tokens_masked": 926,
+      "base_nll": 0.6034221649169922,
+      "lora_nll": 0.5337949395179749
+    },
+    {
+      "question_key": "143d8484770ff5a3aac32b1c1f26b4f58faabd0c6ae81051ed0472554f721212",
+      "supervised_tokens": 16,
+      "prompt_tokens_masked": 1165,
+      "base_nll": 0.6776432394981384,
+      "lora_nll": 0.21672192215919495
+    }
+  ]
+}

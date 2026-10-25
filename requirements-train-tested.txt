@@ -1,0 +1,14 @@
+# Observed versions for the 2026-10-25 0.5B CUDA pilot.
+# Install an appropriate CUDA PyTorch build separately; observed build: 2.7.1+cu118.
+torch==2.7.1
+numpy==1.26.4
+pandas==2.2.2
+pyarrow==23.0.1
+transformers==5.20.2
+datasets==4.8.5
+peft==0.21.2
+trl==1.16.0
+accelerate==1.15.0
+huggingface-hub==1.33.0
+tokenizers==0.23.3
+safetensors==0.8.0

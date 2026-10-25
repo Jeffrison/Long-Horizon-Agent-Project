@@ -1,0 +1,22 @@
+{
+  "train_examples": 63,
+  "validation_examples": 15,
+  "train_questions": 15,
+  "validation_questions": 3,
+  "input_sha256": "e0440512d5a883c908b6b39da0ed63ed0091649b1674c1f46f5751a5b1871146",
+  "dry_run": false,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "requested_model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "resolved_model_revision": null,
+  "arguments": {
+    "data": "outputs/training-qa-20261025/sft.jsonl",
+    "output": "outputs/lora-qwen05b-20261025",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "max_length": 4096,
+    "max_steps": 25,
+    "seed": 11,
+    "dry_run": false
+  },
+  "training_status": "completed"
+}

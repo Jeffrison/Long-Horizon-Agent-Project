@@ -1,0 +1,8 @@
+{
+  "local_path": "D:\\Agent_Eval_Project\\outputs\\lora-qwen05b-20261025\\adapter\\adapter_model.safetensors",
+  "bytes": 35237104,
+  "sha256": "3536c589fd14cdab5b9884dc30e52960ca391d48b9b85709ad89e60f624edc27",
+  "base_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "initial_training_code_revision": "5b3b8c3",
+  "post_training_checks": "return_dict=False token-boundary correction; all 78 examples audited below limit after original training"
+}

@@ -1,0 +1,25 @@
+{
+  "source": "outputs\\dev-math-20261025",
+  "source_manifest_sha256": "488477e513b3a6abdeca157ef414a10a024d8a6d7f67775746afd16b65e3bc1d",
+  "eligible_dev_episodes": 66,
+  "sft_examples": 14,
+  "preference_candidates": 1,
+  "question_keys": [
+    "3f91e2bfae2763287d7f885d3783f3187d28c12dcbcb2e3a6ed5c631f91d0efe",
+    "6637b8c714175b980a556ff9f77c8635bf7cf8fc76568e9c9bc03cd0b182af12",
+    "72908e371f022bf83ce06bdccda5bb2b662d112728e7786270e2b10ae7e2e1d2",
+    "9af9c7fdd57e5efbefa3f81cf757da722ac9c42859b25b432a873a2b0203630f",
+    "b15a48f194f9c5248992cfd55a8c4bc7541ee3a43d2154dde467c1e2d8ca5d35",
+    "b89541e38e41d9e3b90608446ab8109811bcb0673232b8df6fb3cddc75c134d0",
+    "bc0c3e993f8093c6b2cd102232c95a02f6c64aef82aad1b5a940ef2b7adcd6df",
+    "d4941cedf488b4a9fbaf9e12af624f115e73f7b05a8725354239bbba26675c85",
+    "ef58c6ff420f12a6d48647080547fbf318fbe1ac25f55020bb2616375161273a",
+    "fb007fb19911426baa23d9a0145320ab777a948f3306676e3c805e12c8d097f2",
+    "fc7aae70bdeab88a747dbcd23cc500f2eb9d25fac3238e0ed986af82611f9277"
+  ],
+  "limitations": [
+    "Outcome-filtered self-generated SFT is not expert supervision.",
+    "Candidate DPO labels are noisy; review before training.",
+    "No model has been trained by this export."
+  ]
+}

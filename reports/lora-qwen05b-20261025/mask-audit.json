@@ -1,0 +1,9 @@
+{
+  "examples_checked": 78,
+  "prompt_tokens_masked": 45073,
+  "completion_tokens_supervised": 2629,
+  "all_prompts_and_observations_masked": true,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+  "implementation": "actual TRL-preprocessed dataset and trainer.data_collator"
+}
