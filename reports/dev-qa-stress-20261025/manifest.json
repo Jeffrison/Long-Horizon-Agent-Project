@@ -1,0 +1,286 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-25T04:20:23.522471+00:00",
+  "git_revision": "e9a46c42a2a48670a963fac56dcd70c92b4a8f16",
+  "git_dirty": false,
+  "settings": {
+    "tasks": {
+      "QA": [
+        {
+          "id": "qa-03693e140d61e98b",
+          "question": "What occupation was shared by David Yates and Pietro Germi?",
+          "answer": "director",
+          "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+          "split": "dev"
+        },
+        {
+          "id": "qa-0395cf6a3ce8711e",
+          "question": "What screenwriter with credits for \"Evolution\" co-wrote a film starring Nicolas Cage and Téa Leoni?",
+          "answer": "David Weissman",
+          "question_key": "0395cf6a3ce8711ec3c068f00312be68258414faff51e18d19fbeddaf51b4608",
+          "split": "dev"
+        },
+        {
+          "id": "qa-143d8484770ff5a3",
+          "question": "Which year and which conference was the 14th season for this conference as part of the NCAA Division that the Colorado Buffaloes played in with a record of 2-6 in conference play?",
+          "answer": "2009 Big 12 Conference",
+          "question_key": "143d8484770ff5a3aac32b1c1f26b4f58faabd0c6ae81051ed0472554f721212",
+          "split": "dev"
+        },
+        {
+          "id": "qa-1477ee4e5b832f29",
+          "question": "Do The Importance of Being Icelandic and The Five Obstructions belong to different film genres ?",
+          "answer": "no",
+          "question_key": "1477ee4e5b832f29e0f9ba87e6b4f4df63184fe6431a3363ffeed390a3583930",
+          "split": "dev"
+        },
+        {
+          "id": "qa-1ac77cf688b6a57f",
+          "question": "Works by Hanna Leena Kristiina Varis are part of a collection in a museum that houses approximately 65,000 what?",
+          "answer": "drawings",
+          "question_key": "1ac77cf688b6a57f4262968515782283fecb7bc5fc4d235700255b6038dbe25a",
+          "split": "dev"
+        },
+        {
+          "id": "qa-1e83a563fade758e",
+          "question": "The Argentine PGA Championship record holder has won how many tournaments worldwide?",
+          "answer": "230",
+          "question_key": "1e83a563fade758e9e537aab3811df2ddf7c20d88ec19c67a46c48afc9cf5298",
+          "split": "dev"
+        },
+        {
+          "id": "qa-1f820946a9c595bc",
+          "question": "Which airplane was this Major test-flying after whom the base, that 514th Flight Test Squadron is stated at, is named?",
+          "answer": "B-17 Flying Fortress bomber",
+          "question_key": "1f820946a9c595bcd9e25b8b3306d303f676993c65886cb0f5b2b37316252b9b",
+          "split": "dev"
+        },
+        {
+          "id": "qa-278c3c290e18a346",
+          "question": "What American professional Hawaiian surfer born 18 October 1992 won the Rip Curl Pro Portugal?",
+          "answer": "John John Florence",
+          "question_key": "278c3c290e18a34607e5f5ae735f683fd159892faf997749cf85265827dc2466",
+          "split": "dev"
+        },
+        {
+          "id": "qa-3ef80e3d38e79e78",
+          "question": "What was the father of Kasper Schmeichel voted to be by the IFFHS in 1992?",
+          "answer": "World's Best Goalkeeper",
+          "question_key": "3ef80e3d38e79e78265bf52fd853da1cdbaff1554004130a4efc176ae34eed1c",
+          "split": "dev"
+        },
+        {
+          "id": "qa-52d65bf818d42c91",
+          "question": "Which board game was published most recently, Pirate's Cove or Catan?",
+          "answer": "Pirate's Cove",
+          "question_key": "52d65bf818d42c91fdda4c6be68c09dee6ae2678909146d80981e9acb306b1be",
+          "split": "dev"
+        },
+        {
+          "id": "qa-5916de986ee40fa4",
+          "question": "The arena where the Lewiston Maineiacs played their home games can seat how many people?",
+          "answer": "3,677 seated",
+          "question_key": "5916de986ee40fa4cdd362b37e6026ba16da9659e3cc1f194ee6646b35089d9e",
+          "split": "dev"
+        },
+        {
+          "id": "qa-5ea7e8c06f4984a1",
+          "question": "Are Yingkou and Fuding the same level of city?",
+          "answer": "no",
+          "question_key": "5ea7e8c06f4984a1fb310b00325c87481b43566a494b22764e898f1d17f8e2ee",
+          "split": "dev"
+        },
+        {
+          "id": "qa-5f746954840491a7",
+          "question": "What science fantasy young adult series, told in first person, has a set of companion books narrating the stories of enslaved worlds and alien species?",
+          "answer": "Animorphs",
+          "question_key": "5f746954840491a729af6bfbe0c33cb5f158b4e780ab01e37f381db1c6fc6145",
+          "split": "dev"
+        },
+        {
+          "id": "qa-60a306a04dd6cf3b",
+          "question": "What is the name of the executive producer of the film that has a score composed by Jerry Goldsmith?",
+          "answer": "Ronald Shusett",
+          "question_key": "60a306a04dd6cf3b81dcae22265707a0e4e3b98c4a41a985a4b62101a0038449",
+          "split": "dev"
+        },
+        {
+          "id": "qa-633c04528f47cb58",
+          "question": "Who is older, Annie Morton or Terry Richardson?",
+          "answer": "Terry Richardson",
+          "question_key": "633c04528f47cb58dc2dd05a97fa77e77c1f95b25e9e7a023391653b0a7289c9",
+          "split": "dev"
+        },
+        {
+          "id": "qa-77f4be618ae916c4",
+          "question": "Where is the Bubblegum Alley, that is similar to Gum Wall, located in California?",
+          "answer": "San Luis Obispo, California",
+          "question_key": "77f4be618ae916c4853e3aef85ea87036ca9ff7129adfdb63113c8a02477f7ed",
+          "split": "dev"
+        },
+        {
+          "id": "qa-8134365a5edd0151",
+          "question": "What retailer in ABQ Uptown is headquarted in Poole, Dorset, United Kingdom?",
+          "answer": "Lush Ltd.",
+          "question_key": "8134365a5edd0151d9cf36ab6c6274a1942ce36466e4a3e9d25f1d9666c5bce8",
+          "split": "dev"
+        },
+        {
+          "id": "qa-873bfabf0794a24d",
+          "question": "In 2017, what was 3/4th of the organization that also has a Center for Veterinary Medicine as well as part of the U.S. Department of Health and Human Services, spent on?",
+          "answer": "Prescription Drug User Fee Act",
+          "question_key": "873bfabf0794a24d89e8fe4857873e29fdce6227d5c5280e5fde592f208dc53d",
+          "split": "dev"
+        },
+        {
+          "id": "qa-8a902e02ee139a6f",
+          "question": "Are the Laleli Mosque and Esma Sultan Mansion located in the same neighborhood?",
+          "answer": "no",
+          "question_key": "8a902e02ee139a6f42ff7d5780d336a6ea47f3f4906f40c838ea14fc3859d27e",
+          "split": "dev"
+        },
+        {
+          "id": "qa-90d0279fd17848da",
+          "question": "Which came out first, Dinosaur or McFarland, USA",
+          "answer": "Dinosaur",
+          "question_key": "90d0279fd17848da1961d67a6128d206e3c989390ecda890fe99b183944a347a",
+          "split": "dev"
+        },
+        {
+          "id": "qa-9326fff5cad5f29b",
+          "question": "Were Scott Derrickson and Ed Wood of the same nationality?",
+          "answer": "yes",
+          "question_key": "9326fff5cad5f29bde26d70c372a334d413c99f26b50db313a3a0ee5a4477565",
+          "split": "dev"
+        },
+        {
+          "id": "qa-94baae2093bc732a",
+          "question": "The youngest daughter of Lady Mary-Gaye Curzon stars with Douglas Smith and Lucien Laviscount  in what 2017 film?",
+          "answer": "The Bye Bye Man",
+          "question_key": "94baae2093bc732a20dbb3519aca8f3727e2d1cadfc5cf46ea1f7c1d7186e19d",
+          "split": "dev"
+        },
+        {
+          "id": "qa-979f63fb0114a89b",
+          "question": "Are Random House Tower and 888 7th Avenue both used for real estate?",
+          "answer": "no",
+          "question_key": "979f63fb0114a89ba00d870146002d2604d0a5887422985810c261bd52ae26fd",
+          "split": "dev"
+        },
+        {
+          "id": "qa-a1e75bde93d5a9cf",
+          "question": "When did the English local newspaper, featuring the sculpture and war memorial in the Forbury gardens, change names?",
+          "answer": "2009",
+          "question_key": "a1e75bde93d5a9cf940c49fb0b8f66b8c06561c622ddf08157f24f9a712564dd",
+          "split": "dev"
+        },
+        {
+          "id": "qa-a2a59126217b2ceb",
+          "question": "Which film was Oscar nominated, LaLee's Kin: The Legacy of Cotton or Gimme Shelter, the 1970 Rolling Stones documentary?",
+          "answer": "LaLee's Kin: The Legacy of Cotton",
+          "question_key": "a2a59126217b2ceb109db9ae53665f99608a370463ae2b57b48ae20590b42181",
+          "split": "dev"
+        },
+        {
+          "id": "qa-a7de4edfdfa699ee",
+          "question": "Are Ferocactus and Silene both types of plant?",
+          "answer": "yes",
+          "question_key": "a7de4edfdfa699eeb07e81ee2b9e69c979e6166ec498ca0b8ca2a92e41b07db6",
+          "split": "dev"
+        },
+        {
+          "id": "qa-ac0cb3ca5df4f1f2",
+          "question": "Were the bands Skin Yard and Ostava from the U.S.?",
+          "answer": "no",
+          "question_key": "ac0cb3ca5df4f1f283bd508ea1811ae10b387ed6d2675df382841d944d987cb2",
+          "split": "dev"
+        },
+        {
+          "id": "qa-bb2d80876b92db05",
+          "question": "What nationality were social anthropologists Alfred Gell and Edmund Leach?",
+          "answer": "British",
+          "question_key": "bb2d80876b92db05cb0b905c3965f6358da4de6008f90b8c9851b24167ebccc3",
+          "split": "dev"
+        },
+        {
+          "id": "qa-c02f427d261616ec",
+          "question": "In what city did the \"Prince of tenors\" star in a film based on an opera by Giacomo Puccini?",
+          "answer": "Rome",
+          "question_key": "c02f427d261616ecec38d982f3c5adb4884bab4135a4eb3368d6ed0125dcfa6a",
+          "split": "dev"
+        },
+        {
+          "id": "qa-c4e980ad5d01103e",
+          "question": "What WB supernatrual drama series was Jawbreaker star Rose Mcgowan best known for being in?",
+          "answer": "Charmed",
+          "question_key": "c4e980ad5d01103e74be92082dee9fc1fc58682a57c2af5344ddddf6b9c6b4cc",
+          "split": "dev"
+        },
+        {
+          "id": "qa-d27a0553ab99aba4",
+          "question": "What is the name of the singer who's song was released as the lead single from the album \"Confessions\", and that had popular song stuck behind for eight consecutive weeks?",
+          "answer": "Usher",
+          "question_key": "d27a0553ab99aba4a922ba248ed740c65bca2b0be3b07dc6894b676907852a69",
+          "split": "dev"
+        },
+        {
+          "id": "qa-dab27354f4d8b191",
+          "question": "Vince Phillips held a junior welterweight title by an organization recognized by what larger Hall of Fame?",
+          "answer": "International Boxing Hall of Fame",
+          "question_key": "dab27354f4d8b19106e4aa584b41c3ceaee399f074a03d0f31fb6ceea19e07e5",
+          "split": "dev"
+        },
+        {
+          "id": "qa-dd590442248ff147",
+          "question": "Robert Suettinger was the national intelligence officer under which former Governor of Arkansas?",
+          "answer": "William Jefferson Clinton",
+          "question_key": "dd590442248ff147261ff834da4ad534c933a5bdea87c888d29eb0b764e23c7c",
+          "split": "dev"
+        },
+        {
+          "id": "qa-f5cf3069e0e60c67",
+          "question": "Which American audio engineer and clandestine chemist, who was a key figure in the San Francisco Bay Area hippie movement during the 1960s recorded the album \"Old and in the Way?\"",
+          "answer": "Owsley Stanley",
+          "question_key": "f5cf3069e0e60c673046294472ddd242465b166425c498bd751209290075e751",
+          "split": "dev"
+        }
+      ]
+    },
+    "dataset_sha256": {
+      "QA": "5e3c13b20b77e7525ac8df308bba6549eea43e415f0689072603ab626e0888ac"
+    },
+    "config": {
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "max_calls": 8,
+      "max_tokens": 600,
+      "temperature": 0.1,
+      "history_turns": 8,
+      "max_observation_chars": 6000,
+      "timeout": 60,
+      "seed": 0,
+      "retrieval": "snapshot",
+      "context_path": "data/contexts/hotpotqa_distractor.jsonl"
+    },
+    "seeds": [
+      11,
+      29,
+      47
+    ],
+    "modes": [
+      "off",
+      "on"
+    ],
+    "split": "dev",
+    "metric_version": "strict-v2",
+    "protocol": "one-trajectory-no-answer-selection",
+    "workers": 4,
+    "provider_base_url": "https://api.siliconflow.cn/v1",
+    "retrieval_cache_only": false,
+    "context_sha256": "e18c10fcffd0a7225e88dac89268773360594ca9cd7a9e41afbdb373629136ac"
+  },
+  "limitations": [
+    "Seed is requested; provider determinism is not guaranteed.",
+    "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
+    "QA retrieval backend: snapshot; answer-only evaluation, no supporting-fact score."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "purpose": "One unscored transport diagnostic, max_tokens=1; never used as a benchmark prediction",
+  "source_episode": "QA:qa-2518e972efe64bf1:11:on",
+  "status": 200,
+  "body": "model response deliberately not used"
+}

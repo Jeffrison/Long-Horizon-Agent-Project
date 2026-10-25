@@ -1,0 +1,22 @@
+{
+  "status": "completed_service_stress",
+  "use_for_model_accuracy": false,
+  "reason": "Most planned items failed at the HTTP transport layer; no answer-based retries. All raw attempts retained.",
+  "groups": {
+    "MATH/off": {
+      "max_calls_reached": 3,
+      "api_error": 140
+    },
+    "MATH/on": {
+      "api_error": 135
+    },
+    "QA/off": {
+      "max_calls_reached": 1,
+      "api_error": 459
+    },
+    "QA/on": {
+      "api_error": 461,
+      "max_calls_reached": 1
+    }
+  }
+}

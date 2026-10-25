@@ -74,6 +74,7 @@ def main(argv=None):
     parser.add_argument("--history-turns", type=int, default=8)
     parser.add_argument("--temperature", type=float, default=0.1)
     parser.add_argument("--timeout", type=float, default=60)
+    parser.add_argument("--api-interval", type=float, default=1.0)
     parser.add_argument("--model", default=os.getenv("LLM_MODEL", "Qwen/Qwen2.5-7B-Instruct"))
     parser.add_argument("--retrieval", choices=["live", "snapshot"], default="snapshot")
     parser.add_argument("--context-path", default="data/contexts/hotpotqa_distractor.jsonl")
@@ -85,7 +86,7 @@ def main(argv=None):
         parser.error("Workers/limit must be positive; seeds must be unique")
     config = AgentConfig(model=args.model, max_calls=args.max_calls, max_tokens=args.max_tokens,
                          history_turns=args.history_turns, temperature=args.temperature, timeout=args.timeout,
-                         retrieval=args.retrieval, context_path=args.context_path)
+                         retrieval=args.retrieval, context_path=args.context_path, api_interval=args.api_interval)
     datasets = {}
     for task in dict.fromkeys(args.tasks):
         items = load_jsonl_dataset(DATASETS[task])

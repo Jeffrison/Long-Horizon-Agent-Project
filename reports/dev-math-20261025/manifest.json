@@ -1,0 +1,122 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-25T04:09:01.383328+00:00",
+  "git_revision": "42c0487e9430b98bffd06ebff8f0a3f8a2185b81",
+  "git_dirty": false,
+  "settings": {
+    "tasks": {
+      "MATH": [
+        {
+          "id": "math-3f91e2bfae276328",
+          "question": "There are $8!= 40320$ eight-digit positive integers that use each of the digits $1, 2, 3, 4, 5, 6, 7, 8$ exactly once. Let $N$ be the number of these integers that are divisible by $22$. Find the difference between $N$ and $2025$.$",
+          "answer": "279",
+          "question_key": "3f91e2bfae2763287d7f885d3783f3187d28c12dcbcb2e3a6ed5c631f91d0efe",
+          "split": "dev"
+        },
+        {
+          "id": "math-6637b8c714175b98",
+          "question": "In an $11 \\times 11$ grid of cells, each pair of edge-adjacent cells is connected by a door. Karthik wants to walk a path in this grid. He can start in any cell, but he must end in the same cell he started in, and he cannot go through any door more than once (not even in opposite directions). Compute the maximum number of doors he can go through in such a path.",
+          "answer": "200",
+          "question_key": "6637b8c714175b980a556ff9f77c8635bf7cf8fc76568e9c9bc03cd0b182af12",
+          "split": "dev"
+        },
+        {
+          "id": "math-72908e371f022bf8",
+          "question": "Alex divides a disk into four quadrants with two perpendicular diameters intersecting at the center of the disk. He draws $25$ more lines segments through the disk, drawing each segment by selecting two points at random on the perimeter of the disk in different quadrants and connecting these two points. Find the expected number of regions into which these $27$ line segments divide the disk.",
+          "answer": "204",
+          "question_key": "72908e371f022bf83ce06bdccda5bb2b662d112728e7786270e2b10ae7e2e1d2",
+          "split": "dev"
+        },
+        {
+          "id": "math-9af9c7fdd57e5efb",
+          "question": "Define $\\operatorname{sgn}(x)$ to be $1$ when $x$ is positive, $-1$ when $x$ is negative, and $0$ when $x$ is $0$. Compute\n\n$$\n\\sum_{n=1}^{\\infty} \\frac{\\operatorname{sgn}\\left(\\sin \\left(2^{n}\\right)\\right)}{2^{n}}\n$$\n(The arguments to sin are in radians.)",
+          "answer": "1-\\frac{2}{\\pi}",
+          "question_key": "9af9c7fdd57e5efbefa3f81cf757da722ac9c42859b25b432a873a2b0203630f",
+          "split": "dev"
+        },
+        {
+          "id": "math-b15a48f194f9c524",
+          "question": "Let $S$ be the set of vertices of a regular $24$-gon. Find the number of ways to draw $12$ segments of equal lengths so that each vertex in $S$ is an endpoint of exactly one of the $12$ segments.",
+          "answer": "113",
+          "question_key": "b15a48f194f9c5248992cfd55a8c4bc7541ee3a43d2154dde467c1e2d8ca5d35",
+          "split": "dev"
+        },
+        {
+          "id": "math-b89541e38e41d9e3",
+          "question": "Trapezoid $A B C D$, with $A B \\| C D$, has side lengths $A B=11, B C=8, C D=19$, and $D A=4$. Compute the area of the convex quadrilateral whose vertices are the circumcenters of $\\triangle A B C, \\triangle B C D$, $\\triangle C D A$, and $\\triangle D A B$.",
+          "answer": "9\\sqrt{15}",
+          "question_key": "b89541e38e41d9e3b90608446ab8109811bcb0673232b8df6fb3cddc75c134d0",
+          "split": "dev"
+        },
+        {
+          "id": "math-bc0c3e993f8093c6",
+          "question": "In $\\triangle ABC$ points $D$ and $E$ lie on $\\overline{AB}$ so that $AD < AE < AB$, while points $F$ and $G$ lie on $\\overline{AC}$ so that $AF < AG < AC$. Suppose $AD = 4$, $DE = 16$, $EB = 8$, $AF = 13$, $FG = 52$, and $GC = 26$. Let $M$ be the reflection of $D$ through $F$, and let $N$ be the reflection of $G$ through $E$. The area of quadrilateral $DEGF$ is $288$. Find the area of heptagon $AFNBCEM$.",
+          "answer": "588",
+          "question_key": "bc0c3e993f8093c6b2cd102232c95a02f6c64aef82aad1b5a940ef2b7adcd6df",
+          "split": "dev"
+        },
+        {
+          "id": "math-d4941cedf488b4a9",
+          "question": "Compute the number of ways to pick two rectangles in a $5 \\times 5$ grid of squares such that the edges of the rectangles lie on the lines of the grid and the rectangles do not overlap at their interiors, edges, or vertices. The order in which the rectangles are chosen does not matter.",
+          "answer": "6300",
+          "question_key": "d4941cedf488b4a9fbaf9e12af624f115e73f7b05a8725354239bbba26675c85",
+          "split": "dev"
+        },
+        {
+          "id": "math-ef58c6ff420f12a6",
+          "question": "Sophie is at $(0,0)$ on a coordinate grid and would like to get to $(3,3)$. If Sophie is at $(x, y)$, in a single step she can move to one of $(x+1, y),(x, y+1),(x-1, y+1)$, or $(x+1, y-1)$. She cannot revisit any points along her path, and neither her $x$-coordinate nor her $y$-coordinate can ever be less than $0$ or greater than 3. Compute the number of ways for Sophie to reach $(3,3)$.",
+          "answer": "2304",
+          "question_key": "ef58c6ff420f12a6d48647080547fbf318fbe1ac25f55020bb2616375161273a",
+          "split": "dev"
+        },
+        {
+          "id": "math-fb007fb19911426b",
+          "question": "Find the sum of all integer bases $b>9$ for which $17_b$ is a divisor of $97_b.$",
+          "answer": "70",
+          "question_key": "fb007fb19911426baa23d9a0145320ab777a948f3306676e3c805e12c8d097f2",
+          "split": "dev"
+        },
+        {
+          "id": "math-fc7aae70bdeab88a",
+          "question": "Let $\\triangle A B C$ be an equilateral triangle with side length $6$. Let $P$ be a point inside triangle $\\triangle A B C$ such that $\\angle B P C=120^{\\circ}$. The circle with diameter $\\overline{A P}$ meets the circumcircle of $\\triangle A B C$ again at $X \\neq A$. Given that $A X=5$, compute $X P$.",
+          "answer": "\\sqrt{23}-2 \\sqrt{3}",
+          "question_key": "fc7aae70bdeab88a747dbcd23cc500f2eb9d25fac3238e0ed986af82611f9277",
+          "split": "dev"
+        }
+      ]
+    },
+    "dataset_sha256": {
+      "MATH": "50dbb3090c3e10daa71082fdf54eaeae921ebcc95cb8d649cf9c5434684fea42"
+    },
+    "config": {
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "max_calls": 8,
+      "max_tokens": 600,
+      "temperature": 0.1,
+      "history_turns": 8,
+      "max_observation_chars": 6000,
+      "timeout": 60,
+      "seed": 0
+    },
+    "seeds": [
+      11,
+      29,
+      47
+    ],
+    "modes": [
+      "off",
+      "on"
+    ],
+    "split": "dev",
+    "metric_version": "strict-v2",
+    "protocol": "one-trajectory-no-answer-selection",
+    "workers": 2,
+    "provider_base_url": "https://api.siliconflow.cn/v1",
+    "retrieval_cache_only": false
+  },
+  "limitations": [
+    "Seed is requested; provider determinism is not guaranteed.",
+    "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
+    "QA uses live Wikipedia, not the official HotpotQA distractor protocol."
+  ]
+}

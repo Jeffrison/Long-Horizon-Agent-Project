@@ -20,6 +20,7 @@ class AgentConfig:
     seed: int = 0
     retrieval: str = "live"
     context_path: str = "data/contexts/hotpotqa_distractor.jsonl"
+    api_interval: float = 1.0
 
     def __post_init__(self):
         if min(self.max_calls, self.max_tokens, self.history_turns, self.max_observation_chars) < 1:
@@ -28,6 +29,8 @@ class AgentConfig:
             raise ValueError("Invalid timeout or temperature")
         if self.retrieval not in {"live", "snapshot"}:
             raise ValueError("Unknown retrieval backend")
+        if self.api_interval < 0:
+            raise ValueError("api_interval must be nonnegative")
 
 
 def run_agent(query: str, task_type: str = "QA", max_steps: int = 8,
@@ -78,7 +81,8 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 8,
         try:
             response = client.complete(messages, config.seed + call)
         except Exception as exc:
-            event.update(error="api_error", error_type=type(exc).__name__)
+            event.update(error="api_error", error_type=type(exc).__name__,
+                         http_status=getattr(exc, "status_code", None))
             return finish("failed", error="api_error")
         event.update(response)
         event["latency_seconds"] = round(time.monotonic() - call_start, 4)
