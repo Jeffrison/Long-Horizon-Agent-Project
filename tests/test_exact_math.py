@@ -17,6 +17,8 @@ def test_rationals_zero_and_decimals():
     assert not exact_math_match("0.000000001","0")
     assert not exact_math_match("0",r"\frac{1}{100000000000}")
     assert exact_math_match(r"\sqrt{4}","2")
+    assert not exact_math_match("0","1e-400")
+    assert exact_math_match("1e-400","1e-400")
 
 
 @pytest.mark.parametrize("text",["1e-999999999999","10**1000000","__import__('os')","sqrt(-1)"])

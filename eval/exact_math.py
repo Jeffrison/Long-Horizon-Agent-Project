@@ -57,7 +57,10 @@ def _evaluate(node,source):
                 numerator,denominator=math.isqrt(value.numerator),math.isqrt(value.denominator)
                 if numerator*numerator==value.numerator and denominator*denominator==value.denominator:
                     return Fraction(numerator,denominator)
-            return _limit(math.sqrt(value))
+            result=math.sqrt(value)
+            if value>0 and result==0:
+                raise ValueError("Square root underflow")
+            return _limit(result)
     raise ValueError("Unsupported numeric syntax")
 
 
@@ -100,6 +103,9 @@ def exact_math_match(prediction,ground_truth,rel_tol=1e-6):
         if isinstance(gold,Fraction) and gold.denominator==1:
             # A decimal approximation or off-by-one large integer cannot pass by relative tolerance.
             return isinstance(pred,Fraction) and pred==gold
+        if isinstance(gold,Fraction):
+            approximate=pred if isinstance(pred,Fraction) else Fraction(str(pred))
+            return abs(approximate-gold)<=abs(gold)*Fraction(str(rel_tol))
         return math.isclose(float(pred),float(gold),rel_tol=rel_tol,abs_tol=0)
     if prediction is None or ground_truth is None:
         return False
