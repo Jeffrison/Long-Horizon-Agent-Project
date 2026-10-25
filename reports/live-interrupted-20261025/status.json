@@ -1,0 +1,6 @@
+{
+  "status": "aborted_infrastructure",
+  "reason": "Wikipedia HTTP 429 rate limiting and model request read timeouts during startup; switching to a separately preregistered frozen-context experiment, without result selection.",
+  "stopped_at": "2026-10-25T04:17:05.564579+00:00",
+  "never_use_as_full_accuracy_estimate": true
+}

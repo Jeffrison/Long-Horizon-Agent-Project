@@ -1,0 +1,1553 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-25T04:08:23.350839+00:00",
+  "git_revision": "42c0487e9430b98bffd06ebff8f0a3f8a2185b81",
+  "git_dirty": false,
+  "settings": {
+    "tasks": {
+      "QA": [
+        {
+          "id": "qa-00078ce0f0aaf621",
+          "question": "What major truck road is located in Backford Cross?",
+          "answer": "The A41",
+          "question_key": "00078ce0f0aaf621dfbdd8e0a6a0152a1bca7867efb3e751f23185bc83deb0e4",
+          "split": "test"
+        },
+        {
+          "id": "qa-003b327aa5a255b5",
+          "question": "Joe Walker played for which team that ends their regular season with the Civil War rivalry game?",
+          "answer": "Oregon Ducks football",
+          "question_key": "003b327aa5a255b5c59bdd2beef7dea75ad0806a7175ac51cdea65fcf17679e6",
+          "split": "test"
+        },
+        {
+          "id": "qa-00650646b32e2cd8",
+          "question": "When was Poison's album \"Shut Up, Make Love\" released?",
+          "answer": "2000",
+          "question_key": "00650646b32e2cd86f896a9999e0fa2edf5cc98ce6c2edd3104599e636c13a26",
+          "split": "test"
+        },
+        {
+          "id": "qa-008a0ad0d141df6e",
+          "question": "Which of Tara Strong major voice role in animated series is an American animated television series based on the DC Comics fictional superhero team, the \"Teen Titans\"?",
+          "answer": "Teen Titans Go!",
+          "question_key": "008a0ad0d141df6e80c603fecf1053d98b1d9dc3c191e53d675491d1a01088fc",
+          "split": "test"
+        },
+        {
+          "id": "qa-06895d0ff4633c62",
+          "question": "Which Eminem album included vocals from a singer who had an album titled \"Unapologetic\"?",
+          "answer": "\"The Marshall Mathers LP 2\"",
+          "question_key": "06895d0ff4633c621f9e0ecc3d7a46dda18f74238e00a06ce608f67243a085bf",
+          "split": "test"
+        },
+        {
+          "id": "qa-08a95911f5d1b18f",
+          "question": "Randall Cunningham II was a multi-sport athlete at the high school located in what Nevada city?",
+          "answer": "Summerlin",
+          "question_key": "08a95911f5d1b18f43b337f1fc16a2dc9e095db572688b2415a625bd228b01ac",
+          "split": "test"
+        },
+        {
+          "id": "qa-0b271d9560c58a03",
+          "question": "Scott Parkin has been a vocal critic of Exxonmobil and another corporation that has operations in how many countries ?",
+          "answer": "more than 70 countries",
+          "question_key": "0b271d9560c58a03fd738f19a30ab34de6c0de100311a7e79a9889da19d179df",
+          "split": "test"
+        },
+        {
+          "id": "qa-0b5eec12d4e97c3f",
+          "question": "Which travel parody series featured American actor, comedian, and radio host best known as the host of \"The Joe Schmo Show\"?",
+          "answer": "Hidden America with Jonah Ray",
+          "question_key": "0b5eec12d4e97c3f5079a15b1767cd23a1399a5cb6834584f3475bad730c9773",
+          "split": "test"
+        },
+        {
+          "id": "qa-0ec09a54d88d7171",
+          "question": "What season was the character introduced that becomes the main antagonist in the  following season, from the animated television series created by Bryan Konietzko and Michael Dante DiMartino as a sequel to \"\", which aired from 2005 to 2008? ",
+          "answer": "third",
+          "question_key": "0ec09a54d88d7171f7209535b1df13eaec64c0bac7662d066cca74f65a82b6c6",
+          "split": "test"
+        },
+        {
+          "id": "qa-107d57ceea0b7027",
+          "question": "Are both Dictyosperma, and Huernia described as a genus?",
+          "answer": "yes",
+          "question_key": "107d57ceea0b70279d6169643c31f1f49880d01214238c42cbdc831e2fbc6e75",
+          "split": "test"
+        },
+        {
+          "id": "qa-11362d103333987b",
+          "question": "What football club plays in the area between the old tool gates: Brook Bar and Trafford bar?",
+          "answer": "Manchester United",
+          "question_key": "11362d103333987b97eed75027f09374d9d315fec589953cbcffa764a122d3bd",
+          "split": "test"
+        },
+        {
+          "id": "qa-12eae381c7b01b3d",
+          "question": "Who did the Star and Dagger bass player marry?",
+          "answer": "Sean Yseult.",
+          "question_key": "12eae381c7b01b3de5510a5e6306810dcc41f688f9e602cc49d17498f65c114f",
+          "split": "test"
+        },
+        {
+          "id": "qa-131d82db14576356",
+          "question": "Mummulgum is a stop on the Bruxner Highway before reaching the town on the banks of which river?",
+          "answer": "Richmond",
+          "question_key": "131d82db1457635673191c502c7a2c957e8ab93a543d72cd0a32ab61eb67e5da",
+          "split": "test"
+        },
+        {
+          "id": "qa-161d51b3df84dae5",
+          "question": "What distinction is held by the former NBA player who was a member of the Charlotte Hornets during their 1992-93 season and was head coach for the WNBA team Charlotte Sting?",
+          "answer": "shortest player ever to play in the National Basketball Association",
+          "question_key": "161d51b3df84dae5ac520a8ddeb995582004bb2d0a46892c7d9f4e8c90c87ac7",
+          "split": "test"
+        },
+        {
+          "id": "qa-1690b4056fa4e5ab",
+          "question": "Born on 6 March 1937, this man was also a citizen of the United Kingdom.",
+          "answer": "Alistair Grant",
+          "question_key": "1690b4056fa4e5ab4f2265cd844db5db0c4063e86b19dc4f882f392b28f89829",
+          "split": "test"
+        },
+        {
+          "id": "qa-1a3c7deb4594fe96",
+          "question": "The director of the romantic comedy \"Big Stone Gap\" is based in what New York city?",
+          "answer": "Greenwich Village, New York City",
+          "question_key": "1a3c7deb4594fe96b9e4d8c4d9ef1175cab58513f7b167dfe0f5a1e107c963d9",
+          "split": "test"
+        },
+        {
+          "id": "qa-1bc25640d0332c86",
+          "question": "Who held the record for the longest service in the Australian Parliament for a woman, and was surpassed by  a former Australian politician who was the 29th Speaker of the House of Representatives?",
+          "answer": "Kathryn Jean Martin",
+          "question_key": "1bc25640d0332c863d35fbb0ff969b31fd968192f4091f264c13c3fd0cc21344",
+          "split": "test"
+        },
+        {
+          "id": "qa-1d68ace03380143f",
+          "question": "Where does the hotel and casino located in which Bill Cosby's third album was recorded?",
+          "answer": "Las Vegas Strip in Paradise",
+          "question_key": "1d68ace03380143fb0dcfc87bea4fc6c17ef5cb7fa498d3373b80faf248cdc08",
+          "split": "test"
+        },
+        {
+          "id": "qa-2357ef9d593f4ebd",
+          "question": "Which song was behind the third single on the album  \"A Lot About Livin' (And a Little 'bout Love)\" for two weeks on the country charts?",
+          "answer": "\"We'll Burn That Bridge\"",
+          "question_key": "2357ef9d593f4ebd2c663c9ecf87993eb8acccfaa2d097abf1341286c662b8e5",
+          "split": "test"
+        },
+        {
+          "id": "qa-23af023290b0fafa",
+          "question": "Over how many centuries were the \"dwelling place of the dead\" built?",
+          "answer": "three centuries",
+          "question_key": "23af023290b0fafa9e1c060d7d76987d5a307680f535179a626c5969627323d6",
+          "split": "test"
+        },
+        {
+          "id": "qa-241d0a6788d84df6",
+          "question": "Josey Scott and Ian Watkins were both promising musicians. Which of these talented men was incarcerated, impacting his career with a rock band?",
+          "answer": "Lostprophets disbanded in 2013 after Watkins was charged with sexual offences in late 2012.",
+          "question_key": "241d0a6788d84df63f94ab6e45354308ed4c52ab4b8f8dc5f7d26dfa90472b55",
+          "split": "test"
+        },
+        {
+          "id": "qa-2518e972efe64bf1",
+          "question": "D1NZ is a series based on what oversteering technique?",
+          "answer": "Drifting",
+          "question_key": "2518e972efe64bf176ec48a2d18e535d2d05bd828794db2f647264062554a843",
+          "split": "test"
+        },
+        {
+          "id": "qa-257d2b121d0b9592",
+          "question": "What is the birthplace of the Senator who represents the first of 62 districts in the State Senate?",
+          "answer": "Brooklyn, New York",
+          "question_key": "257d2b121d0b9592e9c2cc5609c41f57cc57262e266770e45cfb00b60cf62862",
+          "split": "test"
+        },
+        {
+          "id": "qa-26a657b7a4ac4f3c",
+          "question": "When was the palace founded at which Columba de Dunbar died in 1435?",
+          "answer": "the late 12th Century",
+          "question_key": "26a657b7a4ac4f3c93b2be3368e63d6721547397ac2b51e7f96e28a52eb7afd0",
+          "split": "test"
+        },
+        {
+          "id": "qa-27c418217dd39207",
+          "question": "This Celtic ruler who was born in AD 43 ruled southeastern Britain prior to conquest by which empire?",
+          "answer": "Roman",
+          "question_key": "27c418217dd3920728f2cdf3a2c1073055abba98f5eff4828b679c6ff420c061",
+          "split": "test"
+        },
+        {
+          "id": "qa-2926c35dca6568f4",
+          "question": "who is the younger brother of The episode guest stars of The Hard Easy ",
+          "answer": "Bill Murray",
+          "question_key": "2926c35dca6568f4ebcbccb9dc13f7912bcf2713eecd82f214d9b5848ea9e188",
+          "split": "test"
+        },
+        {
+          "id": "qa-295fdc765fc569e1",
+          "question": "At what venue was the January 2, 2012 game featured the University of Louisville team?",
+          "answer": "Mercedes-Benz Superdome",
+          "question_key": "295fdc765fc569e1fbe3184bf8d782e43a34ce2964d2f63607f4c51f9f7419fd",
+          "split": "test"
+        },
+        {
+          "id": "qa-2abcdfadeff97a3a",
+          "question": "The lamp used in many lighthouses is similiar to this type of lamp patented in 1780 by Aimé Argand?",
+          "answer": "Argand lamp",
+          "question_key": "2abcdfadeff97a3abdf85e0359652d567cdfb233f1e66ce08e745113638dcc0a",
+          "split": "test"
+        },
+        {
+          "id": "qa-2d82c91e171a1eb2",
+          "question": "Which performance act has a higher instrument to person ratio, Badly Drawn Boy or Wolf Alice? ",
+          "answer": "Badly Drawn Boy",
+          "question_key": "2d82c91e171a1eb2f7eafb0d8c1493d7863c43003dc5c4f491a6ba1d02a86e64",
+          "split": "test"
+        },
+        {
+          "id": "qa-2ecee8750a9ece6b",
+          "question": "What was the name of a woman from the book titled \"Their Lives: The Women Targeted by the Clinton Machine \" and was also a former white house intern?",
+          "answer": "Monica Lewinsky",
+          "question_key": "2ecee8750a9ece6bfa081fce27ac39cfacdb2f9a7c595f06848573ab4be44f6e",
+          "split": "test"
+        },
+        {
+          "id": "qa-311a3d56367d6603",
+          "question": "Where are Teide National Park and Garajonay National Park located?",
+          "answer": "Canary Islands, Spain",
+          "question_key": "311a3d56367d6603bd818e080b2179e5c0067daf6d3968e90dbb20ef20c28c16",
+          "split": "test"
+        },
+        {
+          "id": "qa-331a68aff5c717f7",
+          "question": "Who had the best singles ranking, Roberta Vinci or Jorge Lozano?",
+          "answer": "Roberta Vinci",
+          "question_key": "331a68aff5c717f788d64762df5e27116a6aea371dae72cdae602c109049486c",
+          "split": "test"
+        },
+        {
+          "id": "qa-33b230a775321d78",
+          "question": "The Memphis Hustle are based in a suburb of a city with a population of what in 2010?",
+          "answer": "48,982",
+          "question_key": "33b230a775321d786fefe567112077e038cd14a8a99783ac070b48711e127684",
+          "split": "test"
+        },
+        {
+          "id": "qa-361de86318836c03",
+          "question": "What type of activity does Owner earnings and Warren Buffett have in common?",
+          "answer": "business",
+          "question_key": "361de86318836c03c7c44666a3ed23b7ba4ed2b39db506262530b8e3f5814955",
+          "split": "test"
+        },
+        {
+          "id": "qa-374a003001677188",
+          "question": "What's the name of the fantasy film starring Sarah Bolger, featuring a New England family who discover magical creatures around their estate?",
+          "answer": "The Spiderwick Chronicles",
+          "question_key": "374a003001677188883d28ac640edca646fdaf7ebcb188c6d7450e9002e28662",
+          "split": "test"
+        },
+        {
+          "id": "qa-3846b708026171bc",
+          "question": "Roger O. Egeberg was Assistant Secretary for Health and Scientific Affairs during the administration of a president that served during what years?",
+          "answer": "1969 until 1974",
+          "question_key": "3846b708026171bcb62b1c3d2ba677bfffba149854209b911f3ebf630f154bf0",
+          "split": "test"
+        },
+        {
+          "id": "qa-39d1f820c902cdd8",
+          "question": "Do the drinks Gibson and Zurracapote both contain gin?",
+          "answer": "no",
+          "question_key": "39d1f820c902cdd852bb8c2832ed1f87d9ee5bffb1d70bed23affa777ceea9d1",
+          "split": "test"
+        },
+        {
+          "id": "qa-3d949cdfbb7c66a5",
+          "question": "Which of the city at the south of Shelly Beach, New South Wales is a local government area in the Hunter region of New South Wales, Australia?",
+          "answer": "City of Newcastle",
+          "question_key": "3d949cdfbb7c66a5e904b83001dcbb38a79a21ea8027c25613aa111fa19fad4c",
+          "split": "test"
+        },
+        {
+          "id": "qa-3f2bcf533918eba8",
+          "question": "The football manager who recruited David Beckham managed Manchester United during what timeframe?",
+          "answer": "from 1986 to 2013",
+          "question_key": "3f2bcf533918eba81b9e3b24be44a92bb1d91f52ed29e05fcac3da74a321a8e4",
+          "split": "test"
+        },
+        {
+          "id": "qa-41c5e6af84215014",
+          "question": "Who is Bruce Spizer an expert on, known as the most influential act of the rock era?",
+          "answer": "The Beatles",
+          "question_key": "41c5e6af842150142a048f5640c74e96eae07a9602bf11ef60c87b200883f488",
+          "split": "test"
+        },
+        {
+          "id": "qa-4309b14cc71b4fed",
+          "question": "In which city are the headquarters of the American research and scientific development company where Ravi Sethi worked as computer scientist located?",
+          "answer": "Murray Hill",
+          "question_key": "4309b14cc71b4fed651326b4f3cb07204b0ed53113855a9fd7eaaa42c78a5c8a",
+          "split": "test"
+        },
+        {
+          "id": "qa-431423a5340bd86e",
+          "question": "hree Men on a Horse is a play by a playwright born in which year ?",
+          "answer": "1887",
+          "question_key": "431423a5340bd86e6245203361f7fe25d9ba0b46e81bdec738eaed08c958726d",
+          "split": "test"
+        },
+        {
+          "id": "qa-43c4258824855506",
+          "question": "This singer of A Rather Blustery Day also voiced what hedgehog?",
+          "answer": "Sonic",
+          "question_key": "43c4258824855506b26a4758fcca865d005468b50e076d24a5a97b721bd774eb",
+          "split": "test"
+        },
+        {
+          "id": "qa-46e3e5a0663b766f",
+          "question": "Where did the descendants of the group of black Indians associated with the Seminole people settle?",
+          "answer": "Coahuila, Mexico",
+          "question_key": "46e3e5a0663b766f5951c8fd90fe8b09f1268b7a6cb929683c556ffa10ca0caf",
+          "split": "test"
+        },
+        {
+          "id": "qa-48503ce3d10ee833",
+          "question": "SuperMansion starred the actress who had a recurring role as whom on Workaholics?",
+          "answer": "Jillian Belk",
+          "question_key": "48503ce3d10ee8331ece37cbce0ba058e4076e9cf18c732c8309c250d7187635",
+          "split": "test"
+        },
+        {
+          "id": "qa-49e0992c80a9c372",
+          "question": "Are Local H and For Against both from the United States?",
+          "answer": "yes",
+          "question_key": "49e0992c80a9c372b99431be0cd77b7670749f8c02a873754344a2fd41181c36",
+          "split": "test"
+        },
+        {
+          "id": "qa-4aa15623b2abc175",
+          "question": "What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?",
+          "answer": "Arena of Khazan",
+          "question_key": "4aa15623b2abc175e102af26dc9b617deb13499d30c866d4efc8ac634e130216",
+          "split": "test"
+        },
+        {
+          "id": "qa-4f741e30a5364d39",
+          "question": "Which component of shellite has the formula (ON)CHOH?",
+          "answer": "picric acid",
+          "question_key": "4f741e30a5364d394b89923b612ed4dc579ccb110eec5c8e24ac2134af22b1a9",
+          "split": "test"
+        },
+        {
+          "id": "qa-52edc15c7c2bc249",
+          "question": "who is younger Keith Bostic or Jerry Glanville ?",
+          "answer": "Keith Bostic",
+          "question_key": "52edc15c7c2bc2497e3a58bf4dbf4f9521a4d6f21ce0ad4f00c96fa73d8ad034",
+          "split": "test"
+        },
+        {
+          "id": "qa-53532f925bff2376",
+          "question": "Kaiser Ventures corporation was founded by an American industrialist who became known as the father of modern American shipbuilding?",
+          "answer": "Henry J. Kaiser",
+          "question_key": "53532f925bff237666c611d1e737bdd6f67dc54a39aaa1884a074b99bdf47d0a",
+          "split": "test"
+        },
+        {
+          "id": "qa-544a5169b8849008",
+          "question": "In which city is the ambassador of the Rabat-Salé-Kénitra administrative region to China based?",
+          "answer": "Beijing",
+          "question_key": "544a5169b8849008671bae54f6ebb2339f20a08dd6f50b48b60c8e61f72cd637",
+          "split": "test"
+        },
+        {
+          "id": "qa-54513b31f8d9bc40",
+          "question": "Are both Elko Regional Airport and Gerald R. Ford International Airport located in Michigan?",
+          "answer": "no",
+          "question_key": "54513b31f8d9bc4091c88a7110e1778a608b7209d2905029b9445c4b2721a067",
+          "split": "test"
+        },
+        {
+          "id": "qa-546d5091d7b82283",
+          "question": "What was the Roud Folk Song Index of the nursery rhyme inspiring What Are Little Girls Made Of?",
+          "answer": "821",
+          "question_key": "546d5091d7b822836f646abc02a6778b542841affcf1e5bf04f23ca2fd2414a3",
+          "split": "test"
+        },
+        {
+          "id": "qa-54af00df27a3dbb8",
+          "question": "Alfred Balk served as the secretary of the Committee on the Employment of Minority Groups in the News Media under which United States Vice President?",
+          "answer": "Nelson Rockefeller",
+          "question_key": "54af00df27a3dbb8d86afa6e17da9c992ed059b1624eab46dc0f3c27481f986b",
+          "split": "test"
+        },
+        {
+          "id": "qa-59855a6f39aa714a",
+          "question": "What type of forum did a former Soviet statesman initiate?",
+          "answer": "Organizations could come together to address global issues",
+          "question_key": "59855a6f39aa714a2067ccea9063112b9bf81c007087c92334021a2206e2b31d",
+          "split": "test"
+        },
+        {
+          "id": "qa-59e03e54c195f6e1",
+          "question": "David Huntsinger has worked with this gospel singer born in the month of July?",
+          "answer": "Larnelle Harris",
+          "question_key": "59e03e54c195f6e1ba86d2c0d8773b8145940b6df401cd2fd88a098ae8dd74ca",
+          "split": "test"
+        },
+        {
+          "id": "qa-5aab56a07b40d6c1",
+          "question": "Considered the strongest recorded tropical cyclone, which cyclone had a film made about it in 2007?",
+          "answer": "1999 Odisha cyclone",
+          "question_key": "5aab56a07b40d6c1004460657559629d59b37874181ce15900ad2d26ef08ff10",
+          "split": "test"
+        },
+        {
+          "id": "qa-5c164d342488f123",
+          "question": "The 2017–18 Wigan Athletic F.C. season will be a year in which the team competes in the league cup known as what for sponsorship reasons?",
+          "answer": "Carabao Cup",
+          "question_key": "5c164d342488f12324fa9f069dbb2a3d98d726563246de4e8aa8191f95f1d1d2",
+          "split": "test"
+        },
+        {
+          "id": "qa-5f64ca4bab2a67b6",
+          "question": "The author of Sexual Politics attended which British University?",
+          "answer": "Oxford",
+          "question_key": "5f64ca4bab2a67b6042eb3ff5fdc0896dc5359b590bcd4857d3d27810d08e8d7",
+          "split": "test"
+        },
+        {
+          "id": "qa-603a90d1dcaf3df7",
+          "question": "Are Bamboo Mañalac and Danny Jones both musicians?",
+          "answer": "yes",
+          "question_key": "603a90d1dcaf3df72283d408748753a33ff0b2ac77825ba8778e80fa4cbc9316",
+          "split": "test"
+        },
+        {
+          "id": "qa-679e5655824ce30a",
+          "question": "Which Kentucky Writers Hall of Fame author has had works published by Dim Gray Bar Press?",
+          "answer": "Wendell Berry",
+          "question_key": "679e5655824ce30a65689b6af1f855b5dbeabd3f8ad1ce3127bee251ea6a9ac5",
+          "split": "test"
+        },
+        {
+          "id": "qa-68ad7a1945861a41",
+          "question": "Are Freakonomics and In the Realm of the Hackers both American documentaries?",
+          "answer": "no",
+          "question_key": "68ad7a1945861a415cc991b5189e44f2f7b69e73f9fa882a4e37ca123981c0ca",
+          "split": "test"
+        },
+        {
+          "id": "qa-69c6b71f7034a5fb",
+          "question": "Tefik Selim Mborja was a part of a party that held power in Albania until what year? ",
+          "answer": "1943",
+          "question_key": "69c6b71f7034a5fbef7b2baac2b2bf2bd30057a5505aa750359398eef7988490",
+          "split": "test"
+        },
+        {
+          "id": "qa-6c05a8e44175fd0e",
+          "question": "The songs from the sountrack to \"When Harry Met Sally\" are performed by a singer that has had how many top 20 US albums?",
+          "answer": "seven",
+          "question_key": "6c05a8e44175fd0e50e5273bc8b5665a131895d2643f185d9ebbb00e39173ff6",
+          "split": "test"
+        },
+        {
+          "id": "qa-6cbd93b69c1a1208",
+          "question": "Rostker v. Goldberg held that the practice of what way of filling armed forces vacancies was consitutional?",
+          "answer": "Conscription",
+          "question_key": "6cbd93b69c1a12084ae3fd2a80d4274dac428350f016923fc2c9b3a326dea00d",
+          "split": "test"
+        },
+        {
+          "id": "qa-6df73a9bbfe02346",
+          "question": "Who died first, George Archainbaud or Ralph Murphy?",
+          "answer": "George Archainbaud",
+          "question_key": "6df73a9bbfe02346b1eac0c9d98dc1e0fb03851a2f462792f447cf2627fab093",
+          "split": "test"
+        },
+        {
+          "id": "qa-6df91571aa24078c",
+          "question": "In what month is the annual documentary film festival, that is presented by the fortnightly published British journal of literary essays, held? ",
+          "answer": "March and April",
+          "question_key": "6df91571aa24078c01088132f82882c6030829a3f78fdf7ae9669e5c918d63a3",
+          "split": "test"
+        },
+        {
+          "id": "qa-713965464b0e795e",
+          "question": "How many copies of Roald Dahl's variation on a popular anecdote sold?",
+          "answer": "250 million",
+          "question_key": "713965464b0e795ee9a1a6f3cf403fc8a549430888637d2bd987f793a9060bbe",
+          "split": "test"
+        },
+        {
+          "id": "qa-7304ab7a1a6578f4",
+          "question": "What amount was the settlement that the character from the Son of al Quada got in 2017?",
+          "answer": "$10.5 million",
+          "question_key": "7304ab7a1a6578f44d88064ac6bdc8763190c7e43d8c13255f7ccef509146325",
+          "split": "test"
+        },
+        {
+          "id": "qa-73a8230f1b817e87",
+          "question": "Who was known by his stage name Aladin and helped organizations improve their performance as a consultant?",
+          "answer": "Eenasul Fateh",
+          "question_key": "73a8230f1b817e8794266aaddbccefe5385e202cd24d830a6fa428ddffa73287",
+          "split": "test"
+        },
+        {
+          "id": "qa-7457f8ec76dd6ef3",
+          "question": "Both Truth in Science and Discovery embrace what campaign?",
+          "answer": "\"Teach the Controversy\" campaign",
+          "question_key": "7457f8ec76dd6ef361f2b3a288760fb00cc703109384274ca59d2e4a51b4b312",
+          "split": "test"
+        },
+        {
+          "id": "qa-75de847de14e5b2f",
+          "question": "The 1974 Texas Tech Raiders football team represented what public research university in Lubbock, Texas?",
+          "answer": "Texas Tech University",
+          "question_key": "75de847de14e5b2f31106b5985c0d4cb72af3ca30d8b0e474b8b3daf2a6774f5",
+          "split": "test"
+        },
+        {
+          "id": "qa-78e760f4287b2e54",
+          "question": "Are Giuseppe Verdi and Ambroise Thomas both Opera composers ?",
+          "answer": "yes",
+          "question_key": "78e760f4287b2e54f3320275bdbf5481b51f70d43910c39bcaa6aaa81d63ff9c",
+          "split": "test"
+        },
+        {
+          "id": "qa-7af0f90fab293e57",
+          "question": "When was the American lawyer, lobbyist and political consultant who was a senior member of the presidential campaign of Donald Trump born?",
+          "answer": "April 1, 1949",
+          "question_key": "7af0f90fab293e578fcc304c947192a48cfe7765733bcacd186485ab8028a7da",
+          "split": "test"
+        },
+        {
+          "id": "qa-7b24133db650b310",
+          "question": "Which English musician is known for both the songs \"See Yourself\" and \"Withing You Without You\"?",
+          "answer": "George Harrison",
+          "question_key": "7b24133db650b3100bd39e644cf0d7cf44ac35dd81b1991266cd5ce0b209a61f",
+          "split": "test"
+        },
+        {
+          "id": "qa-7c214ae37ca75fba",
+          "question": "In 1991 Euromarché was bought by a chain that operated how any hypermarkets at the end of 2016?",
+          "answer": "1,462",
+          "question_key": "7c214ae37ca75fbac13829bd674dba45ca7326e86008fcc0cb3c12834fb17f8c",
+          "split": "test"
+        },
+        {
+          "id": "qa-7c5fa7fd312bb73d",
+          "question": "What other political position did the person who introduced the DISCLOSE Act hold?",
+          "answer": "United States Senator",
+          "question_key": "7c5fa7fd312bb73dd2a46e2212397cc034138e0de0f4db8b47bc85a94137203c",
+          "split": "test"
+        },
+        {
+          "id": "qa-7c7d9213a2dc6617",
+          "question": "Bordan Tkachuk was the CEO of a company that provides what sort of products?",
+          "answer": "IT products and services",
+          "question_key": "7c7d9213a2dc6617181ed90e0ac4d754d79ec7cc654318abb11ae3dfa5367e46",
+          "split": "test"
+        },
+        {
+          "id": "qa-7c96f19f2b36c8a0",
+          "question": "Which was fought earlier in our nation's history, the Seven Days Battles or the Battle of Manila?",
+          "answer": "The Seven Days Battles",
+          "question_key": "7c96f19f2b36c8a0dd706772c95c7ad83c6c529fbd43fab74f63ec3591c4d078",
+          "split": "test"
+        },
+        {
+          "id": "qa-7ce0fdc9db79fc5c",
+          "question": "Which Australian city founded in 1838 contains a boarding school opened by a Prime Minister of Australia and named after a school in London of the same name.",
+          "answer": "Marion, South Australia",
+          "question_key": "7ce0fdc9db79fc5c8f3846746a92a757babefaca9d661b56833e22a98eb107d3",
+          "split": "test"
+        },
+        {
+          "id": "qa-7d9eb4aff67e32bd",
+          "question": "Which dog's ancestors include Gordon and Irish Setters: the Manchester Terrier or the Scotch Collie?",
+          "answer": "Scotch Collie",
+          "question_key": "7d9eb4aff67e32bd6a87ccde915b34bce97c12966208c0f6b087b1de34afbabc",
+          "split": "test"
+        },
+        {
+          "id": "qa-7e18b99ad5d18000",
+          "question": "Who was born earlier, Emma Bull or Virginia Woolf?",
+          "answer": "Adeline Virginia Woolf",
+          "question_key": "7e18b99ad5d1800050cd6d6b12864f2e645590bcb537bb1e9457e559765a5ee4",
+          "split": "test"
+        },
+        {
+          "id": "qa-7e79f579b82df3c4",
+          "question": "When was the  former Indian cricketer who made his ODI debuts during the 2000 ICC KnockOut Trophy born? ",
+          "answer": "7 October 1978",
+          "question_key": "7e79f579b82df3c4d64ff43eb6fbdf60e46735bbb1afd18bb903248f216e2563",
+          "split": "test"
+        },
+        {
+          "id": "qa-83c27c4518ab5ea8",
+          "question": "Maxeda has been owned since 2004 by which American multinational equity firm?",
+          "answer": "KKR & Co",
+          "question_key": "83c27c4518ab5ea8c6b283a888c6869d406cfe6d14a9f20ec7098d662871206e",
+          "split": "test"
+        },
+        {
+          "id": "qa-85b3d3c4d6ead822",
+          "question": "What year was the brother of this first round draft pick by the Washington Redskins drafted?",
+          "answer": "2003",
+          "question_key": "85b3d3c4d6ead8228e76cac2b7e4d4a1c6cc83c4472168bb3b9be5d7d46a8e56",
+          "split": "test"
+        },
+        {
+          "id": "qa-862fb5cd534f4bf1",
+          "question": "What is the county seat of the county where East Lempster, New Hampshire is located?",
+          "answer": "Newport",
+          "question_key": "862fb5cd534f4bf1f1cf680f5f2c525b1ee0b09cd9887563b35cbe574845abd9",
+          "split": "test"
+        },
+        {
+          "id": "qa-8690077eee9879fb",
+          "question": "Seven Brief Lessons on Physics was written by an Italian physicist that has worked in France since what year?",
+          "answer": "2000",
+          "question_key": "8690077eee9879fb76735ba7ee451d5a7e25b18ff20d90d766da14d1b9ea95f8",
+          "split": "test"
+        },
+        {
+          "id": "qa-89e5089041f9ede2",
+          "question": "Marcus Wayne Garland spent nine seasons with an American professional baseball team that is based in Baltimore, Maryland, and was one of the AMerican League's original eight charter franchises when the league was established in what year?",
+          "answer": "1901",
+          "question_key": "89e5089041f9ede2ca6f7b42c836ce7a1ac8ae82866ed65d357f0a86c2c0a91f",
+          "split": "test"
+        },
+        {
+          "id": "qa-8e6d55d8e620a500",
+          "question": "What director worked with Vikram Bhatt on a film starring actors Rajneesh Duggal and Adah Sharma?",
+          "answer": "Tinu Suresh Desai",
+          "question_key": "8e6d55d8e620a50001bc8d26647f63fae4323bdcf2483977128ca66a6f5cf66d",
+          "split": "test"
+        },
+        {
+          "id": "qa-8fb8d880fb2481d5",
+          "question": "Which filmmaker was known for animation, Lev Yilmaz or Pamela B. Green?",
+          "answer": "Levni Yilmaz",
+          "question_key": "8fb8d880fb2481d53a165885cee7480258a9ef38cc86911f8b4e9ec02bb9875f",
+          "split": "test"
+        },
+        {
+          "id": "qa-908a3ea58e54e098",
+          "question": "Both Bishop Carroll Catholic High School and Kapaun Mt. Carmel Catholic High School are located in which city in Kansas?",
+          "answer": "Wichita",
+          "question_key": "908a3ea58e54e0981193b67e403c984f8de9a854e5834d34a53ff6bca5a05d85",
+          "split": "test"
+        },
+        {
+          "id": "qa-92cd9f36f828fd39",
+          "question": "What is the full name of the viral respiratory disease in which Yi Guan's research helped to prevent the outbreak of?",
+          "answer": "severe acute respiratory syndrome",
+          "question_key": "92cd9f36f828fd396574972fd4a2ff9857b0aac9173e6506d1ded0a13a285aca",
+          "split": "test"
+        },
+        {
+          "id": "qa-934436e357ed5308",
+          "question": "Ellie Goulding worked with what other writers on her third studio album, Delirium?",
+          "answer": "Max Martin, Savan Kotecha and Ilya Salmanzadeh",
+          "question_key": "934436e357ed5308215f9e6926718ff7fe6754a9dda5f548fe3c08306e6cd495",
+          "split": "test"
+        },
+        {
+          "id": "qa-943aa7e9411a8471",
+          "question": "Aside from the Apple Remote, what other device can control the program Apple Remote was originally designed to interact with?",
+          "answer": "keyboard function keys",
+          "question_key": "943aa7e9411a84718acaf77e8b76fdf261c266fe9aa0cbcbe12b5e6d53755d5c",
+          "split": "test"
+        },
+        {
+          "id": "qa-965a4dd40425871f",
+          "question": "What was the name of the 1996 loose adaptation of William Shakespeare's \"Romeo & Juliet\" written by James Gunn?",
+          "answer": "Tromeo and Juliet",
+          "question_key": "965a4dd40425871f116cd53330a6bf31f14c05e36a45e8e37742baacc8b36060",
+          "split": "test"
+        },
+        {
+          "id": "qa-969f066883889c7a",
+          "question": "Who is the writer of this song that was inspired by words on a tombstone and was the first track on the box set Back to Mono?",
+          "answer": "Phil Spector",
+          "question_key": "969f066883889c7af904e26133d6df29571c2d852b8638d31a420bd16a84ab16",
+          "split": "test"
+        },
+        {
+          "id": "qa-97c84ec098d44f44",
+          "question": "Which other Mexican Formula One race car driver has held the podium besides the Force India driver born in 1990?",
+          "answer": "Pedro Rodríguez",
+          "question_key": "97c84ec098d44f44c221c80cbe6e6a7236d37d962b21f1ab72fdcaa17dbe72e5",
+          "split": "test"
+        },
+        {
+          "id": "qa-98226874811bdbda",
+          "question": "The battle in which Giuseppe Arimondi lost his life secured what for Ethiopia?",
+          "answer": "sovereignty",
+          "question_key": "98226874811bdbda21ded5cb50f1675e144a6740705d40439c9baa1d66a72d2c",
+          "split": "test"
+        },
+        {
+          "id": "qa-984efbab3b897c4f",
+          "question": "According to the 2001 census, what was the population of the city in which Kirton End is located?",
+          "answer": "35,124",
+          "question_key": "984efbab3b897c4fc8d03e1023d143689c027644461aee3506484e5ea7fe1da0",
+          "split": "test"
+        },
+        {
+          "id": "qa-98c12e23c1cd272c",
+          "question": "Handi-Snacks are a snack food product line sold by what American multinational confectionery, food, and beverage company that is based in Illinois?",
+          "answer": "Mondelez International, Inc.",
+          "question_key": "98c12e23c1cd272c4d42f4e76fce83cbe0e09605a6b13e55bec76d15cd09f684",
+          "split": "test"
+        },
+        {
+          "id": "qa-99bdeaf1bacc78be",
+          "question": "Where is the company that Sachin Warrier worked for as a software engineer headquartered? ",
+          "answer": "Mumbai",
+          "question_key": "99bdeaf1bacc78be446da27377eeaf3580e6d70c83f6c1b629920283dcb5bc61",
+          "split": "test"
+        },
+        {
+          "id": "qa-9b43b0447298e2ca",
+          "question": "What is the middle name of the actress who plays Bobbi Bacha in Suburban Madness?",
+          "answer": "Ann",
+          "question_key": "9b43b0447298e2ca5035b3f9b5c94685d58683b5a8259622726d736a0a4eb774",
+          "split": "test"
+        },
+        {
+          "id": "qa-9ce5118982422123",
+          "question": "Which writer was from England, Henry Roth or Robert Erskine Childers?",
+          "answer": "Robert Erskine Childers DSC",
+          "question_key": "9ce511898242212306e68ea97b00e6e51d74c485dfb12bd605c761862b3cd83b",
+          "split": "test"
+        },
+        {
+          "id": "qa-9d147b602df09e33",
+          "question": "Tysons Galleria is located in what county?",
+          "answer": "Fairfax County",
+          "question_key": "9d147b602df09e33a365a39b7ea1198c9253347b3fc549deb5ff3592d18f08b8",
+          "split": "test"
+        },
+        {
+          "id": "qa-9daa91438d48884c",
+          "question": "Alexander Kerensky was defeated and destroyed by the Bolsheviks in the course of a civil war that ended when ?",
+          "answer": "October 1922",
+          "question_key": "9daa91438d48884c52baab521474ee91ff046b8f80b369624cccf8d3a263bc21",
+          "split": "test"
+        },
+        {
+          "id": "qa-a3e906a696df30f9",
+          "question": "What occupation do Chris Menges and Aram Avakian share?",
+          "answer": "director",
+          "question_key": "a3e906a696df30f911c4ab944048ab1eaf539bde53793243cd06bc1a1188f1af",
+          "split": "test"
+        },
+        {
+          "id": "qa-a401f9767a153ae2",
+          "question": "Where was the world cup hosted that Algeria qualified for the first time into the round of 16?",
+          "answer": "Brazil",
+          "question_key": "a401f9767a153ae26d1f5e31e41a26aa3d289dda48e68c0912037506cc61e9df",
+          "split": "test"
+        },
+        {
+          "id": "qa-a70ea4fe1704d9e5",
+          "question": "Since 2 June 2017, The Leader of Fine Gael had been held by which Irish Fine Gael politician who has served as Taoiseach and Minister for Defence?",
+          "answer": "Leo Varadkar",
+          "question_key": "a70ea4fe1704d9e5612580ca089902a642a69c6d15ebf89a44f11344ee13418a",
+          "split": "test"
+        },
+        {
+          "id": "qa-a91f7d84a97e05d2",
+          "question": "The Vermont Catamounts men's soccer team currently competes in a conference that was formerly known as what from 1988 to 1996?",
+          "answer": "the North Atlantic Conference",
+          "question_key": "a91f7d84a97e05d291332354535c710d0fbcd544b7244ec0c4bafddf0fd051e2",
+          "split": "test"
+        },
+        {
+          "id": "qa-a970bf33a421bd8c",
+          "question": "Which band, Letters to Cleo or Screaming Trees, had more members?",
+          "answer": "Letters to Cleo",
+          "question_key": "a970bf33a421bd8ca46591fab259908ebf395a82c314e9e1f5b32d5a940a0921",
+          "split": "test"
+        },
+        {
+          "id": "qa-ac9f8ec4782f2892",
+          "question": "The Livesey Hal War Memorial commemorates the fallen of which war, that had over 60 million casualties?",
+          "answer": "World War II",
+          "question_key": "ac9f8ec4782f2892a5465af5c2270e2a185e1f1ebf232327b798711873c7d0eb",
+          "split": "test"
+        },
+        {
+          "id": "qa-ad01821463226234",
+          "question": "What is the name of the Isles who were led by Aonghus Mór and covered a total land area of over 8300 km2?",
+          "answer": "Kingdom of the Isles",
+          "question_key": "ad01821463226234a6c37eae84b039577b8f8155aa1b5241da61e029ffaba5af",
+          "split": "test"
+        },
+        {
+          "id": "qa-ae291fa122c70f11",
+          "question": "What year did the series on CBS, starring the actor who known for his role in \"Rebel Without a Cause,\" air?",
+          "answer": "1952",
+          "question_key": "ae291fa122c70f116a0c2aafb1d09a3d3986b762d59210ab0608eea43e8ee32b",
+          "split": "test"
+        },
+        {
+          "id": "qa-ae713d8b0f1dba7e",
+          "question": "What year did Guns N Roses perform a promo for a movie starring Arnold Schwarzenegger as a former New York Police detective?",
+          "answer": "1999",
+          "question_key": "ae713d8b0f1dba7e0155e1b5a3077d39fcf35b7795da891dcc52db63bab6e799",
+          "split": "test"
+        },
+        {
+          "id": "qa-b2ceb9c8d93f8b08",
+          "question": "When was the British author who wrote the novel on which \"Here We Go Round the Mulberry Bush\" was based born? ",
+          "answer": "7 January 1936",
+          "question_key": "b2ceb9c8d93f8b085e09cc034f98d60a56a6c7ceef010f6f715a1cbd3af39279",
+          "split": "test"
+        },
+        {
+          "id": "qa-b2da9e1e8858180e",
+          "question": "A medieval fortress in Dirleton, East Lothian, Scotland borders on the south side of what coastal area?",
+          "answer": "Yellowcraig",
+          "question_key": "b2da9e1e8858180e5adc05f7afe1f757324a357e3a69851a354c92b1fd5f2be1",
+          "split": "test"
+        },
+        {
+          "id": "qa-b5ea40482fe962a5",
+          "question": "What is the name of the detective novelist parent of the author of '\"Q\" Is for Quarry'?",
+          "answer": "C. W. Grafton",
+          "question_key": "b5ea40482fe962a5aadad10bc3f6e83316f01e3e5795fd1e4d3fd6edf9a95348",
+          "split": "test"
+        },
+        {
+          "id": "qa-b8e89b1c666dd18e",
+          "question": "Which American film actor and dancer starred in the 1945 film Johnny Angel?",
+          "answer": "George Raft",
+          "question_key": "b8e89b1c666dd18ec16331c5cb79093f1a0d997c049954e75338565240c9249d",
+          "split": "test"
+        },
+        {
+          "id": "qa-b9482cb999315439",
+          "question": "The song \"Chim Chim Cher-ee\" can be heard  in the \"Mary Poppins\" scene of a Disney ride that debuted in what year?",
+          "answer": "1989",
+          "question_key": "b9482cb99931543943ca43a0c2cf863d05a44a99824d01edd1b6397d9806ebc7",
+          "split": "test"
+        },
+        {
+          "id": "qa-bab43629f01ff863",
+          "question": "What color clothing do people of the Netherlands wear during Oranjegekte or to celebrate the national holiday Koningsdag? ",
+          "answer": "orange",
+          "question_key": "bab43629f01ff8630454f98d0c8b3ef178c9542d13eec86937ac0b70ceb08e7f",
+          "split": "test"
+        },
+        {
+          "id": "qa-bb4d973438beceb7",
+          "question": "Which American film director hosted the 18th Independent Spirit Awards in 2002?",
+          "answer": "John Waters",
+          "question_key": "bb4d973438beceb7b3288dc509c49f4e23b1bba4c71e0f4486b4370f3797b4c6",
+          "split": "test"
+        },
+        {
+          "id": "qa-bc7598922476584d",
+          "question": "When was the Western Germanic language spoken from which the small settlement situated on the river Leda opposite Leer derives its name?",
+          "answer": "between the 8th and 16th centuries",
+          "question_key": "bc7598922476584d6c7366119391e287bb6a365e92a0d4a610e4302de96fd7d7",
+          "split": "test"
+        },
+        {
+          "id": "qa-bdb367bb34091503",
+          "question": " Robert Smith founded the multinational company headquartered in what city?",
+          "answer": "Golden Valley, Minnesota,",
+          "question_key": "bdb367bb340915038e34d15be188cdd05cc4530b7526c487e14b7efb075c969c",
+          "split": "test"
+        },
+        {
+          "id": "qa-be04feb2e223e945",
+          "question": "What country does Hatton Hill and Hatton Castle, Angus have in common?",
+          "answer": "Scotland",
+          "question_key": "be04feb2e223e9451d8f5d9bb929149d924357ebdea16ad941f1a0b5c5a0d81f",
+          "split": "test"
+        },
+        {
+          "id": "qa-befd7ac1f141e714",
+          "question": "Which  French ace pilot and adventurer fly L'Oiseau Blanc",
+          "answer": "Charles Eugène",
+          "question_key": "befd7ac1f141e71496c9ca73b179b312e7b178ffd20550a82fd21045fc5369bc",
+          "split": "test"
+        },
+        {
+          "id": "qa-bf1d087c149edc79",
+          "question": "Who were the directors of the 2009 American science fiction film starring the actor who played Dexter Morgan in the Showtime TV Network series \"Dexter\"?",
+          "answer": "Mark Neveldine and Brian Taylor",
+          "question_key": "bf1d087c149edc79d7bc04ef70754985db9bee5da5779396dba5c82358f46bad",
+          "split": "test"
+        },
+        {
+          "id": "qa-bf277764c820d71a",
+          "question": "What was the 58th quadrennial American presidential election held after the 2016 Michigan Democratic primary?",
+          "answer": "United States presidential election of 2016",
+          "question_key": "bf277764c820d71a60c7e37589d0704cc632dfbd6d5b58cb0c8d94565bdd3fd0",
+          "split": "test"
+        },
+        {
+          "id": "qa-c04f8fae38073321",
+          "question": "What race track in the midwest hosts a 500 mile race eavery May?",
+          "answer": "Indianapolis Motor Speedway",
+          "question_key": "c04f8fae38073321dd919576dff4a1c50921a48e8ab38bbf5166dec8a2845059",
+          "split": "test"
+        },
+        {
+          "id": "qa-c277fcdaf4f41aaf",
+          "question": "Which songwriting duo composed music for \"La La Land\", and created lyrics for \"A Christmas Story: The Musical\"? ",
+          "answer": "Pasek & Paul",
+          "question_key": "c277fcdaf4f41aaf1089bf0ad1bcb4d9f0eba88337e0d824bd64e46266a770e5",
+          "split": "test"
+        },
+        {
+          "id": "qa-c28372b762ac318b",
+          "question": "The Album Against the Wind was the 11th Album of a Rock singer Robert C Seger born may 6 1945. What was the Rock singers stage name ?",
+          "answer": "Bob Seger",
+          "question_key": "c28372b762ac318baa043712fa9e64c0b795465da9a2525b4d02f2ddd37eeb03",
+          "split": "test"
+        },
+        {
+          "id": "qa-c29cdfda6a670ad8",
+          "question": "What station broadcast the episode \"Marry Me a Little, Marry Me a Little More\" , of the series created by Max Mutchnick and David Kohan?",
+          "answer": "National Broadcasting Company",
+          "question_key": "c29cdfda6a670ad86a956b7d52e3f258b126e33996c8443449fa7cc720a63858",
+          "split": "test"
+        },
+        {
+          "id": "qa-c4a2988b5df8957a",
+          "question": "Alvaro Mexia had a diplomatic mission with which tribe of indigenous people?",
+          "answer": "Apalachees",
+          "question_key": "c4a2988b5df8957afdc8c7e095619dbd8e9da861e8f0b87ea44139a3f7a160ac",
+          "split": "test"
+        },
+        {
+          "id": "qa-c6fcb5916c62325d",
+          "question": "The 2011–12 VCU Rams men's basketball team, led by third year head coach Shaka Smart, represented Virginia Commonwealth University which was founded in what year?",
+          "answer": "1838",
+          "question_key": "c6fcb5916c62325d18ef6de687ec11f0e47ee0dc2df51ed5457bc093473b5f44",
+          "split": "test"
+        },
+        {
+          "id": "qa-c98e0bcf0fd57bd8",
+          "question": "What year was the film that starred the composer for \"The Naked Brothers Band\"?",
+          "answer": "2014",
+          "question_key": "c98e0bcf0fd57bd8e4b45ca66284574394daca9428feed96f6534c1a017f91f2",
+          "split": "test"
+        },
+        {
+          "id": "qa-cb4ba3dce6f12e1c",
+          "question": "Where is the stadium at which 1964 Georgia Tech Yellow Jackets football team played their home game located? ",
+          "answer": "North Avenue at Techwood Drive",
+          "question_key": "cb4ba3dce6f12e1c54424c3d5558d42a757838b0362021c02e2939a205e7e385",
+          "split": "test"
+        },
+        {
+          "id": "qa-cd65be794b134ebe",
+          "question": "Which British first-generation jet-powered medium bomber was used in the South West Pacific theatre of World War II?",
+          "answer": "English Electric Canberra",
+          "question_key": "cd65be794b134ebe0865d16756cce6f2e60ed2781df3ffe8a7b2f0ff7cfae38a",
+          "split": "test"
+        },
+        {
+          "id": "qa-cf474791416af8d8",
+          "question": "Who was the writer of These Boots Are Made for Walkin' and who died in 2007?",
+          "answer": "Barton Lee Hazlewood",
+          "question_key": "cf474791416af8d8e0b504ade55c60bf814f7e520adcf7722a1923ca3ce8609b",
+          "split": "test"
+        },
+        {
+          "id": "qa-d125c144d88ddd88",
+          "question": "What British singer-songwriter hosted the 16th Annual Young Hollywood Awards?",
+          "answer": "Kelly Lee Osbourne",
+          "question_key": "d125c144d88ddd88ff6ee60b3cae8b8ca4fd83d9bf4dc5002ee84eef141cea3e",
+          "split": "test"
+        },
+        {
+          "id": "qa-d1e8ce57506e1f21",
+          "question": "Alice David is the voice of Lara Croft in a video game developed by which company ?",
+          "answer": "Crystal Dynamics",
+          "question_key": "d1e8ce57506e1f21fd2bf246081b17aa2b3e6b89d36b48be97336f49e817a198",
+          "split": "test"
+        },
+        {
+          "id": "qa-d6f14733c16efebe",
+          "question": "What major city is the Faith Lutheran Middle School and High School located by?",
+          "answer": "Las Vegas",
+          "question_key": "d6f14733c16efebe2cb63447cf384b519634fde95291d3078504787c4f7962e8",
+          "split": "test"
+        },
+        {
+          "id": "qa-d7bd1d3af63eb0b8",
+          "question": "Who was born first, Erika Jayne or Marco Da Silva",
+          "answer": "Erika Jayne",
+          "question_key": "d7bd1d3af63eb0b8882eae06e63cc020be3b871ee9b5146c9484f7f2a4f5ec6e",
+          "split": "test"
+        },
+        {
+          "id": "qa-d7c8cb0d0752a814",
+          "question": "In what year was the novel that Lourenço Mutarelli based \"Nina\" on based first published?",
+          "answer": "1866",
+          "question_key": "d7c8cb0d0752a814ff01c22fff96742ddb0361341f73614acdd860566bb25b92",
+          "split": "test"
+        },
+        {
+          "id": "qa-d81ba346c2550b02",
+          "question": "Ralph Hefferline was a psychology professor at a university that is located in what city?",
+          "answer": "New York City",
+          "question_key": "d81ba346c2550b02b541487dc0c0c93416c9e6181f8e7965caa28e53a5e0b1b5",
+          "split": "test"
+        },
+        {
+          "id": "qa-d87fc8a63a495cfe",
+          "question": "Which professional ice hockey position does the Captain of the National Hockey League All-Star Game \"Away Team\" play?",
+          "answer": "Canadian professional ice hockey centre",
+          "question_key": "d87fc8a63a495cfe47b19a3a3c7c2a74f1f54ce000d1786b32b6db48835bfb2e",
+          "split": "test"
+        },
+        {
+          "id": "qa-db9a559eff2ecba4",
+          "question": "Suicide's 1977 released album features a song based on what brand's comic character?",
+          "answer": "Marvel",
+          "question_key": "db9a559eff2ecba4ab0f9b358ba31a8aaa9acc6e363a916f6e65624f34d0687a",
+          "split": "test"
+        },
+        {
+          "id": "qa-dc1833e479783885",
+          "question": "What podcast was the cheif executive officer of Nerdist Industries a guest on?",
+          "answer": "Comedy Film Nerds",
+          "question_key": "dc1833e479783885048d203d39ed0b47e1410dd8f0b81a2c966470396867e051",
+          "split": "test"
+        },
+        {
+          "id": "qa-dc7904c91525d7f5",
+          "question": "This American crime film set in South Los Angeles was written and directed by the same director and writer of screenwriter of \"Street Kings\", \"End of Watch\", \"Sabotage\", \"Fury\" and what other film? ",
+          "answer": "Suicide Squad",
+          "question_key": "dc7904c91525d7f59aa587ee51e31613108036ae5a88a4532c4dbc1557b07127",
+          "split": "test"
+        },
+        {
+          "id": "qa-dd1c80f0a25e292b",
+          "question": "Based on a True Story... is an album by which country music star, with the single My Eyes?",
+          "answer": "Blake Shelton",
+          "question_key": "dd1c80f0a25e292b29e492340377baf821e760a99135f19a5c0c90761bc90401",
+          "split": "test"
+        },
+        {
+          "id": "qa-dea55075ea941bd6",
+          "question": "Georges-Henri Bousquet translated the work of a historian who is of what heritage?",
+          "answer": "North African Arab",
+          "question_key": "dea55075ea941bd6d73df6261aec4c18028a08819748b38c837b7a7d75583bd7",
+          "split": "test"
+        },
+        {
+          "id": "qa-df14854666f7c705",
+          "question": "In which role did Caroline Carver played in a 1999 Hallmark Entertainment made-for-TV fantasy movie?",
+          "answer": "Princess Jessica",
+          "question_key": "df14854666f7c705dd08c28d68d0cca5cf0fcf1c1160c4e11bbb530f54943833",
+          "split": "test"
+        },
+        {
+          "id": "qa-df1cd4aabe0b31ba",
+          "question": "For what type of work is the production company for The Year Without a Santa Claus best known?",
+          "answer": "seasonal television specials, particularly its work in stop motion animation",
+          "question_key": "df1cd4aabe0b31bab7f90656414ddcbce0bb1bebdeac28e3d1ce10a2dcefcb08",
+          "split": "test"
+        },
+        {
+          "id": "qa-e18a34851b1f1838",
+          "question": "2014 S/S is the debut album of a South Korean boy group that was formed by who?",
+          "answer": "YG Entertainment",
+          "question_key": "e18a34851b1f1838b294e9cde859cd482a158e678d8947f1413b9c88591afee1",
+          "split": "test"
+        },
+        {
+          "id": "qa-e5e290ff4b689614",
+          "question": "Are Daryl Hall and Gerry Marsden both musicians?",
+          "answer": "yes",
+          "question_key": "e5e290ff4b689614bb047416d765a797c80369078428ec8108e8a2642edb75ad",
+          "split": "test"
+        },
+        {
+          "id": "qa-e879c73757bc7a2f",
+          "question": "Are both Cypress and Ajuga genera?",
+          "answer": "no",
+          "question_key": "e879c73757bc7a2f2e3a2bea7ed49178fe5c77d6390c3c173e55d0d52b8e4ce3",
+          "split": "test"
+        },
+        {
+          "id": "qa-ea7214265f61cf91",
+          "question": "What is the inhabitant of the city where  122nd SS-Standarte was formed in2014",
+          "answer": "276,170 inhabitants",
+          "question_key": "ea7214265f61cf917bddf8abb4822d1643ea1a7265ec64913bed02ae60fac3a4",
+          "split": "test"
+        },
+        {
+          "id": "qa-ebf064e306627f47",
+          "question": "What is the name of the fight song of the university whose main campus is in Lawrence, Kansas and whose branch campuses are in the Kansas City metropolitan area?",
+          "answer": "Kansas Song",
+          "question_key": "ebf064e306627f47d330f4202f15a24a5c67038e8af3beb28642bcf57788fc33",
+          "split": "test"
+        },
+        {
+          "id": "qa-ec215dba69067f6e",
+          "question": "The movies Queen of Blood and Battle Beyond the Sun both contained scenes from what 1959 Soviet feature?",
+          "answer": "Nebo Zovyot",
+          "question_key": "ec215dba69067f6e158aa4d7580e15a3dd7b9c7875480281a210f9e251dd4b53",
+          "split": "test"
+        },
+        {
+          "id": "qa-ee88204bd01a34a9",
+          "question": "Brown State Fishing Lake is in a country that has a population of how many inhabitants ?",
+          "answer": "9,984",
+          "question_key": "ee88204bd01a34a90e008ef187a70871451ce88f210e353a2f50ba515e1d833f",
+          "split": "test"
+        },
+        {
+          "id": "qa-ee8872ab285c1df2",
+          "question": "What government position was held by the woman who portrayed Corliss Archer in the film Kiss and Tell?",
+          "answer": "Chief of Protocol",
+          "question_key": "ee8872ab285c1df22faea0d6d1862f5b5bc0d70582ad074bb9adb075cbaebc61",
+          "split": "test"
+        },
+        {
+          "id": "qa-ef65e6163866de1e",
+          "question": "A Japanese manga series based on a 16 year old high school student Ichitaka Seto, is written and illustrated by someone born in what year?",
+          "answer": "1962",
+          "question_key": "ef65e6163866de1ee0eb450658d27976044f4114afd8d8c0c30954ef21aa068c",
+          "split": "test"
+        },
+        {
+          "id": "qa-f5754a93fce6d9d7",
+          "question": "Hayden is a singer-songwriter from Canada, but where does Buck-Tick hail from?",
+          "answer": "Fujioka, Gunma",
+          "question_key": "f5754a93fce6d9d730de474f7aa880662584026ae9b67cb478968b12bfbe2a17",
+          "split": "test"
+        },
+        {
+          "id": "qa-fae89884d533468b",
+          "question": "Are Broughtonia and Laeliocattleya both orchids?",
+          "answer": "yes",
+          "question_key": "fae89884d533468bd8f94cc67fa80a03febcc4fc9f43dd2541c87c630db03e12",
+          "split": "test"
+        },
+        {
+          "id": "qa-fb90d5b9d742b9d6",
+          "question": "During Siege of Bharatpur, which Commander-in-Chief of Ireland and Commander-in-Chief of India contributed to the storming of the castle?",
+          "answer": "Lord Combermere",
+          "question_key": "fb90d5b9d742b9d6e7da0d1df76bc062e65e8ec241456d654a8e1d71a6caa40b",
+          "split": "test"
+        },
+        {
+          "id": "qa-fba50695290ae8f4",
+          "question": "Which man who presented the Australia 2022 FIFA World Cup bid was born on October 22, 1930?",
+          "answer": "Frank Lowy",
+          "question_key": "fba50695290ae8f4b61439d6229bbc323a7a823bdf32f1571b3341019e8bab3d",
+          "split": "test"
+        },
+        {
+          "id": "qa-fc06d632d0dbf048",
+          "question": "In which year was the King who made the 1925 Birthday Honours born?",
+          "answer": "1865",
+          "question_key": "fc06d632d0dbf0485116f9cba22f84c16e08ee785eae326b150e56441c95ceee",
+          "split": "test"
+        },
+        {
+          "id": "qa-fe7bba596a52d6b1",
+          "question": "Andrew Jaspan was the co-founder of what not-for-profit media outlet?",
+          "answer": "The Conversation",
+          "question_key": "fe7bba596a52d6b136f8a4982f305556779465d077bf81057a4b48853420a05d",
+          "split": "test"
+        }
+      ],
+      "MATH": [
+        {
+          "id": "math-03b438bc4364ef6c",
+          "question": "There are $n$ values of $x$ in the interval $0<x<2\\pi$ where $f(x)=\\sin(7\\pi\\cdot\\sin(5x))=0$. For $t$ of these $n$ values of $x$, the graph of $y=f(x)$ is tangent to the $x$-axis. Find $n+t$.",
+          "answer": "149",
+          "question_key": "03b438bc4364ef6cdc1b9b3d54d238213404336cb1cd2a7c27c9a646067d0efd",
+          "split": "test"
+        },
+        {
+          "id": "math-08e624521875ede7",
+          "question": "A semicircle is inscribed in another semicircle if the smaller semicircle's diameter is a chord of the larger semicircle, and the smaller semicircle's arc is tangent to the diameter of the larger semicircle.\nSemicircle $S_{1}$ is inscribed in a semicircle $S_{2}$, which is inscribed in another semicircle $S_{3}$. The radii of $S_{1}$ and $S_{3}$ are $1$ and 10, respectively, and the diameters of $S_{1}$ and $S_{3}$ are parallel. The endpoints of the diameter of $S_{3}$ are $A$ and $B$, and $S_{2}$ 's arc is tangent to $A B$ at $C$. Compute $A C \\cdot C B$.\n\n\\begin{tikzpicture}\n\n    % S_1\n    \\coordinate (S_1_1) at (6.57,0.45);\n    \\coordinate (S_1_2) at (9.65,0.45);\n    \\draw (S_1_1) -- (S_1_2);\n\n    \\draw (S_1_1) arc[start angle=180, end angle=0, radius=1.54]\n    node[midway,above] {};\n\n    \\node[above=0.5cm] at (7,1.2) {$S_1$};\n\n    % S_2 \n    \\coordinate (S_2_1) at (6.32,4.82);\n    \\coordinate (S_2_2) at (9.95,0.68);\n\n    \\draw (S_2_1) -- (S_2_2);\n\n    \\draw (S_2_1) arc[start angle=131, end angle=311, radius=2.75]\n    node[midway,above] {};\n\n    \\node[above=0.5cm] at (5,2) {$S_2$};\n\n    % S_3\n    \\coordinate (A) at (0,0);\n    \\coordinate (B) at (10,0);\n    \\draw (A) -- (B);\n    \\fill (A) circle (2pt) node[below] {$A$};\n    \\fill (B) circle (2pt) node[below] {$B$};\n\n    \\draw (A) arc[start angle=180, end angle=0, radius=5]\n    node[midway,above] {};\n    \\node[above=0.5cm] at (1,3) {$S_3$};\n\n    \\coordinate (C) at (8.3,0);\n    \\fill (C) circle (2pt) node[below] {$C$};\n\n\\end{tikzpicture}",
+          "answer": "20",
+          "question_key": "08e624521875ede7eace7f2bf5a92b306fdf1d8c10c8ed3eae7ea0911dbd6781",
+          "split": "test"
+        },
+        {
+          "id": "math-0f08ca6f6bc4e807",
+          "question": "Compute the sum of the positive divisors (including $1$) of $9!$ that have units digit $1$.",
+          "answer": "103",
+          "question_key": "0f08ca6f6bc4e807ec4e99c422df13c7dfd1aa239e573d2a7e2158e033d4b56d",
+          "split": "test"
+        },
+        {
+          "id": "math-0fcd5297e531d223",
+          "question": "A piecewise linear function is defined by\\[f(x) = \\begin{cases} x & \\operatorname{if} ~ -1 \\leq x < 1 \\ 2 - x & \\operatorname{if} ~ 1 \\leq x < 3\\end{cases}\\]and $f(x + 4) = f(x)$ for all real numbers $x$. The graph of $f(x)$ has the sawtooth pattern depicted below. The parabola $x = 34y^{2}$ intersects the graph of $f(x)$ at finitely many points. The sum of the $y$-coordinates of all these intersection points can be expressed in the form $\\tfrac{a + b\\sqrt{c}}{d}$, where $a$, $b$, $c$, and $d$ are positive integers such that $a$, $b$, $d$ have greatest common divisor equal to $1$, and $c$ is not divisible by the square of any prime. Find $a + b + c + d$. Graph [asy] import graph;  size(300);  Label f;  f.p=fontsize(6);  yaxis(-2,2,Ticks(f, 2.0));  xaxis(-6.5,6.5,Ticks(f, 2.0)); draw((0, 0)..(1/4,sqrt(1/136))..(1/2,sqrt(1/68))..(0.75,sqrt(0.75/34))..(1, sqrt(1/34))..(2, sqrt(2/34))..(3, sqrt(3/34))..(4, sqrt(4/34))..(5, sqrt(5/34))..(6, sqrt(6/34))..(7, sqrt(7/34))..(8, sqrt(8/34)), red); draw((0, 0)..(1/4,-sqrt(1/136))..(0.5,-sqrt(1/68))..(0.75,-sqrt(0.75/34))..(1, -sqrt(1/34))..(2, -sqrt(2/34))..(3, -sqrt(3/34))..(4, -sqrt(4/34))..(5, -sqrt(5/34))..(6, -sqrt(6/34))..(7, -sqrt(7/34))..(8, -sqrt(8/34)), red); draw((-7,0)--(7,0), black+0.8bp); draw((0,-2.2)--(0,2.2), black+0.8bp);  draw((-6,-0.1)--(-6,0.1), black); draw((-4,-0.1)--(-4,0.1), black); draw((-2,-0.1)--(-2,0.1), black); draw((0,-0.1)--(0,0.1), black); draw((2,-0.1)--(2,0.1), black); draw((4,-0.1)--(4,0.1), black); draw((6,-0.1)--(6,0.1), black);  draw((-7,1)..(-5,-1), blue); draw((-5,-1)--(-3,1), blue); draw((-3,1)--(-1,-1), blue); draw((-1,-1)--(1,1), blue); draw((1,1)--(3,-1), blue); draw((3,-1)--(5,1), blue); draw((5,1)--(7,-1), blue); [/asy]",
+          "answer": "259",
+          "question_key": "0fcd5297e531d22325a56f6b5661fd15ff5ccef4d7597905dcaf1404355d50d7",
+          "split": "test"
+        },
+        {
+          "id": "math-10f9b45eab108554",
+          "question": "Ben has $16$ balls labeled $1,2,3, \\ldots, 16$, as well as $4$ indistinguishable boxes. Two balls are \\emph{neighbors} if their labels differ by $1$. Compute the number of ways for him to put $4$ balls in each box such that each ball is in the same box as at least one of its neighbors. (The order in which the balls are placed does not matter.)",
+          "answer": "105",
+          "question_key": "10f9b45eab1085547f2a63fdf59fa374b4740cf5cb5f02a264424fd3b699c787",
+          "split": "test"
+        },
+        {
+          "id": "math-1386ae112defe5ff",
+          "question": "Suppose $\\triangle ABC$ has angles $\\angle BAC = 84^\\circ, \\angle ABC=60^\\circ,$ and $\\angle ACB = 36^\\circ.$ Let $D, E,$ and $F$ be the midpoints of sides $\\overline{BC}, \\overline{AC},$ and $\\overline{AB},$ respectively. The circumcircle of $\triangle DEF$ intersects $\\overline{BD}, \\overline{AE},$ and $\\overline{AF}$ at points $G, H,$ and $J,$ respectively. The points $G, D, E, H, J,$ and $F$ divide the circumcircle of $\\triangle DEF$ into six minor arcs, as shown. Find $\\overarc{DE}+2\\cdot \\overarc{HJ} + 3\\cdot \\overarc{FG},$ where the arcs are measured in degrees.[asy] import olympiad; size(6cm); defaultpen(fontsize(10pt)); pair B = (0, 0), A = (Cos(60), Sin(60)), C = (Cos(60)+Sin(60)/Tan(36), 0), D = midpoint(B--C), E = midpoint(A--C), F = midpoint(A--B); guide circ = circumcircle(D, E, F); pair G = intersectionpoint(B--D, circ), J = intersectionpoints(A--F, circ)[0], H = intersectionpoints(A--E, circ)[0]; draw(B--A--C--cycle); draw(D--E--F--cycle); draw(circ);  dot(A);dot(B);dot(C);dot(D);dot(E);dot(F);dot(G);dot(H);dot(J); label(\"$A$\", A, (0, .8)); label(\"$B$\", B, (-.8, -.8)); label(\"$C$\", C, (.8, -.8)); label(\"$D$\", D, (0, -.8)); label(\"$E$\", E, (.8, .2)); label(\"$F$\", F, (-.8, .2)); label(\"$G$\", G, (0, .8)); label(\"$H$\", H, (-.2, -1));label(\"$J$\", J, (.2, -.8)); [/asy]",
+          "answer": "336",
+          "question_key": "1386ae112defe5ff686e4c5519be4c2e35ff6a709b32b8e36edaf25fdfe7f5b3",
+          "split": "test"
+        },
+        {
+          "id": "math-13a136765c868b7d",
+          "question": "Find the sum of all positive integers $n$ such that $n + 2$ divides the product $3(n + 3)(n^2 + 9)$.",
+          "answer": "49",
+          "question_key": "13a136765c868b7d998f90ed50ae6ab0954d3581e38ef4087354270e9af33249",
+          "split": "test"
+        },
+        {
+          "id": "math-17aad2cb309e59b4",
+          "question": "Six points $A, B, C, D, E,$ and $F$ lie in a straight line in that order. Suppose that $G$ is a point not on the line and that $AC=26, BD=22, CE=31, DF=33, AF=73, CG=40,$ and $DG=30.$ Find the area of $\\triangle BGE.$",
+          "answer": "468",
+          "question_key": "17aad2cb309e59b46025e87bbe055896cbe0b857db3509acc8a74071b0064fed",
+          "split": "test"
+        },
+        {
+          "id": "math-276fd24702af6565",
+          "question": "Circle $\\omega_1$ with radius $6$ centered at point $A$ is internally tangent at point $B$ to circle $\\omega_2$ with radius $15$. Points $C$ and $D$ lie on $\\omega_2$ such that $\\overline{BC}$ is a diameter of $\\omega_2$ and ${\\overline{BC} \\perp \\overline{AD}}$. The rectangle $EFGH$ is inscribed in $\\omega_1$ such that $\\overline{EF} \\perp \\overline{BC}$, $C$ is closer to $\\overline{GH}$ than to $\\overline{EF}$, and $D$ is closer to $\\overline{FG}$ than to $\\overline{EH}$, as shown. Triangles $\\triangle {DGF}$ and $\\triangle {CHG}$ have equal areas. The area of rectangle $EFGH$ is $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$. [asy] size(5cm); defaultpen(fontsize(10pt)); pair A = (9, 0), B = (15, 0), C = (-15, 0), D = (9, 12), E = (9+12/sqrt(5), -6/sqrt(5)), F = (9+12/sqrt(5), 6/sqrt(5)), G = (9-12/sqrt(5), 6/sqrt(5)), H = (9-12/sqrt(5), -6/sqrt(5)); filldraw(G--H--C--cycle, lightgray); filldraw(D--G--F--cycle, lightgray);  draw(B--C); draw(A--D);  draw(E--F--G--H--cycle);         draw(circle((0,0), 15)); draw(circle(A, 6)); dot(A);  dot(B); dot(C); dot(D);dot(E); dot(F); dot(G); dot(H); label(\"$A$\", A, (.8, -.8)); label(\"$B$\", B, (.8, 0)); label(\"$C$\", C, (-.8, 0)); label(\"$D$\", D, (.4, .8));  label(\"$E$\", E, (.8, -.8));  label(\"$F$\", F, (.8, .8)); label(\"$G$\", G, (-.8, .8)); label(\"$H$\", H, (-.8, -.8)); label(\"$\\omega_1$\", (9, -5)); label(\"$\\omega_2$\", (-1, -13.5)); [/asy]",
+          "answer": "293",
+          "question_key": "276fd24702af65651d647a9f17b146740ac3163b01b5282e79823e05013247e4",
+          "split": "test"
+        },
+        {
+          "id": "math-2e64323a65c1fc5f",
+          "question": "Let the sequence of rationals $x_1,x_2,\\dots$ be defined such that $x_1=\\frac{25}{11}$ and\\[x_{k+1}=\\frac{1}{3}\\left(x_k+\\frac{1}{x_k}-1\\right).\\]$x_{2025}$ can be expressed as $\frac{m}{n}$ for relatively prime positive integers $m$ and $n$. Find the remainder when $m+n$ is divided by $1000$.",
+          "answer": "248",
+          "question_key": "2e64323a65c1fc5f5247e9d7486ba13f4956b5a487c2dd34ead24fbab2b0ac1e",
+          "split": "test"
+        },
+        {
+          "id": "math-357d1440b0e03e7a",
+          "question": "Let $A B C D$ be an isosceles trapezoid such that $C D>A B=4$. Let $E$ be a point on line $C D$ such that $D E=2$ and $D$ lies between $E$ and $C$. Let $M$ be the midpoint of $\\overline{A E}$. Given that points $A, B, C, D$, and $M$ lie on a circle with radius $5$, compute $M D$.",
+          "answer": "\\sqrt{6}",
+          "question_key": "357d1440b0e03e7a58e613c30cf1c5ffb3d0ad322bd12b15fd9da069b8496711",
+          "split": "test"
+        },
+        {
+          "id": "math-3c3cf44a4a3c8e99",
+          "question": "Compute the number of ways to arrange $3$ copies of each of the $26$ lowercase letters of the English alphabet such that for any two distinct letters $x_{1}$ and $x_{2}$, the number of $x_{2}$ 's between the first and second occurrences of $x_{1}$ equals the number of $x_{2}$ 's between the second and third occurrences of $x_{1}$.",
+          "answer": "2^{25} \\cdot 26!",
+          "question_key": "3c3cf44a4a3c8e996e906041be3bf12a9164427d554b9d0e03f3c1e76195d668",
+          "split": "test"
+        },
+        {
+          "id": "math-402da4f0ba5bfec7",
+          "question": "Albert writes $2025$ numbers $a_{1}, \\ldots, a_{2025}$ in a circle on a blackboard. Initially, each of the numbers is uniformly and independently sampled at random from the interval $[0,1]$. Then, each second, he \\emph{simultaneously} replaces $a_{i}$ with $\\max \\left(a_{i-1}, a_{i}, a_{i+1}\\right)$ for all $i=1,2, \\ldots, 2025$ (where $a_{0}=a_{2025}$ and $a_{2026}=a_{1}$ ). Compute the expected value of the number of distinct values remaining after $100$ seconds.",
+          "answer": "\\frac{2025}{101}",
+          "question_key": "402da4f0ba5bfec7400c450a7dfa3e9f6fd9076b84f7d71f4eebe802f0fee9b2",
+          "split": "test"
+        },
+        {
+          "id": "math-4afc81298e962550",
+          "question": "Let $k$ be a real number such that the system \\begin{align*} &|25 + 20i - z| = 5 \\ &|z - 4 - k| = |z - 3i - k| \\end{align*} has exactly one complex solution $z$. The sum of all possible values of $k$ can be written as $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m + n$. Here $i = \\sqrt{-1}$.$",
+          "answer": "77",
+          "question_key": "4afc81298e96255045147d0628740192a78f668c755a31e3efd548426e5de173",
+          "split": "test"
+        },
+        {
+          "id": "math-4f0299ef83cc68fe",
+          "question": "The product\\[\\prod^{63}_{k=4} \frac{\\log_k (5^{k^2 - 1})}{\\log_{k + 1} (5^{k^2 - 4})} = \frac{\\log_4 (5^{15})}{\\log_5 (5^{12})} \\cdot \frac{\\log_5 (5^{24})}{\\log_6 (5^{21})}\\cdot \frac{\\log_6 (5^{35})}{\\log_7 (5^{32})} \\cdots \frac{\\log_{63} (5^{3968})}{\\log_{64} (5^{3965})}\\]is equal to $\\tfrac mn,$ where $m$ and $n$ are relatively prime positive integers. Find $m + n.$",
+          "answer": "106",
+          "question_key": "4f0299ef83cc68fecf40261f3264be3edcbc55a21676f32bd55575b0e941bb09",
+          "split": "test"
+        },
+        {
+          "id": "math-565c5772874870d6",
+          "question": "Let $N$ denote the number of ordered triples of positive integers $(a, b, c)$ such that $a, b, c \\leq 3^6$ and $a^3 + b^3 + c^3$ is a multiple of $3^7$. Find the remainder when $N$ is divided by $1000$.",
+          "answer": "735",
+          "question_key": "565c5772874870d6f80ff19724b8194fe75e5ff8702b1778dcc3e7eaebbd7d49",
+          "split": "test"
+        },
+        {
+          "id": "math-633d1c0d1eb64339",
+          "question": "Four unit squares form a $2 \\times 2$ grid. Each of the $12$ unit line segments forming the sides of the squares is colored either red or blue in such a say that each unit square has $2$ red sides and $2$ blue sides. One example is shown below (red is solid, blue is dashed). Find the number of such colorings. [asy]         size(4cm);     defaultpen(linewidth(1.2));     draw((0, 0) -- (2, 0) -- (2, 1));     draw((0, 1) -- (1, 1) -- (1, 2) -- (2,2));     draw((0, 0) -- (0, 1), dotted);     draw((1, 0) -- (1, 1) -- (2, 1) -- (2, 2), dotted);     draw((0, 1) -- (0, 2) -- (1, 2), dotted); [/asy]",
+          "answer": "82",
+          "question_key": "633d1c0d1eb6433992ab6d55f9b58e3fdd404d95e6d27791b8d75a26cd6b3fc8",
+          "split": "test"
+        },
+        {
+          "id": "math-65144788815a013d",
+          "question": "Let $a, b$, and $c$ be pairwise distinct complex numbers such that\n$$\na^{2}=b+6, \\quad b^{2}=c+6, \\quad \\text { and } \\quad c^{2}=a+6\n$$\n\nCompute the two possible values of $a+b+c$. In your answer, list the two values in a comma-separated list of two valid \\LaTeX expressions.",
+          "answer": "\\frac{-1+\\sqrt{17}}{2}",
+          "question_key": "65144788815a013da344ae44016c7bbc3795f9a6a97ea6b9a640d6d76ec81a49",
+          "split": "test"
+        },
+        {
+          "id": "math-740cf08222f8f041",
+          "question": "Equilateral triangles $\\triangle A B C$ and $\\triangle D E F$ are drawn such that points $B, E, F$, and $C$ lie on a line in this order, and point $D$ lies inside triangle $\\triangle A B C$. If $B E=14, E F=15$, and $F C=16$, compute $A D$.",
+          "answer": "26",
+          "question_key": "740cf08222f8f041de87ecd3fd5d67c4d0914a43e6a48c310da09a75a65ba2e0",
+          "split": "test"
+        },
+        {
+          "id": "math-74556b8b484f37af",
+          "question": "Let ${\\triangle ABC}$ be a right triangle with $\\angle A = 90^\\circ$ and $BC = 38.$ There exist points $K$ and $L$ inside the triangle such\\[AK = AL = BK = CL = KL = 14.\\]The area of the quadrilateral $BKLC$ can be expressed as $n\\sqrt3$ for some positive integer $n.$ Find $n.$",
+          "answer": "104",
+          "question_key": "74556b8b484f37af4abce3002e7024d542a667d8107b4e2c19a67d56f70eb76a",
+          "split": "test"
+        },
+        {
+          "id": "math-74b9ea49846f19d1",
+          "question": "Let $A_1A_2\\dots A_{11}$ be a non-convex $11$-gon such that The area of $A_iA_1A_{i+1}$ is $1$ for each $2 \\le i \\le 10$, $\\cos(\\angle A_iA_1A_{i+1})=\\frac{12}{13}$ for each $2 \\le i \\le 10$, The perimeter of $A_1A_2\\dots A_{11}$ is $20$. If $A_1A_2+A_1A_{11}$ can be expressed as $\\frac{m\\sqrt{n}-p}{q}$ for positive integers $m,n,p,q$ with $n$ squarefree and $\\gcd(m,p,q)=1$, find $m+n+p+q$.",
+          "answer": "19",
+          "question_key": "74b9ea49846f19d1026b3ec57ea9fd62949a6d7f152c44963799e656b2bfd072",
+          "split": "test"
+        },
+        {
+          "id": "math-784b557b923c4641",
+          "question": "Let\\[f(x)=\\frac{(x-18)(x-72)(x-98)(x-k)}{x}.\\]There exist exactly three positive real values of $k$ such that $f$ has a minimum at exactly two real values of $x$. Find the sum of these three values of $k$.",
+          "answer": "240",
+          "question_key": "784b557b923c46415fc62d7447f132491f7eda9e35ff1f51deaa456062354922",
+          "split": "test"
+        },
+        {
+          "id": "math-786bf408c8c7db47",
+          "question": "Sixteen chairs are arranged in a row. Eight people each select a chair in which to sit so that no person sits next to two other people. Let $N$ be the number of subsets of $16$ chairs that could be selected. Find the remainder when $N$ is divided by $1000$.",
+          "answer": "907",
+          "question_key": "786bf408c8c7db470a07877b5a0a11770b961cc312a7d71ff5960845646aab49",
+          "split": "test"
+        },
+        {
+          "id": "math-78ae5309642b62e3",
+          "question": "Point $P$ lies inside square $A B C D$ such that the areas of $\\triangle P A B, \\triangle P B C, \\triangle P C D$, and $\\triangle P D A$ are 1, $2,3$, and $4$, in some order. Compute $P A \\cdot P B \\cdot P C \\cdot P D$.",
+          "answer": "8\\sqrt{10}",
+          "question_key": "78ae5309642b62e332313792fc7e7d7a61d08e673618881e6b87be7ea9394a26",
+          "split": "test"
+        },
+        {
+          "id": "math-82fafdd01146a8f6",
+          "question": "Let $r$ be the remainder when $2017^{2025!}-1$ is divided by 2025!. Compute $\\frac{r}{2025!}$. (Note that $2017$ is prime.)",
+          "answer": "\\frac{1311}{2017}",
+          "question_key": "82fafdd01146a8f63f2733bd8c6540937e929d47a0de5e10a1e4f5d6efda04fa",
+          "split": "test"
+        },
+        {
+          "id": "math-839c0a01e573d1b0",
+          "question": "Let $f$ be the unique polynomial of degree at most $2026$ such that for all $n \\in\\{1,2,3, \\ldots, 2027\\}$,\n$$\nf(n)= \\begin{cases}1 & \\text { if } n \\text { is a perfect square } \\\\ 0 & \\text { otherwise }\\end{cases}\n$$\n\nSuppose that $\\frac{a}{b}$ is the coefficient of $x^{2025}$ in $f$, where $a$ and $b$ are integers such that $\\operatorname{gcd}(a, b)=1$. Compute the unique integer $r$ between $0$ and $2026$ (inclusive) such that $a-r b$ is divisible by $2027$. (Note that $2027$ is prime.)",
+          "answer": "1037",
+          "question_key": "839c0a01e573d1b0e46b37e2eb7b191881fea98f5e8f53095e6fb66d1c21d913",
+          "split": "test"
+        },
+        {
+          "id": "math-874156c631f6173e",
+          "question": "Compute the number of ways to arrange the numbers $1,2,3,4,5,6$, and $7$ around a circle such that the product of every pair of adjacent numbers on the circle is at most 20. (Rotations and reflections count as different arrangements.)",
+          "answer": "56",
+          "question_key": "874156c631f6173eea288533ff310ba2ad3b9ee32dc7690a389ce01a838a7ac0",
+          "split": "test"
+        },
+        {
+          "id": "math-89aa8a8075a19f43",
+          "question": "Given that $x, y$, and $z$ are positive real numbers such that\n\n$$\nx^{\\log _{2}(y z)}=2^{8} \\cdot 3^{4}, \\quad y^{\\log _{2}(z x)}=2^{9} \\cdot 3^{6}, \\quad \\text { and } \\quad z^{\\log _{2}(x y)}=2^{5} \\cdot 3^{10}\n$$\ncompute the smallest possible value of $x y z$.",
+          "answer": "\\frac{1}{576}",
+          "question_key": "89aa8a8075a19f435537b6bafbf1b27b66c8404fc6ca56317b639383a3ea171e",
+          "split": "test"
+        },
+        {
+          "id": "math-90a75b46af01a24d",
+          "question": "Let $\\lfloor z\\rfloor$ denote the greatest integer less than or equal to $z$. Compute\n\n$$\n\\sum_{j=-1000}^{1000}\\left\\lfloor\\frac{2025}{j+0.5}\\right\\rfloor\n$$",
+          "answer": "-984",
+          "question_key": "90a75b46af01a24dddec86a5b1918fbac113aeec5eb522ffeafee9513ca67ea2",
+          "split": "test"
+        },
+        {
+          "id": "math-97c54528262f7fb0",
+          "question": "The circumference of a circle is divided into $45$ arcs, each of length $1$. Initially, there are $15$ snakes, each of length $1$, occupying every third arc. Every second, each snake independently moves either one arc left or one arc right, each with probability $\\frac{1}{2}$. If two snakes ever touch, they merge to form a single snake occupying the arcs of both of the previous snakes, and the merged snake moves as one snake. Compute the expected number of seconds until there is only one snake left.",
+          "answer": "\\frac{448}{3}",
+          "question_key": "97c54528262f7fb053007ef53510436332e315a551c03d0cd283415e7452ea98",
+          "split": "test"
+        },
+        {
+          "id": "math-9aa741cd4e891f1b",
+          "question": "Let $A B C D$ be a rectangle with $B C=24$. Point $X$ lies inside the rectangle such that $\\angle A X B=90^{\\circ}$. Given that triangles $\\triangle A X D$ and $\\triangle B X C$ are both acute and have circumradii $13$ and $15$, respectively, compute $A B$.",
+          "answer": "14+4\\sqrt{37}",
+          "question_key": "9aa741cd4e891f1b6e6faf10c84203e79a334c77877b16b394d8ec58becf4b5d",
+          "split": "test"
+        },
+        {
+          "id": "math-9ca90691999d76e4",
+          "question": "The set of points in $3$-dimensional coordinate space that lie in the plane $x+y+z=75$ whose coordinates satisfy the inequalities\\[x-yz<y-zx<z-xy\\]forms three disjoint convex regions. Exactly one of those regions has finite area. The area of this finite region can be expressed in the form $a\\sqrt{b},$ where $a$ and $b$ are positive integers and $b$ is not divisible by the square of any prime. Find $a+b.$",
+          "answer": "510",
+          "question_key": "9ca90691999d76e4ae17bb4d4747ca898aeef8df0b85fb94f47ccd764fe92567",
+          "split": "test"
+        },
+        {
+          "id": "math-9f3d0e615d010d87",
+          "question": "Mark writes the expression $\\sqrt{\\underline{a b c d}}$ on the board, where $\\underline{a b c d}$ is a four-digit number and $a \\neq 0$. Derek, a toddler, decides to move the $a$, changing Mark's expression to $a \\sqrt{\\underline{b c d}}$. Surprisingly, these two expressions are equal. Compute the only possible four-digit number $\\underline{a b c d}$.",
+          "answer": "3375",
+          "question_key": "9f3d0e615d010d87c23f16a1b9ee2db410d2b97b9172f92c82d06bfbf3cc08cc",
+          "split": "test"
+        },
+        {
+          "id": "math-9faa0ba6e365ab07",
+          "question": "From an unlimited supply of 1-cent coins, 10-cent coins, and 25-cent coins, Silas wants to find a collection of coins that has a total value of $N$ cents, where $N$ is a positive integer. He uses the so-called greedy algorithm, successively choosing the coin of greatest value that does not cause the value of his collection to exceed $N.$ For example, to get 42 cents, Silas will choose a 25-cent coin, then a 10-cent coin, then 7 1-cent coins. However, this collection of 9 coins uses more coins than necessary to get a total of 42 cents; indeed, choosing 4 10-cent coins and 2 1-cent coins achieves the same total value with only 6 coins. In general, the greedy algorithm succeeds for a given $N$ if no other collection of 1-cent, 10-cent, and 25-cent coins gives a total value of $N$ cents using strictly fewer coins than the collection given by the greedy algorithm. Find the number of values of $N$ between $1$ and $1000$ inclusive for which the greedy algorithm succeeds.",
+          "answer": "610",
+          "question_key": "9faa0ba6e365ab07f1b4e260fe36ba97a3f0646286448517902057a9f45df468",
+          "split": "test"
+        },
+        {
+          "id": "math-a480a79e0d391a95",
+          "question": "The $27$ cells of a $3 \\times 9$ grid are filled in using the numbers $1$ through $9$ so that each row contains $9$ different numbers, and each of the three $3 \\times 3$ blocks heavily outlined in the example below contains $9$ different numbers, as in the first three rows of a Sudoku puzzle. [asy] unitsize(20);  add(grid(9,3));  draw((0,0)--(9,0)--(9,3)--(0,3)--cycle, linewidth(2)); draw((3,0)--(3,3), linewidth(2)); draw((6,0)--(6,3), linewidth(2));  real a = 0.5;  label(\"5\",(a,a)); label(\"6\",(1+a,a)); label(\"1\",(2+a,a)); label(\"8\",(3+a,a)); label(\"4\",(4+a,a)); label(\"7\",(5+a,a)); label(\"9\",(6+a,a)); label(\"2\",(7+a,a)); label(\"3\",(8+a,a));  label(\"3\",(a,1+a)); label(\"7\",(1+a,1+a)); label(\"9\",(2+a,1+a)); label(\"5\",(3+a,1+a)); label(\"2\",(4+a,1+a)); label(\"1\",(5+a,1+a)); label(\"6\",(6+a,1+a)); label(\"8\",(7+a,1+a)); label(\"4\",(8+a,1+a));  label(\"4\",(a,2+a)); label(\"2\",(1+a,2+a)); label(\"8\",(2+a,2+a)); label(\"9\",(3+a,2+a)); label(\"6\",(4+a,2+a)); label(\"3\",(5+a,2+a)); label(\"1\",(6+a,2+a)); label(\"7\",(7+a,2+a)); label(\"5\",(8+a,2+a));  [/asy] The number of different ways to fill such a grid can be written as $p^a \\cdot q^b \\cdot r^c \\cdot s^d$ where $p$, $q$, $r$, and $s$ are distinct prime numbers and $a$, $b$, $c$, $d$ are positive integers. Find $p \\cdot a + q \\cdot b + r \\cdot c + s \\cdot d$.",
+          "answer": "81",
+          "question_key": "a480a79e0d391a9507719c7817997fe02153d1d454c34b4a8193297ec0b95f97",
+          "split": "test"
+        },
+        {
+          "id": "math-af533c9a7ebcb66d",
+          "question": "The twelve letters $A$,$B$,$C$,$D$,$E$,$F$,$G$,$H$,$I$,$J$,$K$, and $L$ are randomly grouped into six pairs of letters. The two letters in each pair are placed next to each other in alphabetical order to form six two-letter words, and then those six words are listed alphabetically. For example, a possible result is $AB$, $CJ$, $DG$, $EK$, $FL$, $HI$. The probability that the last word listed contains $G$ is $\\frac mn$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.",
+          "answer": "821",
+          "question_key": "af533c9a7ebcb66dfb3a49ea08a448e94260139c849f9a8eec2c757205e77217",
+          "split": "test"
+        },
+        {
+          "id": "math-ba8996649588aa0e",
+          "question": "Let $\\mathcal{S}$ be the set of all nonconstant monic polynomials $P$ with integer coefficients satisfying $P(\\sqrt{3}+\\sqrt{2})=$ $P(\\sqrt{3}-\\sqrt{2})$. If $Q$ is an element of $\\mathcal{S}$ with minimal degree, compute the only possible value of $Q(10)-Q(0)$.",
+          "answer": "890",
+          "question_key": "ba8996649588aa0e5fbeaa1844129d3213a41250ad99fdbf0b41938fe61456fe",
+          "split": "test"
+        },
+        {
+          "id": "math-bab4d0e4534870fb",
+          "question": "Let $A$ be the set of positive integer divisors of $2025$. Let $B$ be a randomly selected subset of $A$. The probability that $B$ is a nonempty set with the property that the least common multiple of its element is $2025$ is $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.",
+          "answer": "237",
+          "question_key": "bab4d0e4534870fba39158d1a09aeee21d0a8131f9cf239fc84db3dcfe17686b",
+          "split": "test"
+        },
+        {
+          "id": "math-be825a7acc5a024f",
+          "question": "Find the number of ordered pairs $(x,y)$, where both $x$ and $y$ are integers between $-100$ and $100$ inclusive, such that $12x^2-xy-6y^2=0$.",
+          "answer": "117",
+          "question_key": "be825a7acc5a024f58fb71133cdb76f064045b53bf3415e2ea2540c1319b3116",
+          "split": "test"
+        },
+        {
+          "id": "math-c51c82ae12095b0a",
+          "question": "Let $ABCDE$ be a convex pentagon with $AB=14,$ $BC=7,$ $CD=24,$ $DE=13,$ $EA=26,$ and $\\angle B=\\angle E=60^{\\circ}.$ For each point $X$ in the plane, define $f(X)=AX+BX+CX+DX+EX.$ The least possible value of $f(X)$ can be expressed as $m+n\\sqrt{p},$ where $m$ and $n$ are positive integers and $p$ is not divisible by the square of any prime. Find $m+n+p.$",
+          "answer": "60",
+          "question_key": "c51c82ae12095b0a5dba88264bc5d3b91fe8497cf7d02c8985b3b151a8210a56",
+          "split": "test"
+        },
+        {
+          "id": "math-c55e05019085b102",
+          "question": "Point $P$ is inside triangle $\\triangle A B C$ such that $\\angle A B P=\\angle A C P$. Given that $A B=6, A C=8, B C=7$, and $\\frac{B P}{P C}=\\frac{1}{2}$, compute $\\frac{[B P C]}{[A B C]}$.\n(Here, $[X Y Z]$ denotes the area of $\\triangle X Y Z$ ).",
+          "answer": "\\frac{7}{18}",
+          "question_key": "c55e05019085b1020df95fc75f235e16790587b1795bde30d15674425743bf33",
+          "split": "test"
+        },
+        {
+          "id": "math-cbd301f962bd10d9",
+          "question": "Kevin the frog in on the bottom-left lily pad of a $3 \\times 3$ grid of lily pads, and his home is at the topright lily pad. He can only jump between two lily pads which are horizontally or vertically adjacent. Compute the number of ways to remove $4$ of the lily pads so that the bottom-left and top-right lily pads both remain, but Kelvin cannot get home.",
+          "answer": "29",
+          "question_key": "cbd301f962bd10d9792b125b93b816a8724a96aa6de484569664b8884c4f2932",
+          "split": "test"
+        },
+        {
+          "id": "math-d9afc05a8cd074f1",
+          "question": "An isosceles trapezoid has an inscribed circle tangent to each of its four sides. The radius of the circle is $3$, and the area of the trapezoid is $72$. Let the parallel sides of the trapezoid have lengths $r$ and $s$, with $r \\neq s$. Find $r^2+s^2$",
+          "answer": "504",
+          "question_key": "d9afc05a8cd074f1ed55bf167702288bde0c4871660e59ec5ccf3a6a70c978c2",
+          "split": "test"
+        },
+        {
+          "id": "math-e587c0a8d2aa5692",
+          "question": "There exists a unique triple $(a, b, c)$ of positive real numbers that satisfies the equations\n$$\n2\\left(a^{2}+1\\right)=3\\left(b^{2}+1\\right)=4\\left(c^{2}+1\\right) \\quad \\text { and } \\quad a b+b c+c a=1\n$$\n\nCompute $a+b+c$.",
+          "answer": "\\frac{9 \\sqrt{23}}{23}",
+          "question_key": "e587c0a8d2aa5692a2ce260e4d5a45f4656978acd74dfe55b89f8259acdd7406",
+          "split": "test"
+        },
+        {
+          "id": "math-ef9fb1f4bef0d8cb",
+          "question": "Two points are selected independently and uniformly at random inside a regular hexagon. Compute the probability that a line passing through both of the points intersects a pair of opposite edges of the hexagon.",
+          "answer": "\\frac{4}{9}",
+          "question_key": "ef9fb1f4bef0d8cb844c0287c7a8fdbb6d1037dc38fac48c11d4173a7b94ce11",
+          "split": "test"
+        },
+        {
+          "id": "math-f12ef5f6b63bb910",
+          "question": "A plane $\\mathcal{P}$ intersects a rectangular prism at a hexagon which has side lengths $45,66,63,55,54$, and 77, in that order. Compute the distance from the center of the rectangular prism to $\\mathcal{P}$.",
+          "answer": "\\sqrt{\\frac{95}{24}}",
+          "question_key": "f12ef5f6b63bb910c36cbf5ca959dec5ec159a18da6727afc67f6a0357d8c9be",
+          "split": "test"
+        },
+        {
+          "id": "math-f22b078c91e76d57",
+          "question": "In a two-dimensional cave with a parallel floor and ceiling, two stalactites of lengths $16$ and $36$ hang perpendicularly from the ceiling, while two stalagmites of heights $25$ and $49$ grow perpendicularly from the ground. If the tips of these four structures form the vertices of a square in some order, compute the height of the cave.",
+          "answer": "63",
+          "question_key": "f22b078c91e76d577cefdee7a51dde13ad56ca150ae4be70725512d38311ac86",
+          "split": "test"
+        },
+        {
+          "id": "math-fb95a14cddd10c1f",
+          "question": "The parabola with equation $y = x^2 - 4$ is rotated $60^\\circ$ counterclockwise around the origin. The unique point in the fourth quadrant where the original parabola and its image intersect has $y$-coordinate $\\frac{a - \\sqrt{b}}{c}$, where $a$, $b$, and $c$ are positive integers, and $a$ and $c$ are relatively prime. Find $a + b + c$.",
+          "answer": "62",
+          "question_key": "fb95a14cddd10c1f82afd308643c6efd38f130ce2a0fe6b4a131efe86ebb4007",
+          "split": "test"
+        },
+        {
+          "id": "math-fd82985cb51a0f37",
+          "question": "The $9$ members of a baseball team went to an ice-cream parlor after their game. Each player had a single scoop cone of chocolate, vanilla, or strawberry ice cream. At least one player chose each flavor, and the number of players who chose chocolate was greater than the number of players who chose vanilla, which was greater than the number of players who chose strawberry. Let $N$ be the number of different assignments of flavors to players that meet these conditions. Find the remainder when $N$ is divided by $1000.$",
+          "answer": "16",
+          "question_key": "fd82985cb51a0f37b9d8271eb9e4f9a6da92fd6e0594ee9daa3738faa3ddaaac",
+          "split": "test"
+        }
+      ]
+    },
+    "dataset_sha256": {
+      "QA": "5e3c13b20b77e7525ac8df308bba6549eea43e415f0689072603ab626e0888ac",
+      "MATH": "50dbb3090c3e10daa71082fdf54eaeae921ebcc95cb8d649cf9c5434684fea42"
+    },
+    "config": {
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "max_calls": 8,
+      "max_tokens": 600,
+      "temperature": 0.1,
+      "history_turns": 8,
+      "max_observation_chars": 6000,
+      "timeout": 60,
+      "seed": 0
+    },
+    "seeds": [
+      11,
+      29,
+      47
+    ],
+    "modes": [
+      "off",
+      "on"
+    ],
+    "split": "test",
+    "metric_version": "strict-v2",
+    "protocol": "one-trajectory-no-answer-selection",
+    "workers": 6,
+    "provider_base_url": "https://api.siliconflow.cn/v1",
+    "retrieval_cache_only": false
+  },
+  "limitations": [
+    "Seed is requested; provider determinism is not guaranteed.",
+    "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
+    "QA uses live Wikipedia, not the official HotpotQA distractor protocol."
+  ]
+}

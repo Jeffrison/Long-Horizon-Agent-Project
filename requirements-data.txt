@@ -1,0 +1,3 @@
+# Optional public snapshot preparation only; runtime snapshot search needs no PyArrow.
+-r requirements.txt
+pyarrow>=19,<24

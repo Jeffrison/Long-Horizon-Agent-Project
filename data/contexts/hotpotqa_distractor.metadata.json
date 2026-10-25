@@ -1,0 +1,19 @@
+{
+  "source_url": "https://huggingface.co/api/datasets/hotpotqa/hotpot_qa/parquet/distractor/validation/0.parquet",
+  "source_sha256": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6",
+  "context_sha256": "e18c10fcffd0a7225e88dac89268773360594ca9cd7a9e41afbdb373629136ac",
+  "questions": 200,
+  "documents_per_question": [
+    2,
+    10
+  ],
+  "visible_fields": [
+    "question_key",
+    "documents.title",
+    "documents.text"
+  ],
+  "license": "CC BY-SA 4.0",
+  "attribution": "HotpotQA (Yang et al., EMNLP 2018), Wikipedia contributors",
+  "reference": "https://hotpotqa.github.io/",
+  "protocol": "question-scoped candidate-paragraph retrieval; no supporting-fact labels exposed"
+}

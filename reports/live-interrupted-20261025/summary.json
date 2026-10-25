@@ -1,0 +1,421 @@
+{
+  "planned_episodes": 1290,
+  "completed_episodes": 28,
+  "complete": false,
+  "groups": {
+    "MATH/off": {
+      "episodes": 4,
+      "correct": 0,
+      "accuracy": 0.0,
+      "unique_questions": 4,
+      "answer_f1": null,
+      "completion_rate": 0.75,
+      "avg_llm_calls": 7.0,
+      "avg_tool_calls": 1.75,
+      "avg_latency_seconds": 67.58975,
+      "prompt_tokens": 13729,
+      "completion_tokens": 10409,
+      "parse_errors": 18,
+      "tool_errors": 4,
+      "reflection_events": 0,
+      "terminal_failures": {
+        "max_calls_reached": 1
+      },
+      "tool_failure_types": {
+        "unknown_tool": 1,
+        "execution_error": 3
+      },
+      "truncated_completions": 8
+    },
+    "MATH/on": {
+      "episodes": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "unique_questions": 4,
+      "answer_f1": null,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 2.75,
+      "avg_tool_calls": 1.0,
+      "avg_latency_seconds": 12.324250000000001,
+      "prompt_tokens": 4589,
+      "completion_tokens": 1818,
+      "parse_errors": 3,
+      "tool_errors": 0,
+      "reflection_events": 3,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0
+    },
+    "MATH/off/seed-11": {
+      "episodes": 0,
+      "correct": 0,
+      "accuracy": 0,
+      "unique_questions": 0,
+      "answer_f1": null,
+      "completion_rate": 0,
+      "avg_llm_calls": 0,
+      "avg_tool_calls": 0,
+      "avg_latency_seconds": 0,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "parse_errors": 0,
+      "tool_errors": 0,
+      "reflection_events": 0,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0,
+        1
+      ]
+    },
+    "MATH/on/seed-11": {
+      "episodes": 1,
+      "correct": 1,
+      "accuracy": 1.0,
+      "unique_questions": 1,
+      "answer_f1": null,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 3.0,
+      "avg_tool_calls": 1.0,
+      "avg_latency_seconds": 7.0,
+      "prompt_tokens": 1067,
+      "completion_tokens": 230,
+      "parse_errors": 1,
+      "tool_errors": 0,
+      "reflection_events": 1,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0.20654931437723745,
+        1
+      ]
+    },
+    "MATH/off/seed-29": {
+      "episodes": 2,
+      "correct": 0,
+      "accuracy": 0.0,
+      "unique_questions": 2,
+      "answer_f1": null,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 7.5,
+      "avg_tool_calls": 1.5,
+      "avg_latency_seconds": 65.82,
+      "prompt_tokens": 7347,
+      "completion_tokens": 4950,
+      "parse_errors": 10,
+      "tool_errors": 2,
+      "reflection_events": 0,
+      "terminal_failures": {},
+      "tool_failure_types": {
+        "unknown_tool": 1,
+        "execution_error": 1
+      },
+      "truncated_completions": 2,
+      "wilson_95": [
+        0,
+        0.6576197724933469
+      ]
+    },
+    "MATH/on/seed-29": {
+      "episodes": 2,
+      "correct": 1,
+      "accuracy": 0.5,
+      "unique_questions": 2,
+      "answer_f1": null,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 2.5,
+      "avg_tool_calls": 1.0,
+      "avg_latency_seconds": 14.906500000000001,
+      "prompt_tokens": 2149,
+      "completion_tokens": 1108,
+      "parse_errors": 1,
+      "tool_errors": 0,
+      "reflection_events": 1,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0.09453120573423074,
+        0.9054687942657693
+      ]
+    },
+    "MATH/off/seed-47": {
+      "episodes": 2,
+      "correct": 0,
+      "accuracy": 0.0,
+      "unique_questions": 2,
+      "answer_f1": null,
+      "completion_rate": 0.5,
+      "avg_llm_calls": 6.5,
+      "avg_tool_calls": 2.0,
+      "avg_latency_seconds": 69.3595,
+      "prompt_tokens": 6382,
+      "completion_tokens": 5459,
+      "parse_errors": 8,
+      "tool_errors": 2,
+      "reflection_events": 0,
+      "terminal_failures": {
+        "max_calls_reached": 1
+      },
+      "tool_failure_types": {
+        "execution_error": 2
+      },
+      "truncated_completions": 6,
+      "wilson_95": [
+        0,
+        0.6576197724933469
+      ]
+    },
+    "MATH/on/seed-47": {
+      "episodes": 1,
+      "correct": 0,
+      "accuracy": 0.0,
+      "unique_questions": 1,
+      "answer_f1": null,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 3.0,
+      "avg_tool_calls": 1.0,
+      "avg_latency_seconds": 12.484,
+      "prompt_tokens": 1373,
+      "completion_tokens": 480,
+      "parse_errors": 1,
+      "tool_errors": 0,
+      "reflection_events": 1,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0,
+        0.7934506856227626
+      ]
+    },
+    "QA/off": {
+      "episodes": 13,
+      "correct": 6,
+      "accuracy": 0.46153846153846156,
+      "unique_questions": 13,
+      "answer_f1": 0.5576923076923077,
+      "completion_rate": 0.9230769230769231,
+      "avg_llm_calls": 3.4615384615384617,
+      "avg_tool_calls": 2.4615384615384617,
+      "avg_latency_seconds": 104.8836153846154,
+      "prompt_tokens": 39018,
+      "completion_tokens": 1736,
+      "parse_errors": 1,
+      "tool_errors": 3,
+      "reflection_events": 0,
+      "terminal_failures": {
+        "max_calls_reached": 1
+      },
+      "tool_failure_types": {
+        "retrieval_http_429": 3
+      },
+      "truncated_completions": 0
+    },
+    "QA/on": {
+      "episodes": 7,
+      "correct": 1,
+      "accuracy": 0.14285714285714285,
+      "unique_questions": 7,
+      "answer_f1": 0.19047619047619047,
+      "completion_rate": 0.7142857142857143,
+      "avg_llm_calls": 4.142857142857143,
+      "avg_tool_calls": 2.7142857142857144,
+      "avg_latency_seconds": 133.29014285714285,
+      "prompt_tokens": 25351,
+      "completion_tokens": 1162,
+      "parse_errors": 3,
+      "tool_errors": 4,
+      "reflection_events": 7,
+      "terminal_failures": {
+        "api_error": 2
+      },
+      "tool_failure_types": {
+        "retrieval_http_429": 4
+      },
+      "truncated_completions": 0
+    },
+    "QA/off/seed-11": {
+      "episodes": 5,
+      "correct": 3,
+      "accuracy": 0.6,
+      "unique_questions": 5,
+      "answer_f1": 0.7,
+      "completion_rate": 0.8,
+      "avg_llm_calls": 4.6,
+      "avg_tool_calls": 3.6,
+      "avg_latency_seconds": 163.025,
+      "prompt_tokens": 22783,
+      "completion_tokens": 919,
+      "parse_errors": 1,
+      "tool_errors": 2,
+      "reflection_events": 0,
+      "terminal_failures": {
+        "max_calls_reached": 1
+      },
+      "tool_failure_types": {
+        "retrieval_http_429": 2
+      },
+      "truncated_completions": 0,
+      "wilson_95": [
+        0.2307242812760128,
+        0.882379225767352
+      ]
+    },
+    "QA/on/seed-11": {
+      "episodes": 5,
+      "correct": 1,
+      "accuracy": 0.2,
+      "unique_questions": 5,
+      "answer_f1": 0.26666666666666666,
+      "completion_rate": 0.8,
+      "avg_llm_calls": 4.8,
+      "avg_tool_calls": 3.4,
+      "avg_latency_seconds": 165.756,
+      "prompt_tokens": 24144,
+      "completion_tokens": 1033,
+      "parse_errors": 2,
+      "tool_errors": 3,
+      "reflection_events": 5,
+      "terminal_failures": {
+        "api_error": 1
+      },
+      "tool_failure_types": {
+        "retrieval_http_429": 3
+      },
+      "truncated_completions": 0,
+      "wilson_95": [
+        0.03622410863243014,
+        0.6244653702374747
+      ]
+    },
+    "QA/off/seed-29": {
+      "episodes": 3,
+      "correct": 0,
+      "accuracy": 0.0,
+      "unique_questions": 3,
+      "answer_f1": 0.24999999999999997,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 3.0,
+      "avg_tool_calls": 2.0,
+      "avg_latency_seconds": 93.995,
+      "prompt_tokens": 7195,
+      "completion_tokens": 325,
+      "parse_errors": 0,
+      "tool_errors": 1,
+      "reflection_events": 0,
+      "terminal_failures": {},
+      "tool_failure_types": {
+        "retrieval_http_429": 1
+      },
+      "truncated_completions": 0,
+      "wilson_95": [
+        5.551115123125783e-17,
+        0.5614970317550454
+      ]
+    },
+    "QA/on/seed-29": {
+      "episodes": 1,
+      "correct": 0,
+      "accuracy": 0.0,
+      "unique_questions": 1,
+      "answer_f1": 0.0,
+      "completion_rate": 0.0,
+      "avg_llm_calls": 3.0,
+      "avg_tool_calls": 1.0,
+      "avg_latency_seconds": 84.313,
+      "prompt_tokens": 491,
+      "completion_tokens": 78,
+      "parse_errors": 1,
+      "tool_errors": 1,
+      "reflection_events": 2,
+      "terminal_failures": {
+        "api_error": 1
+      },
+      "tool_failure_types": {
+        "retrieval_http_429": 1
+      },
+      "truncated_completions": 0,
+      "wilson_95": [
+        0,
+        0.7934506856227626
+      ]
+    },
+    "QA/off/seed-47": {
+      "episodes": 5,
+      "correct": 3,
+      "accuracy": 0.6,
+      "unique_questions": 5,
+      "answer_f1": 0.6,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 2.6,
+      "avg_tool_calls": 1.6,
+      "avg_latency_seconds": 53.275400000000005,
+      "prompt_tokens": 9040,
+      "completion_tokens": 492,
+      "parse_errors": 0,
+      "tool_errors": 0,
+      "reflection_events": 0,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0.2307242812760128,
+        0.882379225767352
+      ]
+    },
+    "QA/on/seed-47": {
+      "episodes": 1,
+      "correct": 0,
+      "accuracy": 0.0,
+      "unique_questions": 1,
+      "answer_f1": 0.0,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 2.0,
+      "avg_tool_calls": 1.0,
+      "avg_latency_seconds": 19.938,
+      "prompt_tokens": 716,
+      "completion_tokens": 51,
+      "parse_errors": 0,
+      "tool_errors": 0,
+      "reflection_events": 0,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0,
+        0.7934506856227626
+      ]
+    }
+  },
+  "paired": {
+    "MATH": {
+      "complete_pairs": 0,
+      "unpaired": 8,
+      "unique_questions": 0,
+      "improved": 0,
+      "regressed": 0,
+      "delta_accuracy": 0,
+      "cluster_bootstrap_95": [
+        0,
+        0
+      ],
+      "uncertainty_unit": "question; retain all seeds within a resampled question"
+    },
+    "QA": {
+      "complete_pairs": 2,
+      "unpaired": 16,
+      "unique_questions": 2,
+      "improved": 0,
+      "regressed": 0,
+      "delta_accuracy": 0,
+      "cluster_bootstrap_95": [
+        0,
+        0
+      ],
+      "uncertainty_unit": "question; retain all seeds within a resampled question"
+    }
+  }
+}

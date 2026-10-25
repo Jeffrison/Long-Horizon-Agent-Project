@@ -75,6 +75,8 @@ def main(argv=None):
     parser.add_argument("--temperature", type=float, default=0.1)
     parser.add_argument("--timeout", type=float, default=60)
     parser.add_argument("--model", default=os.getenv("LLM_MODEL", "Qwen/Qwen2.5-7B-Instruct"))
+    parser.add_argument("--retrieval", choices=["live", "snapshot"], default="snapshot")
+    parser.add_argument("--context-path", default="data/contexts/hotpotqa_distractor.jsonl")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--output", required=True)
     parser.add_argument("--resume", action="store_true")
@@ -82,7 +84,8 @@ def main(argv=None):
     if args.workers < 1 or len(args.seeds) != len(set(args.seeds)) or (args.limit is not None and args.limit < 1):
         parser.error("Workers/limit must be positive; seeds must be unique")
     config = AgentConfig(model=args.model, max_calls=args.max_calls, max_tokens=args.max_tokens,
-                         history_turns=args.history_turns, temperature=args.temperature, timeout=args.timeout)
+                         history_turns=args.history_turns, temperature=args.temperature, timeout=args.timeout,
+                         retrieval=args.retrieval, context_path=args.context_path)
     datasets = {}
     for task in dict.fromkeys(args.tasks):
         items = load_jsonl_dataset(DATASETS[task])
@@ -96,7 +99,8 @@ def main(argv=None):
                 "split": args.split, "metric_version": "strict-v2",
                 "protocol": "one-trajectory-no-answer-selection", "workers": args.workers,
                 "provider_base_url": os.getenv("LLM_BASE_URL", "https://api.siliconflow.cn/v1"),
-                "retrieval_cache_only": os.getenv("SEARCH_CACHE_ONLY", "0") == "1"}
+                "retrieval_cache_only": os.getenv("SEARCH_CACHE_ONLY", "0") == "1",
+                "context_sha256": sha(args.context_path) if "QA" in datasets and args.retrieval == "snapshot" else None}
     if args.resume:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         if manifest["settings"] != settings:
@@ -115,7 +119,7 @@ def main(argv=None):
                     "settings": settings,
                     "limitations": ["Seed is requested; provider determinism is not guaranteed.",
                         "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
-                        "QA uses live Wikipedia, not the official HotpotQA distractor protocol."]}
+                        "QA retrieval backend: " + args.retrieval + "; answer-only evaluation, no supporting-fact score."]}
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     records_path, started_path = directory / "episodes.jsonl", directory / "started.jsonl"
     rows = read_rows(records_path)

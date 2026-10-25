@@ -18,12 +18,16 @@ class AgentConfig:
     max_observation_chars: int = 6000
     timeout: float = 60
     seed: int = 0
+    retrieval: str = "live"
+    context_path: str = "data/contexts/hotpotqa_distractor.jsonl"
 
     def __post_init__(self):
         if min(self.max_calls, self.max_tokens, self.history_turns, self.max_observation_chars) < 1:
             raise ValueError("Agent budgets must be positive")
         if self.timeout <= 0 or not 0 <= self.temperature <= 2:
             raise ValueError("Invalid timeout or temperature")
+        if self.retrieval not in {"live", "snapshot"}:
+            raise ValueError("Unknown retrieval backend")
 
 
 def run_agent(query: str, task_type: str = "QA", max_steps: int = 8,
@@ -37,10 +41,21 @@ def run_agent(query: str, task_type: str = "QA", max_steps: int = 8,
         raise ValueError("task_type must be QA or MATH")
     config = config or AgentConfig(max_calls=max_steps)
     client = client or ChatClient(config)
-    tools = ({name: TOOL_REGISTRY[name] for name in
-              (["Search"] if task_type == "QA" else ["Python_REPL"])} if tools is None else tools)
+    if tools is None:
+        if task_type == "QA" and config.retrieval == "snapshot":
+            from eval.data_loader import question_key
+            from tools.local_search import load_contexts, LocalSearch
+            documents = load_contexts(config.context_path).get(question_key(query))
+            if documents is None:
+                raise ValueError("Question is not covered by the frozen context snapshot")
+            tools = {"Search": LocalSearch(documents)}
+        else:
+            tools = {name: TOOL_REGISTRY[name] for name in
+                     (["Search"] if task_type == "QA" else ["Python_REPL"])}
     template = QA_SYSTEM_PROMPT if task_type == "QA" else MATH_SYSTEM_PROMPT
     system = template.format(tool_descriptions=get_tool_description(tools), tool_names=", ".join(tools))
+    if task_type == "QA" and config.retrieval == "snapshot":
+        system += "\nSearch retrieves from this question's fixed candidate paragraphs, not live Wikipedia."
     initial = [{"role": "system", "content": system}, {"role": "user", "content": query}]
     history, trajectory, events = [], [], []
     counts = {"llm_calls": 0, "tool_calls": 0, "tool_errors": 0, "parse_errors": 0,
