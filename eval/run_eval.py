@@ -62,6 +62,8 @@ def execute_job(task, item, seed, mode, config):
 
 
 def main(argv=None):
+    from dotenv import load_dotenv
+    load_dotenv()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tasks", nargs="+", choices=DATASETS, default=["QA", "MATH"])
     parser.add_argument("--split", choices=["dev", "test", "all"], default="test")
@@ -92,7 +94,9 @@ def main(argv=None):
     settings = {"tasks": datasets, "dataset_sha256": {t: sha(DATASETS[t]) for t in datasets},
                 "config": asdict(config), "seeds": args.seeds, "modes": ["off", "on"],
                 "split": args.split, "metric_version": "strict-v2",
-                "protocol": "one-trajectory-no-answer-selection", "workers": args.workers}
+                "protocol": "one-trajectory-no-answer-selection", "workers": args.workers,
+                "provider_base_url": os.getenv("LLM_BASE_URL", "https://api.siliconflow.cn/v1"),
+                "retrieval_cache_only": os.getenv("SEARCH_CACHE_ONLY", "0") == "1"}
     if args.resume:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         if manifest["settings"] != settings:

@@ -9,6 +9,26 @@ import requests
 from tools.result import ToolResult
 
 _lock = threading.Lock()
+_next_request_at = 0.0
+
+
+def _get(session, endpoint, params):
+    """Throttle every HTTP request, including failed ones; never retry implicitly."""
+    global _next_request_at
+    time.sleep(max(0, _next_request_at - time.monotonic()))
+    try:
+        response = session.get(endpoint, params=params, timeout=15)
+        delay = 1.5
+        if response.status_code == 429:
+            try:
+                delay = max(delay, min(60, float(response.headers.get("Retry-After", "5"))))
+            except ValueError:
+                delay = 5
+        _next_request_at = time.monotonic() + delay
+        return response
+    except requests.RequestException:
+        _next_request_at = time.monotonic() + 1.5
+        raise
 
 
 def search(query: str, max_results: int = 2) -> ToolResult:
@@ -27,8 +47,8 @@ def search(query: str, max_results: int = 2) -> ToolResult:
             session = requests.Session()
             session.headers["User-Agent"] = "LongHorizonAgent/2.0 (research evaluation; github.com/Jeffrison/Long-Horizon-Agent-Project)"
             endpoint = "https://en.wikipedia.org/w/api.php"
-            data = session.get(endpoint, params={"action": "query", "list": "search", "srsearch": query,
-                "srlimit": max_results, "format": "json"}, timeout=15)
+            data = _get(session, endpoint, {"action": "query", "list": "search", "srsearch": query,
+                "srlimit": max_results, "format": "json"})
             data.raise_for_status()
             payload = data.json()
             if "error" in payload:
@@ -37,9 +57,8 @@ def search(query: str, max_results: int = 2) -> ToolResult:
             if not titles:
                 content = "No results found."
             else:
-                time.sleep(0.25)
-                response = session.get(endpoint, params={"action": "query", "prop": "extracts",
-                    "exintro": 1, "explaintext": 1, "titles": "|".join(titles), "format": "json"}, timeout=15)
+                response = _get(session, endpoint, {"action": "query", "prop": "extracts",
+                    "exintro": 1, "explaintext": 1, "titles": "|".join(titles), "format": "json"})
                 response.raise_for_status()
                 pages = response.json().get("query", {}).get("pages", {}).values()
                 content = "\n\n".join(f"Title: {p.get('title')}\nSnippet: {p.get('extract', '')[:2400]}"
