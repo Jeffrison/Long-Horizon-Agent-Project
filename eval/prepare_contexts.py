@@ -33,7 +33,8 @@ def prepare(source, output="data/contexts/hotpotqa_distractor.jsonl"):
     content = "".join(json.dumps(extracted[key], ensure_ascii=False)+"\n" for key in sorted(extracted))
     if target.exists() and target.read_text(encoding="utf-8") != content:
         raise ValueError("Refusing to alter an existing context snapshot")
-    target.write_text(content, encoding="utf-8")
+    if not target.exists():
+        target.write_bytes(content.encode("utf-8"))
     metadata = {"source_url": SOURCE_URL, "source_sha256": hashlib.sha256(Path(source).read_bytes()).hexdigest(),
                 "context_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
                 "questions": len(extracted), "documents_per_question": sorted({len(x["documents"]) for x in extracted.values()}),
@@ -41,7 +42,10 @@ def prepare(source, output="data/contexts/hotpotqa_distractor.jsonl"):
                 "license": "CC BY-SA 4.0", "attribution": "HotpotQA (Yang et al., EMNLP 2018), Wikipedia contributors",
                 "reference": "https://hotpotqa.github.io/",
                 "protocol": "question-scoped candidate-paragraph retrieval; no supporting-fact labels exposed"}
-    target.with_suffix(".metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+    metadata_path=target.with_suffix(".metadata.json")
+    metadata_text=json.dumps(metadata, indent=2)
+    if not metadata_path.exists() or metadata_path.read_text(encoding="utf-8")!=metadata_text:
+        metadata_path.write_bytes(metadata_text.encode("utf-8"))
     print(json.dumps(metadata, indent=2))
     return metadata
 

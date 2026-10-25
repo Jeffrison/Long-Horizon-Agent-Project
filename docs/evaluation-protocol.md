@@ -1,5 +1,7 @@
 # 评测协议 v2
 
+本文件描述原始协议与审计。最终采样范围以 [最终复测计划](final-rerun-plan.md) 为准：215 题 seed=11 主实验，加预定 20 题的额外两个种子。数学最终采用 [strict-v3 精度修正](scoring-amendment.md)，保留 strict-v2 原分数；对同一批预测重判，不重跑模型。
+
 ## 历史数据审计
 
 原始代码 d95783a 与四份日志保留。用户披露历史运行存在反复尝试直到正确的结果筛选；原 README 的 8%→43%、8.33%→25% 不能作为可靠增益。代码还存在：
@@ -29,7 +31,7 @@
 
 QA 使用标准化的答案 exact match 与 token F1；yes/no/noanswer 特殊答案必须严格匹配，参照 [HotpotQA 官方评测器](https://github.com/hotpotqa/hotpot/blob/master/hotpot_evaluate_v1.py)。检索方式是实时 Wikipedia，不包含官方 distractor context/supporting facts，不能对标官方完整 benchmark。
 
-数学只解析整段最终表达式；受限 AST 解释器支持数值、分数、根号、幂、阶乘，禁止 eval。rel_tol=1e-6、abs_tol=1e-8。一般符号、多元解、单位与复杂 LaTeX 不支持；不能解析时仅允许表达式严格一致。这是保守判分器，不声称覆盖全部数学等价性。
+数学只解析整段最终表达式；受限 AST 解释器支持数值、分数、根号、幂、阶乘，禁止 eval。历史 strict-v2 使用浮点 rel_tol=1e-6、abs_tol=1e-8，并有表达式严格一致回退。strict-v3 使用 Fraction 精确有理数，整数必须精确相等，非整数仅用相对容差 1e-6；不允许绝对容差吞掉微小非零差异。无法解析、非有限值和一般符号答案不判正确。它不覆盖通用数学等价性，当前 60 个标准答案均通过可解析与自匹配审计。
 
 每种子报告 Wilson 区间；ON−OFF 的主要区间按题目聚类 bootstrap，保留同一题全部种子，避免把重复采样当作新题。报告改正数/退化数、调用/token/延迟、格式错误、工具错误、预算耗尽。小数据集上的区间不代表真实业务分布。
 

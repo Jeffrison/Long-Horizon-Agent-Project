@@ -1,7 +1,7 @@
 {
   "QA": {
-    "source": "data\\hotpotqa200.jsonl",
-    "validated": "data\\validated\\hotpotqa200.jsonl",
+    "source": "data/hotpotqa200.jsonl",
+    "validated": "data/validated/hotpotqa200.jsonl",
     "questions": 200,
     "repeated_source_ids": 0,
     "splits": {
@@ -10,8 +10,8 @@
     }
   },
   "MATH": {
-    "source": "data\\math.jsonl",
-    "validated": "data\\validated\\math.jsonl",
+    "source": "data/math.jsonl",
+    "validated": "data/validated/math.jsonl",
     "questions": 60,
     "repeated_source_ids": 29,
     "splits": {

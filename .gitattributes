@@ -1,0 +1,10 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+# Preserve checksum-bearing evidence byte-for-byte across operating systems.
+data/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+logs/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/** -text whitespace=trailing-space,space-before-tab,cr-at-eol

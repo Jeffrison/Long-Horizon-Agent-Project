@@ -78,15 +78,16 @@ def write_report(directory):
     if len(set(keys)) != len(keys) or not set(keys) <= expected:
         raise ValueError("Duplicate or unplanned records")
     # Recompute labels from saved predictions rather than trusting is_correct fields.
-    from eval.metrics import qa_match, math_match
+    from eval.scoring import score_answer
     for row in rows:
-        score = (qa_match if row["task"] == "QA" else math_match)(row["result"].get("final_answer"), row["ground_truth"])
+        score = score_answer(row["result"].get("final_answer"), row["ground_truth"], row["task"], settings["metric_version"])
         if bool(score and row["result"]["status"] == "success") != row["is_correct"]:
             raise ValueError("Stored score differs from metric recomputation")
     report = {"planned_episodes": len(expected), "completed_episodes": len(rows),
               "complete": set(keys) == expected, "groups": {}, "paired": {}}
     lines = ["# 真实复测报告", "", f"- Source revision: `{manifest['git_revision']}`",
              f"- Protocol: `{settings['protocol']}`; split: `{settings['split']}`",
+             f"- Scorer: `{settings['metric_version']}`; inference source fingerprint: `{manifest.get('source_sha256', 'legacy: Git revision and clean-start flag')}`",
              f"- Progress: {len(rows)}/{len(expected)} episodes; complete: {report['complete']}",
              f"- Seeds requested: {settings['seeds']}; model: `{settings['config']['model']}`",
              f"- QA retrieval: `{settings['config'].get('retrieval', 'live')}`; context hash: `{settings.get('context_sha256')}`",
@@ -109,6 +110,8 @@ def write_report(directory):
                 group = summarize(subset)
                 group["wilson_95"] = wilson(group["correct"], group["episodes"])
                 report["groups"][f"{task}/{mode}/seed-{seed}"] = group
+    if "rescoring" in manifest:
+        lines += ["", f"离线重判：scoring revision `{manifest['rescoring']['scoring_revision']}`；新增模型调用 0。原始分数和预测保留在父实验，差异见 scoring-differences.json。"]
     lines += ["", "## 成对差异与误差分析", ""]
     for task, comparison in report["paired"].items():
         lo, hi = comparison["cluster_bootstrap_95"]

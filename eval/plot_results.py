@@ -24,8 +24,9 @@ def main():
         positions=[x+offset for x in range(2)]
         axis.bar(positions,values,width=.32,label="Feedback "+mode.upper(),color=color)
         axis.errorbar(positions,values,yerr=errors,fmt="none",color="#334155",capsize=3)
-        for x,value in zip(positions,values):
-            axis.text(x,value+2,f"{value:.1f}%",ha="center",fontsize=9)
+        for index,(x,value) in enumerate(zip(positions,values)):
+            upper=intervals[index][1]*100
+            axis.text(x,upper+2 if upper<94 else value-5,f"{value:.1f}%",ha="center",fontsize=9)
     axis.set(xticks=[0,1],xticklabels=["QA (166 questions)","Math (49 questions)"],
              ylabel="Strict pass@1 / answer EM (%)",ylim=(0,100),
              title="Frozen-corpus Agent / Python Agent — seed 11")

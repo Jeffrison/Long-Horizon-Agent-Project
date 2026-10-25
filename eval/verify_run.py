@@ -4,7 +4,8 @@ from dataclasses import replace
 import json
 from pathlib import Path
 
-from eval.metrics import qa_match,qa_f1,math_match
+from eval.metrics import qa_f1
+from eval.scoring import score_answer
 from eval.run_eval import read_rows,job_key
 
 
@@ -28,7 +29,7 @@ def verify(directory):
         if any(row.get(name)!=value for name,value in fields.items()):
             raise ValueError("Episode labels/identity differ from frozen manifest")
         result=row["result"]
-        score=(qa_match if task=="QA" else math_match)(result.get("final_answer"),item["answer"])
+        score=score_answer(result.get("final_answer"),item["answer"],task,settings.get("metric_version","strict-v2"))
         if row["is_correct"] != bool(score and result["status"]=="success"):
             raise ValueError("Stored correctness differs from independent scoring")
         if task=="QA" and abs(row["answer_f1"]-qa_f1(result.get("final_answer"),item["answer"]))>1e-12:

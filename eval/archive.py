@@ -10,6 +10,7 @@ import shutil
 import subprocess
 
 from eval.report import write_report
+from eval.verify_run import verify
 
 
 def archive(source, destination):
@@ -17,9 +18,14 @@ def archive(source, destination):
     summary = write_report(source)
     if not summary["complete"]:
         raise ValueError("Formal archive requires a complete run")
+    verify(source)
     destination.mkdir(parents=True, exist_ok=False)
     for name in ("manifest.json", "summary.json", "report.md"):
         shutil.copyfile(source/name, destination/name)
+    for name in ("verification.json", "failure-analysis.json", "failure-analysis.md",
+                 "scoring-differences.json", "accuracy.png", "accuracy.svg"):
+        if (source/name).exists():
+            shutil.copyfile(source/name, destination/name)
     for name in ("episodes.jsonl", "started.jsonl"):
         with (destination/(name+".gz")).open("wb") as stream:
             with gzip.GzipFile(fileobj=stream, mode="wb", mtime=0, filename="") as compressed:

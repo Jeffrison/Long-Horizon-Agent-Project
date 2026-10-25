@@ -113,7 +113,7 @@ def parse_latex_to_float(value):
         return None
 
 
-def math_match(prediction, ground_truth, rel_tol=1e-6, abs_tol=1e-8) -> bool:
+def math_match_v2(prediction, ground_truth, rel_tol=1e-6, abs_tol=1e-8) -> bool:
     pred, gold = parse_latex_to_float(prediction), parse_latex_to_float(ground_truth)
     if pred is not None and gold is not None:
         return math.isclose(pred, gold, rel_tol=rel_tol, abs_tol=abs_tol)
@@ -122,3 +122,11 @@ def math_match(prediction, ground_truth, rel_tol=1e-6, abs_tol=1e-8) -> bool:
         return False
     norm = lambda x: re.sub(r"\s+", "", str(x).strip().strip("$"))
     return bool(norm(prediction) and norm(prediction) == norm(ground_truth))
+
+
+def math_match(prediction, ground_truth, rel_tol=1e-6, abs_tol=0.0) -> bool:
+    """Strict-v3 public grader. Historical tolerance is exposed as math_match_v2."""
+    if abs_tol != 0:
+        raise ValueError("Strict-v3 does not use absolute tolerance; select math_match_v2 explicitly")
+    from eval.exact_math import exact_math_match
+    return exact_math_match(prediction, ground_truth, rel_tol=rel_tol)

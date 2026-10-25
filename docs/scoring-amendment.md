@@ -9,4 +9,6 @@
 
 这属于已看到数据后的 **scorer bug fix / protocol amendment**，不会包装成预先盲定的指标。原始 strict-v2 分数、预测与所有轨迹保留；strict-v3 对同一预测离线重判并给出差异明细，不重新采样模型。若两版结果相同，也如实记录；若不同，完整披露差异。
 
+strict-v3 是数值判分器：超出支持语法或非有限值不会判正确，即使字符串相同；一般符号答案需要另行验证。
+
 最终报告分别记录 inference revision 与 scoring revision，不能把更严格判分后的数值变化解释为 Agent 能力变化。

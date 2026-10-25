@@ -18,7 +18,9 @@ if __package__ in (None, ""):
 
 from agent.react_loop import AgentConfig, run_agent
 from eval.data_loader import load_jsonl_dataset
-from eval.metrics import qa_match, qa_f1, math_match
+from eval.metrics import qa_f1
+from eval.scoring import score_answer, VERSIONS
+from eval.provenance import source_fingerprint
 
 DATASETS = {"QA": "data/validated/hotpotqa200.jsonl", "MATH": "data/validated/math.jsonl"}
 _lock = threading.Lock()
@@ -47,12 +49,11 @@ def job_key(task, item, seed, mode):
     return f"{task}:{item['id']}:{seed}:{mode}"
 
 
-def execute_job(task, item, seed, mode, config):
+def execute_job(task, item, seed, mode, config, metric_version="strict-v3"):
     result = run_agent(item["question"], task_type=task,
                        enable_reflection=(mode == "on"), config=replace(config, seed=seed))
-    correct = result["status"] == "success" and (
-        qa_match(result["final_answer"], item["answer"]) if task == "QA"
-        else math_match(result["final_answer"], item["answer"]))
+    correct = result["status"] == "success" and score_answer(
+        result["final_answer"], item["answer"], task, metric_version)
     return {"key": job_key(task, item, seed, mode), "task": task, "id": item["id"],
             "question_key": item["question_key"], "question": item["question"],
             "split": item["split"], "seed": seed, "mode": mode,
@@ -75,6 +76,7 @@ def main(argv=None):
     parser.add_argument("--temperature", type=float, default=0.1)
     parser.add_argument("--timeout", type=float, default=60)
     parser.add_argument("--api-interval", type=float, default=1.0)
+    parser.add_argument("--metric-version", choices=VERSIONS, default="strict-v3")
     parser.add_argument("--model", default=os.getenv("LLM_MODEL", "Qwen/Qwen2.5-7B-Instruct"))
     parser.add_argument("--retrieval", choices=["live", "snapshot"], default="snapshot")
     parser.add_argument("--context-path", default="data/contexts/hotpotqa_distractor.jsonl")
@@ -97,7 +99,7 @@ def main(argv=None):
     manifest_path = directory / "manifest.json"
     settings = {"tasks": datasets, "dataset_sha256": {t: sha(DATASETS[t]) for t in datasets},
                 "config": asdict(config), "seeds": args.seeds, "modes": ["off", "on"],
-                "split": args.split, "metric_version": "strict-v2",
+                "split": args.split, "metric_version": args.metric_version,
                 "protocol": "one-trajectory-no-answer-selection", "workers": args.workers,
                 "provider_base_url": os.getenv("LLM_BASE_URL", "https://api.siliconflow.cn/v1"),
                 "retrieval_cache_only": os.getenv("SEARCH_CACHE_ONLY", "0") == "1",
@@ -109,11 +111,14 @@ def main(argv=None):
         revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
         if manifest["git_revision"] != revision:
             parser.error("Source revision changed; resume requires the original implementation")
+        if manifest.get("source_sha256") != source_fingerprint():
+            parser.error("Source fingerprint changed or is absent in this legacy run; use its original implementation")
     else:
         if directory.exists() and any(directory.iterdir()):
             parser.error("Output directory is nonempty; use --resume with identical settings")
         directory.mkdir(parents=True, exist_ok=True)
         manifest = {"schema_version": 2, "created_at": datetime.now(timezone.utc).isoformat(),
+                    "source_sha256": source_fingerprint(),
                     "git_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
                     "git_dirty": bool(subprocess.check_output(["git", "status", "--porcelain",
                                                                "--untracked-files=no"], text=True).strip()),
@@ -158,7 +163,7 @@ def main(argv=None):
         key = job_key(*job)
         append(started_path, {"key": key, "started_at": datetime.now(timezone.utc).isoformat()})
         try:
-            row = execute_job(*job, config)
+            row = execute_job(*job, config, metric_version=args.metric_version)
         except Exception as exc:
             task, item, seed, mode = job
             row = {"key": key, "task": task, "id": item["id"], "question_key": item["question_key"],

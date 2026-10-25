@@ -107,8 +107,6 @@ def exact_math_match(prediction,ground_truth,rel_tol=1e-6):
             approximate=pred if isinstance(pred,Fraction) else Fraction(str(pred))
             return abs(approximate-gold)<=abs(gold)*Fraction(str(rel_tol))
         return math.isclose(float(pred),float(gold),rel_tol=rel_tol,abs_tol=0)
-    if prediction is None or ground_truth is None:
-        return False
-    normalize=lambda value:re.sub(r"\s+","",str(value).strip().strip("$"))
-    return bool(normalize(prediction) and normalize(prediction)==normalize(ground_truth))
+    # This scorer is explicitly numeric: unsupported/nonfinite expressions fail closed.
+    return False
 

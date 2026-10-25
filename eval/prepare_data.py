@@ -28,9 +28,10 @@ def prepare(output="data/validated"):
         content = "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows)
         if target.exists() and target.read_text(encoding="utf-8") != content:
             raise ValueError(f"Refusing to change an existing validated dataset: {target}")
-        target.write_text(content, encoding="utf-8")
+        if not target.exists():
+            target.write_bytes(content.encode("utf-8"))
         validated = load_jsonl_dataset(target)
-        audit[task] = {"source": str(source), "validated": str(target), "questions": len(rows),
+        audit[task] = {"source": source.as_posix(), "validated": target.as_posix(), "questions": len(rows),
                        "repeated_source_ids": sum(n - 1 for n in source_ids.values()),
                        "splits": {s: sum(x["split"] == s for x in validated) for s in ("dev", "test")}}
     (directory / "audit.json").write_text(json.dumps(audit, indent=2), encoding="utf-8")

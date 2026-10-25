@@ -24,3 +24,8 @@ def test_rationals_zero_and_decimals():
 @pytest.mark.parametrize("text",["1e-999999999999","10**1000000","__import__('os')","sqrt(-1)"])
 def test_exact_parser_bounds(text):
     assert parse_exact_number(text) is None
+
+
+def test_invalid_numeric_answers_do_not_match_themselves():
+    for text in ["NaN", "inf", "1/0", "sqrt(-1)", "x+1"]:
+        assert not exact_math_match(text,text)

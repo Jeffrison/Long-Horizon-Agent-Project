@@ -1,4 +1,5 @@
 import json
+import pytest
 from pathlib import Path
 from eval import run_eval
 from eval.metrics import qa_f1
@@ -10,7 +11,7 @@ def test_resume_never_resamples_completed_or_interrupted_jobs(tmp_path, monkeypa
     output = tmp_path/"run"
     monkeypatch.setitem(run_eval.DATASETS, "QA", str(data))
     calls = []
-    def execute(task, item, seed, mode, config):
+    def execute(task, item, seed, mode, config, metric_version="strict-v3"):
         calls.append(mode)
         return {"key":run_eval.job_key(task,item,seed,mode), "task":task, "id":item["id"],
                 "question_key":item["question_key"], "question":item["question"],
@@ -34,3 +35,7 @@ def test_resume_never_resamples_completed_or_interrupted_jobs(tmp_path, monkeypa
     assert sum(r["result"].get("error") == "interrupted" for r in restored) == 1
     summary = json.loads((output/"summary.json").read_text(encoding="utf-8"))
     assert summary["complete"]
+    monkeypatch.setattr(run_eval,"source_fingerprint",lambda:"changed-source")
+    with pytest.raises(SystemExit):
+        run_eval.main(args+["--resume"])
+    assert len(calls)==2
