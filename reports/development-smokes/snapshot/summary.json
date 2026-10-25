@@ -1,0 +1,106 @@
+{
+  "planned_episodes": 4,
+  "completed_episodes": 4,
+  "complete": true,
+  "groups": {
+    "QA/off": {
+      "episodes": 2,
+      "correct": 2,
+      "accuracy": 1.0,
+      "unique_questions": 2,
+      "answer_f1": 1.0,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 4.5,
+      "avg_tool_calls": 2.0,
+      "avg_latency_seconds": 6.3045,
+      "prompt_tokens": 3648,
+      "completion_tokens": 278,
+      "parse_errors": 3,
+      "tool_errors": 0,
+      "reflection_events": 0,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0
+    },
+    "QA/on": {
+      "episodes": 2,
+      "correct": 1,
+      "accuracy": 0.5,
+      "unique_questions": 2,
+      "answer_f1": 0.75,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 3.5,
+      "avg_tool_calls": 2.0,
+      "avg_latency_seconds": 3.359,
+      "prompt_tokens": 3131,
+      "completion_tokens": 187,
+      "parse_errors": 1,
+      "tool_errors": 0,
+      "reflection_events": 1,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0
+    },
+    "QA/off/seed-47": {
+      "episodes": 2,
+      "correct": 2,
+      "accuracy": 1.0,
+      "unique_questions": 2,
+      "answer_f1": 1.0,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 4.5,
+      "avg_tool_calls": 2.0,
+      "avg_latency_seconds": 6.3045,
+      "prompt_tokens": 3648,
+      "completion_tokens": 278,
+      "parse_errors": 3,
+      "tool_errors": 0,
+      "reflection_events": 0,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0.34238022750665303,
+        1
+      ]
+    },
+    "QA/on/seed-47": {
+      "episodes": 2,
+      "correct": 1,
+      "accuracy": 0.5,
+      "unique_questions": 2,
+      "answer_f1": 0.75,
+      "completion_rate": 1.0,
+      "avg_llm_calls": 3.5,
+      "avg_tool_calls": 2.0,
+      "avg_latency_seconds": 3.359,
+      "prompt_tokens": 3131,
+      "completion_tokens": 187,
+      "parse_errors": 1,
+      "tool_errors": 0,
+      "reflection_events": 1,
+      "terminal_failures": {},
+      "tool_failure_types": {},
+      "truncated_completions": 0,
+      "wilson_95": [
+        0.09453120573423074,
+        0.9054687942657693
+      ]
+    }
+  },
+  "paired": {
+    "QA": {
+      "complete_pairs": 2,
+      "unpaired": 0,
+      "unique_questions": 2,
+      "improved": 0,
+      "regressed": 1,
+      "delta_accuracy": -0.5,
+      "cluster_bootstrap_95": [
+        -1,
+        0
+      ],
+      "uncertainty_unit": "question; retain all seeds within a resampled question"
+    }
+  }
+}

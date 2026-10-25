@@ -31,6 +31,7 @@ def main():
              ylabel="Strict pass@1 / answer EM (%)",ylim=(0,100),
              title="Frozen-corpus Agent / Python Agent — seed 11")
     axis.grid(alpha=.2,axis="y")
+    axis.set_xlabel("Whiskers: 95% Wilson intervals; all failures retained",fontsize=8,labelpad=10)
     axis.legend(frameon=False)
     figure.savefig(directory/"accuracy.png",dpi=180)
     figure.savefig(directory/"accuracy.svg")

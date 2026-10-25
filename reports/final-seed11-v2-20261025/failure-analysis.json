@@ -1,0 +1,196 @@
+{
+  "groups": {
+    "MATH/off": {
+      "total": 49,
+      "primary": {
+        "correct": 6,
+        "max_calls_reached": 24,
+        "wrong_numeric_final": 17,
+        "invalid_numeric_final": 2
+      },
+      "auxiliary": {
+        "had_parse_error": 45,
+        "had_tool_error": 16,
+        "had_truncation": 26,
+        "repeated_tool_input": 3,
+        "error_then_correct": 5
+      }
+    },
+    "MATH/on": {
+      "total": 49,
+      "primary": {
+        "wrong_numeric_final": 36,
+        "correct": 8,
+        "invalid_numeric_final": 1,
+        "max_calls_reached": 4
+      },
+      "auxiliary": {
+        "had_parse_error": 46,
+        "had_tool_error": 23,
+        "had_truncation": 16,
+        "repeated_tool_input": 4,
+        "error_then_correct": 7
+      }
+    },
+    "QA/off": {
+      "total": 166,
+      "primary": {
+        "qa_partial_match": 34,
+        "correct": 71,
+        "max_calls_reached": 15,
+        "qa_no_token_overlap": 43,
+        "api_timeout": 3
+      },
+      "auxiliary": {
+        "had_parse_error": 38,
+        "had_tool_error": 0,
+        "had_truncation": 0,
+        "repeated_tool_input": 11,
+        "error_then_correct": 13
+      }
+    },
+    "QA/on": {
+      "total": 166,
+      "primary": {
+        "qa_no_token_overlap": 46,
+        "correct": 69,
+        "qa_partial_match": 32,
+        "api_timeout": 7,
+        "max_calls_reached": 12
+      },
+      "auxiliary": {
+        "had_parse_error": 36,
+        "had_tool_error": 0,
+        "had_truncation": 0,
+        "repeated_tool_input": 9,
+        "error_then_correct": 14
+      }
+    }
+  },
+  "paired_examples": {
+    "improved": [
+      {
+        "question_key": "2abcdfadeff97a3abdf85e0359652d567cdfb233f1e66ce08e745113638dcc0a",
+        "seed": 11,
+        "question": "The lamp used in many lighthouses is similiar to this type of lamp patented in 1780 by Aimé Argand?",
+        "ground_truth": "Argand lamp",
+        "off": {
+          "final_answer": "yes",
+          "error": null,
+          "llm_calls": 3,
+          "parse_errors": 1,
+          "tool_errors": 0
+        },
+        "on": {
+          "final_answer": "Argand lamp",
+          "error": null,
+          "llm_calls": 2,
+          "parse_errors": 0,
+          "tool_errors": 0
+        }
+      },
+      {
+        "question_key": "49e0992c80a9c372b99431be0cd77b7670749f8c02a873754344a2fd41181c36",
+        "seed": 11,
+        "question": "Are Local H and For Against both from the United States?",
+        "ground_truth": "yes",
+        "off": {
+          "final_answer": "no",
+          "error": null,
+          "llm_calls": 3,
+          "parse_errors": 0,
+          "tool_errors": 0
+        },
+        "on": {
+          "final_answer": "yes",
+          "error": null,
+          "llm_calls": 4,
+          "parse_errors": 1,
+          "tool_errors": 0
+        }
+      },
+      {
+        "question_key": "4f0299ef83cc68fecf40261f3264be3edcbc55a21676f32bd55575b0e941bb09",
+        "seed": 11,
+        "question": "The product\\[\\prod^{63}_{k=4} \frac{\\log_k (5^{k^2 - 1})}{\\log_{k + 1} (5^{k^2 - 4})} = \frac{\\log_4 (5^{15})}{\\log_5 (5^{12})} \\cdot \frac{\\log_5 (5^{24})}{\\log_6 (5^{21})}\\cdot \frac{\\log_6 (5^{35})}{\\log_7 (5^{32})} \\cdots \frac{\\log_{63} (5^{3968})}{\\log_{64} (5^{3965})}\\]is equal to $\\tfrac mn,$ where $m$ and $n$ are relatively prime positive integers. Find $m + n.$",
+        "ground_truth": "106",
+        "off": {
+          "final_answer": null,
+          "error": "max_calls_reached",
+          "llm_calls": 8,
+          "parse_errors": 8,
+          "tool_errors": 0
+        },
+        "on": {
+          "final_answer": "106",
+          "error": null,
+          "llm_calls": 7,
+          "parse_errors": 1,
+          "tool_errors": 2
+        }
+      }
+    ],
+    "regressed": [
+      {
+        "question_key": "0b5eec12d4e97c3f5079a15b1767cd23a1399a5cb6834584f3475bad730c9773",
+        "seed": 11,
+        "question": "Which travel parody series featured American actor, comedian, and radio host best known as the host of \"The Joe Schmo Show\"?",
+        "ground_truth": "Hidden America with Jonah Ray",
+        "off": {
+          "final_answer": "Hidden America with Jonah Ray",
+          "error": null,
+          "llm_calls": 3,
+          "parse_errors": 0,
+          "tool_errors": 0
+        },
+        "on": {
+          "final_answer": "The Joe Schmo Show Paradox Travel Series",
+          "error": null,
+          "llm_calls": 4,
+          "parse_errors": 1,
+          "tool_errors": 0
+        }
+      },
+      {
+        "question_key": "2ecee8750a9ece6bfa081fce27ac39cfacdb2f9a7c595f06848573ab4be44f6e",
+        "seed": 11,
+        "question": "What was the name of a woman from the book titled \"Their Lives: The Women Targeted by the Clinton Machine \" and was also a former white house intern?",
+        "ground_truth": "Monica Lewinsky",
+        "off": {
+          "final_answer": "Monica Lewinsky",
+          "error": null,
+          "llm_calls": 3,
+          "parse_errors": 0,
+          "tool_errors": 0
+        },
+        "on": {
+          "final_answer": "no",
+          "error": null,
+          "llm_calls": 6,
+          "parse_errors": 0,
+          "tool_errors": 0
+        }
+      },
+      {
+        "question_key": "431423a5340bd86e6245203361f7fe25d9ba0b46e81bdec738eaed08c958726d",
+        "seed": 11,
+        "question": "hree Men on a Horse is a play by a playwright born in which year ?",
+        "ground_truth": "1887",
+        "off": {
+          "final_answer": "1887",
+          "error": null,
+          "llm_calls": 3,
+          "parse_errors": 0,
+          "tool_errors": 0
+        },
+        "on": {
+          "final_answer": "1972",
+          "error": null,
+          "llm_calls": 2,
+          "parse_errors": 0,
+          "tool_errors": 0
+        }
+      }
+    ]
+  }
+}

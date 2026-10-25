@@ -1,0 +1,28 @@
+{
+  "main_inference_revision": "5b3b8c33f5cc8256d7912f82c9ca7076d280e5b0",
+  "extra_inference_revision": "44694c5fd9233a6b800b239d13448f4dcff4ba02",
+  "active_inference_modules_identical": true,
+  "modules_checked": [
+    "agent/client.py",
+    "agent/react_loop.py",
+    "agent/parser.py",
+    "agent/prompts.py",
+    "tools/__init__.py",
+    "tools/result.py",
+    "tools/python_repl.py",
+    "tools/search_tool.py",
+    "tools/local_search.py",
+    "eval/run_eval.py",
+    "eval/data_loader.py",
+    "eval/metrics.py",
+    "eval/report.py"
+  ],
+  "data_bytes_still_match_frozen_plan": {
+    "QA": true,
+    "MATH": true
+  },
+  "qa_context_matches": true,
+  "all_sampling_complete": true,
+  "formal_trajectories": 510,
+  "api_failures_retained": 11
+}

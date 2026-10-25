@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-25T04:18:33.537541+00:00",
+  "git_revision": "42c0487e9430b98bffd06ebff8f0a3f8a2185b81",
+  "git_dirty": true,
+  "settings": {
+    "tasks": {
+      "QA": [
+        {
+          "id": "qa-03693e140d61e98b",
+          "question": "What occupation was shared by David Yates and Pietro Germi?",
+          "answer": "director",
+          "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+          "split": "dev"
+        },
+        {
+          "id": "qa-0395cf6a3ce8711e",
+          "question": "What screenwriter with credits for \"Evolution\" co-wrote a film starring Nicolas Cage and Téa Leoni?",
+          "answer": "David Weissman",
+          "question_key": "0395cf6a3ce8711ec3c068f00312be68258414faff51e18d19fbeddaf51b4608",
+          "split": "dev"
+        }
+      ]
+    },
+    "dataset_sha256": {
+      "QA": "5e3c13b20b77e7525ac8df308bba6549eea43e415f0689072603ab626e0888ac"
+    },
+    "config": {
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "max_calls": 8,
+      "max_tokens": 600,
+      "temperature": 0.1,
+      "history_turns": 8,
+      "max_observation_chars": 6000,
+      "timeout": 60,
+      "seed": 0,
+      "retrieval": "snapshot",
+      "context_path": "data/contexts/hotpotqa_distractor.jsonl"
+    },
+    "seeds": [
+      47
+    ],
+    "modes": [
+      "off",
+      "on"
+    ],
+    "split": "dev",
+    "metric_version": "strict-v2",
+    "protocol": "one-trajectory-no-answer-selection",
+    "workers": 2,
+    "provider_base_url": "https://api.siliconflow.cn/v1",
+    "retrieval_cache_only": false,
+    "context_sha256": "e18c10fcffd0a7225e88dac89268773360594ca9cd7a9e41afbdb373629136ac"
+  },
+  "limitations": [
+    "Seed is requested; provider determinism is not guaranteed.",
+    "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
+    "QA retrieval backend: snapshot; answer-only evaluation, no supporting-fact score."
+  ]
+}

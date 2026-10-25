@@ -1,0 +1,200 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-25T05:30:04.533430+00:00",
+  "git_revision": "44694c5fd9233a6b800b239d13448f4dcff4ba02",
+  "git_dirty": false,
+  "settings": {
+    "tasks": {
+      "QA": [
+        {
+          "id": "qa-00078ce0f0aaf621",
+          "question": "What major truck road is located in Backford Cross?",
+          "answer": "The A41",
+          "question_key": "00078ce0f0aaf621dfbdd8e0a6a0152a1bca7867efb3e751f23185bc83deb0e4",
+          "split": "test"
+        },
+        {
+          "id": "qa-003b327aa5a255b5",
+          "question": "Joe Walker played for which team that ends their regular season with the Civil War rivalry game?",
+          "answer": "Oregon Ducks football",
+          "question_key": "003b327aa5a255b5c59bdd2beef7dea75ad0806a7175ac51cdea65fcf17679e6",
+          "split": "test"
+        },
+        {
+          "id": "qa-00650646b32e2cd8",
+          "question": "When was Poison's album \"Shut Up, Make Love\" released?",
+          "answer": "2000",
+          "question_key": "00650646b32e2cd86f896a9999e0fa2edf5cc98ce6c2edd3104599e636c13a26",
+          "split": "test"
+        },
+        {
+          "id": "qa-008a0ad0d141df6e",
+          "question": "Which of Tara Strong major voice role in animated series is an American animated television series based on the DC Comics fictional superhero team, the \"Teen Titans\"?",
+          "answer": "Teen Titans Go!",
+          "question_key": "008a0ad0d141df6e80c603fecf1053d98b1d9dc3c191e53d675491d1a01088fc",
+          "split": "test"
+        },
+        {
+          "id": "qa-06895d0ff4633c62",
+          "question": "Which Eminem album included vocals from a singer who had an album titled \"Unapologetic\"?",
+          "answer": "\"The Marshall Mathers LP 2\"",
+          "question_key": "06895d0ff4633c621f9e0ecc3d7a46dda18f74238e00a06ce608f67243a085bf",
+          "split": "test"
+        },
+        {
+          "id": "qa-08a95911f5d1b18f",
+          "question": "Randall Cunningham II was a multi-sport athlete at the high school located in what Nevada city?",
+          "answer": "Summerlin",
+          "question_key": "08a95911f5d1b18f43b337f1fc16a2dc9e095db572688b2415a625bd228b01ac",
+          "split": "test"
+        },
+        {
+          "id": "qa-0b271d9560c58a03",
+          "question": "Scott Parkin has been a vocal critic of Exxonmobil and another corporation that has operations in how many countries ?",
+          "answer": "more than 70 countries",
+          "question_key": "0b271d9560c58a03fd738f19a30ab34de6c0de100311a7e79a9889da19d179df",
+          "split": "test"
+        },
+        {
+          "id": "qa-0b5eec12d4e97c3f",
+          "question": "Which travel parody series featured American actor, comedian, and radio host best known as the host of \"The Joe Schmo Show\"?",
+          "answer": "Hidden America with Jonah Ray",
+          "question_key": "0b5eec12d4e97c3f5079a15b1767cd23a1399a5cb6834584f3475bad730c9773",
+          "split": "test"
+        },
+        {
+          "id": "qa-0ec09a54d88d7171",
+          "question": "What season was the character introduced that becomes the main antagonist in the  following season, from the animated television series created by Bryan Konietzko and Michael Dante DiMartino as a sequel to \"\", which aired from 2005 to 2008? ",
+          "answer": "third",
+          "question_key": "0ec09a54d88d7171f7209535b1df13eaec64c0bac7662d066cca74f65a82b6c6",
+          "split": "test"
+        },
+        {
+          "id": "qa-107d57ceea0b7027",
+          "question": "Are both Dictyosperma, and Huernia described as a genus?",
+          "answer": "yes",
+          "question_key": "107d57ceea0b70279d6169643c31f1f49880d01214238c42cbdc831e2fbc6e75",
+          "split": "test"
+        }
+      ],
+      "MATH": [
+        {
+          "id": "math-03b438bc4364ef6c",
+          "question": "There are $n$ values of $x$ in the interval $0<x<2\\pi$ where $f(x)=\\sin(7\\pi\\cdot\\sin(5x))=0$. For $t$ of these $n$ values of $x$, the graph of $y=f(x)$ is tangent to the $x$-axis. Find $n+t$.",
+          "answer": "149",
+          "question_key": "03b438bc4364ef6cdc1b9b3d54d238213404336cb1cd2a7c27c9a646067d0efd",
+          "split": "test"
+        },
+        {
+          "id": "math-08e624521875ede7",
+          "question": "A semicircle is inscribed in another semicircle if the smaller semicircle's diameter is a chord of the larger semicircle, and the smaller semicircle's arc is tangent to the diameter of the larger semicircle.\nSemicircle $S_{1}$ is inscribed in a semicircle $S_{2}$, which is inscribed in another semicircle $S_{3}$. The radii of $S_{1}$ and $S_{3}$ are $1$ and 10, respectively, and the diameters of $S_{1}$ and $S_{3}$ are parallel. The endpoints of the diameter of $S_{3}$ are $A$ and $B$, and $S_{2}$ 's arc is tangent to $A B$ at $C$. Compute $A C \\cdot C B$.\n\n\\begin{tikzpicture}\n\n    % S_1\n    \\coordinate (S_1_1) at (6.57,0.45);\n    \\coordinate (S_1_2) at (9.65,0.45);\n    \\draw (S_1_1) -- (S_1_2);\n\n    \\draw (S_1_1) arc[start angle=180, end angle=0, radius=1.54]\n    node[midway,above] {};\n\n    \\node[above=0.5cm] at (7,1.2) {$S_1$};\n\n    % S_2 \n    \\coordinate (S_2_1) at (6.32,4.82);\n    \\coordinate (S_2_2) at (9.95,0.68);\n\n    \\draw (S_2_1) -- (S_2_2);\n\n    \\draw (S_2_1) arc[start angle=131, end angle=311, radius=2.75]\n    node[midway,above] {};\n\n    \\node[above=0.5cm] at (5,2) {$S_2$};\n\n    % S_3\n    \\coordinate (A) at (0,0);\n    \\coordinate (B) at (10,0);\n    \\draw (A) -- (B);\n    \\fill (A) circle (2pt) node[below] {$A$};\n    \\fill (B) circle (2pt) node[below] {$B$};\n\n    \\draw (A) arc[start angle=180, end angle=0, radius=5]\n    node[midway,above] {};\n    \\node[above=0.5cm] at (1,3) {$S_3$};\n\n    \\coordinate (C) at (8.3,0);\n    \\fill (C) circle (2pt) node[below] {$C$};\n\n\\end{tikzpicture}",
+          "answer": "20",
+          "question_key": "08e624521875ede7eace7f2bf5a92b306fdf1d8c10c8ed3eae7ea0911dbd6781",
+          "split": "test"
+        },
+        {
+          "id": "math-0f08ca6f6bc4e807",
+          "question": "Compute the sum of the positive divisors (including $1$) of $9!$ that have units digit $1$.",
+          "answer": "103",
+          "question_key": "0f08ca6f6bc4e807ec4e99c422df13c7dfd1aa239e573d2a7e2158e033d4b56d",
+          "split": "test"
+        },
+        {
+          "id": "math-0fcd5297e531d223",
+          "question": "A piecewise linear function is defined by\\[f(x) = \\begin{cases} x & \\operatorname{if} ~ -1 \\leq x < 1 \\ 2 - x & \\operatorname{if} ~ 1 \\leq x < 3\\end{cases}\\]and $f(x + 4) = f(x)$ for all real numbers $x$. The graph of $f(x)$ has the sawtooth pattern depicted below. The parabola $x = 34y^{2}$ intersects the graph of $f(x)$ at finitely many points. The sum of the $y$-coordinates of all these intersection points can be expressed in the form $\\tfrac{a + b\\sqrt{c}}{d}$, where $a$, $b$, $c$, and $d$ are positive integers such that $a$, $b$, $d$ have greatest common divisor equal to $1$, and $c$ is not divisible by the square of any prime. Find $a + b + c + d$. Graph [asy] import graph;  size(300);  Label f;  f.p=fontsize(6);  yaxis(-2,2,Ticks(f, 2.0));  xaxis(-6.5,6.5,Ticks(f, 2.0)); draw((0, 0)..(1/4,sqrt(1/136))..(1/2,sqrt(1/68))..(0.75,sqrt(0.75/34))..(1, sqrt(1/34))..(2, sqrt(2/34))..(3, sqrt(3/34))..(4, sqrt(4/34))..(5, sqrt(5/34))..(6, sqrt(6/34))..(7, sqrt(7/34))..(8, sqrt(8/34)), red); draw((0, 0)..(1/4,-sqrt(1/136))..(0.5,-sqrt(1/68))..(0.75,-sqrt(0.75/34))..(1, -sqrt(1/34))..(2, -sqrt(2/34))..(3, -sqrt(3/34))..(4, -sqrt(4/34))..(5, -sqrt(5/34))..(6, -sqrt(6/34))..(7, -sqrt(7/34))..(8, -sqrt(8/34)), red); draw((-7,0)--(7,0), black+0.8bp); draw((0,-2.2)--(0,2.2), black+0.8bp);  draw((-6,-0.1)--(-6,0.1), black); draw((-4,-0.1)--(-4,0.1), black); draw((-2,-0.1)--(-2,0.1), black); draw((0,-0.1)--(0,0.1), black); draw((2,-0.1)--(2,0.1), black); draw((4,-0.1)--(4,0.1), black); draw((6,-0.1)--(6,0.1), black);  draw((-7,1)..(-5,-1), blue); draw((-5,-1)--(-3,1), blue); draw((-3,1)--(-1,-1), blue); draw((-1,-1)--(1,1), blue); draw((1,1)--(3,-1), blue); draw((3,-1)--(5,1), blue); draw((5,1)--(7,-1), blue); [/asy]",
+          "answer": "259",
+          "question_key": "0fcd5297e531d22325a56f6b5661fd15ff5ccef4d7597905dcaf1404355d50d7",
+          "split": "test"
+        },
+        {
+          "id": "math-10f9b45eab108554",
+          "question": "Ben has $16$ balls labeled $1,2,3, \\ldots, 16$, as well as $4$ indistinguishable boxes. Two balls are \\emph{neighbors} if their labels differ by $1$. Compute the number of ways for him to put $4$ balls in each box such that each ball is in the same box as at least one of its neighbors. (The order in which the balls are placed does not matter.)",
+          "answer": "105",
+          "question_key": "10f9b45eab1085547f2a63fdf59fa374b4740cf5cb5f02a264424fd3b699c787",
+          "split": "test"
+        },
+        {
+          "id": "math-1386ae112defe5ff",
+          "question": "Suppose $\\triangle ABC$ has angles $\\angle BAC = 84^\\circ, \\angle ABC=60^\\circ,$ and $\\angle ACB = 36^\\circ.$ Let $D, E,$ and $F$ be the midpoints of sides $\\overline{BC}, \\overline{AC},$ and $\\overline{AB},$ respectively. The circumcircle of $\triangle DEF$ intersects $\\overline{BD}, \\overline{AE},$ and $\\overline{AF}$ at points $G, H,$ and $J,$ respectively. The points $G, D, E, H, J,$ and $F$ divide the circumcircle of $\\triangle DEF$ into six minor arcs, as shown. Find $\\overarc{DE}+2\\cdot \\overarc{HJ} + 3\\cdot \\overarc{FG},$ where the arcs are measured in degrees.[asy] import olympiad; size(6cm); defaultpen(fontsize(10pt)); pair B = (0, 0), A = (Cos(60), Sin(60)), C = (Cos(60)+Sin(60)/Tan(36), 0), D = midpoint(B--C), E = midpoint(A--C), F = midpoint(A--B); guide circ = circumcircle(D, E, F); pair G = intersectionpoint(B--D, circ), J = intersectionpoints(A--F, circ)[0], H = intersectionpoints(A--E, circ)[0]; draw(B--A--C--cycle); draw(D--E--F--cycle); draw(circ);  dot(A);dot(B);dot(C);dot(D);dot(E);dot(F);dot(G);dot(H);dot(J); label(\"$A$\", A, (0, .8)); label(\"$B$\", B, (-.8, -.8)); label(\"$C$\", C, (.8, -.8)); label(\"$D$\", D, (0, -.8)); label(\"$E$\", E, (.8, .2)); label(\"$F$\", F, (-.8, .2)); label(\"$G$\", G, (0, .8)); label(\"$H$\", H, (-.2, -1));label(\"$J$\", J, (.2, -.8)); [/asy]",
+          "answer": "336",
+          "question_key": "1386ae112defe5ff686e4c5519be4c2e35ff6a709b32b8e36edaf25fdfe7f5b3",
+          "split": "test"
+        },
+        {
+          "id": "math-13a136765c868b7d",
+          "question": "Find the sum of all positive integers $n$ such that $n + 2$ divides the product $3(n + 3)(n^2 + 9)$.",
+          "answer": "49",
+          "question_key": "13a136765c868b7d998f90ed50ae6ab0954d3581e38ef4087354270e9af33249",
+          "split": "test"
+        },
+        {
+          "id": "math-17aad2cb309e59b4",
+          "question": "Six points $A, B, C, D, E,$ and $F$ lie in a straight line in that order. Suppose that $G$ is a point not on the line and that $AC=26, BD=22, CE=31, DF=33, AF=73, CG=40,$ and $DG=30.$ Find the area of $\\triangle BGE.$",
+          "answer": "468",
+          "question_key": "17aad2cb309e59b46025e87bbe055896cbe0b857db3509acc8a74071b0064fed",
+          "split": "test"
+        },
+        {
+          "id": "math-276fd24702af6565",
+          "question": "Circle $\\omega_1$ with radius $6$ centered at point $A$ is internally tangent at point $B$ to circle $\\omega_2$ with radius $15$. Points $C$ and $D$ lie on $\\omega_2$ such that $\\overline{BC}$ is a diameter of $\\omega_2$ and ${\\overline{BC} \\perp \\overline{AD}}$. The rectangle $EFGH$ is inscribed in $\\omega_1$ such that $\\overline{EF} \\perp \\overline{BC}$, $C$ is closer to $\\overline{GH}$ than to $\\overline{EF}$, and $D$ is closer to $\\overline{FG}$ than to $\\overline{EH}$, as shown. Triangles $\\triangle {DGF}$ and $\\triangle {CHG}$ have equal areas. The area of rectangle $EFGH$ is $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$. [asy] size(5cm); defaultpen(fontsize(10pt)); pair A = (9, 0), B = (15, 0), C = (-15, 0), D = (9, 12), E = (9+12/sqrt(5), -6/sqrt(5)), F = (9+12/sqrt(5), 6/sqrt(5)), G = (9-12/sqrt(5), 6/sqrt(5)), H = (9-12/sqrt(5), -6/sqrt(5)); filldraw(G--H--C--cycle, lightgray); filldraw(D--G--F--cycle, lightgray);  draw(B--C); draw(A--D);  draw(E--F--G--H--cycle);         draw(circle((0,0), 15)); draw(circle(A, 6)); dot(A);  dot(B); dot(C); dot(D);dot(E); dot(F); dot(G); dot(H); label(\"$A$\", A, (.8, -.8)); label(\"$B$\", B, (.8, 0)); label(\"$C$\", C, (-.8, 0)); label(\"$D$\", D, (.4, .8));  label(\"$E$\", E, (.8, -.8));  label(\"$F$\", F, (.8, .8)); label(\"$G$\", G, (-.8, .8)); label(\"$H$\", H, (-.8, -.8)); label(\"$\\omega_1$\", (9, -5)); label(\"$\\omega_2$\", (-1, -13.5)); [/asy]",
+          "answer": "293",
+          "question_key": "276fd24702af65651d647a9f17b146740ac3163b01b5282e79823e05013247e4",
+          "split": "test"
+        },
+        {
+          "id": "math-2e64323a65c1fc5f",
+          "question": "Let the sequence of rationals $x_1,x_2,\\dots$ be defined such that $x_1=\\frac{25}{11}$ and\\[x_{k+1}=\\frac{1}{3}\\left(x_k+\\frac{1}{x_k}-1\\right).\\]$x_{2025}$ can be expressed as $\frac{m}{n}$ for relatively prime positive integers $m$ and $n$. Find the remainder when $m+n$ is divided by $1000$.",
+          "answer": "248",
+          "question_key": "2e64323a65c1fc5f5247e9d7486ba13f4956b5a487c2dd34ead24fbab2b0ac1e",
+          "split": "test"
+        }
+      ]
+    },
+    "dataset_sha256": {
+      "QA": "5e3c13b20b77e7525ac8df308bba6549eea43e415f0689072603ab626e0888ac",
+      "MATH": "50dbb3090c3e10daa71082fdf54eaeae921ebcc95cb8d649cf9c5434684fea42"
+    },
+    "config": {
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "max_calls": 8,
+      "max_tokens": 600,
+      "temperature": 0.1,
+      "history_turns": 8,
+      "max_observation_chars": 6000,
+      "timeout": 60,
+      "seed": 0,
+      "retrieval": "snapshot",
+      "context_path": "data/contexts/hotpotqa_distractor.jsonl",
+      "api_interval": 1.0
+    },
+    "seeds": [
+      29,
+      47
+    ],
+    "modes": [
+      "off",
+      "on"
+    ],
+    "split": "test",
+    "metric_version": "strict-v3",
+    "protocol": "one-trajectory-no-answer-selection",
+    "workers": 4,
+    "provider_base_url": "https://api.siliconflow.cn/v1",
+    "retrieval_cache_only": false,
+    "context_sha256": "e18c10fcffd0a7225e88dac89268773360594ca9cd7a9e41afbdb373629136ac"
+  },
+  "limitations": [
+    "Seed is requested; provider determinism is not guaranteed.",
+    "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
+    "QA retrieval backend: snapshot; answer-only evaluation, no supporting-fact score."
+  ],
+  "rescoring": {
+    "source_manifest_sha256": "5fa270747c0e580c226641f31684592b853453411138400006e7084c0ce20315",
+    "source_episodes_sha256": "4979ff3a8b10dd141f6e77dcbbeb1d61c58f09b1db9ad15a53900a5f4f36abb3",
+    "original_metric_version": "strict-v2",
+    "new_metric_version": "strict-v3",
+    "scoring_revision": "89f5bd03d00e3342d744856d77ce38a4fef8f1ca",
+    "scorer_sha256": "86aa9862c81cdb3d492662e7792b66ce74e944d7336e8a8442ac54937223494b",
+    "model_calls_made_by_rescoring": 0
+  }
+}

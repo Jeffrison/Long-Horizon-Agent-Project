@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-10-25T04:02:55.481916+00:00",
+  "git_revision": "d95783ab0befb67c875ab6c9c0d817eb4dc9ae07",
+  "git_dirty": true,
+  "settings": {
+    "tasks": {
+      "QA": [
+        {
+          "id": "qa-03693e140d61e98b",
+          "question": "What occupation was shared by David Yates and Pietro Germi?",
+          "answer": "director",
+          "question_key": "03693e140d61e98b95244bc49f54f31266d9df2f981d2971268c8c907746929a",
+          "split": "dev"
+        },
+        {
+          "id": "qa-0395cf6a3ce8711e",
+          "question": "What screenwriter with credits for \"Evolution\" co-wrote a film starring Nicolas Cage and Téa Leoni?",
+          "answer": "David Weissman",
+          "question_key": "0395cf6a3ce8711ec3c068f00312be68258414faff51e18d19fbeddaf51b4608",
+          "split": "dev"
+        }
+      ],
+      "MATH": [
+        {
+          "id": "math-3f91e2bfae276328",
+          "question": "There are $8!= 40320$ eight-digit positive integers that use each of the digits $1, 2, 3, 4, 5, 6, 7, 8$ exactly once. Let $N$ be the number of these integers that are divisible by $22$. Find the difference between $N$ and $2025$.$",
+          "answer": "279",
+          "question_key": "3f91e2bfae2763287d7f885d3783f3187d28c12dcbcb2e3a6ed5c631f91d0efe",
+          "split": "dev"
+        },
+        {
+          "id": "math-6637b8c714175b98",
+          "question": "In an $11 \\times 11$ grid of cells, each pair of edge-adjacent cells is connected by a door. Karthik wants to walk a path in this grid. He can start in any cell, but he must end in the same cell he started in, and he cannot go through any door more than once (not even in opposite directions). Compute the maximum number of doors he can go through in such a path.",
+          "answer": "200",
+          "question_key": "6637b8c714175b980a556ff9f77c8635bf7cf8fc76568e9c9bc03cd0b182af12",
+          "split": "dev"
+        }
+      ]
+    },
+    "dataset_sha256": {
+      "QA": "5e3c13b20b77e7525ac8df308bba6549eea43e415f0689072603ab626e0888ac",
+      "MATH": "50dbb3090c3e10daa71082fdf54eaeae921ebcc95cb8d649cf9c5434684fea42"
+    },
+    "config": {
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "max_calls": 8,
+      "max_tokens": 600,
+      "temperature": 0.1,
+      "history_turns": 8,
+      "max_observation_chars": 6000,
+      "timeout": 60,
+      "seed": 0
+    },
+    "seeds": [
+      11
+    ],
+    "modes": [
+      "off",
+      "on"
+    ],
+    "split": "dev",
+    "metric_version": "strict-v2",
+    "protocol": "one-trajectory-no-answer-selection",
+    "workers": 2
+  },
+  "limitations": [
+    "Seed is requested; provider determinism is not guaranteed.",
+    "Existing local datasets were used in historical development; test is an operational split, not pristine unseen data.",
+    "QA uses live Wikipedia, not the official HotpotQA distractor protocol."
+  ]
+}
